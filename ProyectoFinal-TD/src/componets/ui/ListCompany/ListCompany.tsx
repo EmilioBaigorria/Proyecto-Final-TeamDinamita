@@ -6,7 +6,11 @@ interface IListComapany{
 }
 export const ListCompany : FC<IListComapany> = ({companyList}) => {
 return (
-    <div>
+    <div style={{
+        display:"flex",
+        flexDirection:"column",
+        gap:"1rem"
+    }}>
         {
             companyList.map((company)=>(
                 <CompanyCard company={company}/>
