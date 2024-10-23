@@ -1,0 +1,56 @@
+:root {
+    --primary-color: #623CEA;
+    --secondary-color: #54426B;
+    --ligth-color: #E7DFC6;
+    --background-color: #e9f1f7;
+    --background-color-secondary: #DBd5B2;
+    --text-color: #333;
+}
+
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.grid_container {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: auto 1fr;
+    height: 100vh;
+}
+
+nav {
+    background-color: var(--secondary-color);
+    padding: 10px;
+    grid-column: 1 / 3;
+    grid-row: 1;
+}
+
+nav ul {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    list-style: none;
+    gap: 0.5rem;
+    text-transform: uppercase;
+    margin-bottom: 0.2rem;
+}
+
+nav a {
+    color: var(--ligth-color);
+}
+
+aside {
+    background-color: var(--primary-color);
+    padding: 10px;
+    grid-column: 1;
+    grid-row: 2;
+}
+
+main {
+    background-color: var(--background-color);
+    padding: 10px;
+    grid-column: 2 / 3;
+    grid-row: 2;
+}
