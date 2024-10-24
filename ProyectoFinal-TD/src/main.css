@@ -54,3 +54,17 @@ main {
     grid-column: 2 / 3;
     grid-row: 2;
 }
+
+aside {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;   
+    align-items: center;
+}
+
+.card {
+    width: 250px;
+    margin: 0.2rem 0;
+    border: 1px solid #33333362;
+    padding: 0.5rem;
+}

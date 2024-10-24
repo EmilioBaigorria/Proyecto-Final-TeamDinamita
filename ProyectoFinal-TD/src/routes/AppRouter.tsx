@@ -1,6 +1,8 @@
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import Home from '../componets/pages/Home';
 import Administration from "../componets/pages/Administration";
+import Sidebar from "../componets/ui/SidebarHome/Sidebar";
+
 
 export const AppRouter = () => {
   return (
@@ -13,9 +15,7 @@ export const AppRouter = () => {
           </ul>
         </nav>
 
-        <aside>
-          side bar
-        </aside>
+        <Sidebar />
 
         <Routes>
           <Route path="/" element={<Home />} />

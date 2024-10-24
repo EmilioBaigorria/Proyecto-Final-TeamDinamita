@@ -4,5 +4,4 @@ export interface ICompany{
     sR:string,
     cuit:string,
     logo:string
-
 }

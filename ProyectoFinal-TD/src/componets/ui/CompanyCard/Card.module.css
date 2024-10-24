@@ -1,0 +1,14 @@
+.btn_group {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.card_title{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
