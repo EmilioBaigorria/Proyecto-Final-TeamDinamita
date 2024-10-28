@@ -1,10 +1,14 @@
-import { useState } from "react"
+import { FC } from "react"
 import { Button, FloatingLabel, Form } from "react-bootstrap"
 
 
-export const PopUpMakeEnterprise = () => {
+interface IDisplayPopUp{
+    display:boolean,
+    setDisplay:Function
+}
+export const PopUpMakeEnterprise: FC<IDisplayPopUp> = ({display,setDisplay}) => {
     {/*Si quieren sacar el popup cambien el true a false*/}
-    const [display,setDisplay]=useState(true)
+    
     
     
 return (

@@ -1,8 +1,16 @@
 import { useLocation } from 'react-router-dom'
 import IEmpresa from '../../../types/IEmpresa';
 import Card from '../CompanyCard/Card';
+import { FC } from 'react';
 
-const Sidebar = () => {
+
+interface IDisplayPopUp{
+  setDisplay:Function
+}
+
+const Sidebar: FC<IDisplayPopUp> = ({setDisplay}) => {
+  
+    
     const location = useLocation(); // Obtener la ubicación actual
   
     const empresas :Array<IEmpresa> = [{
@@ -16,11 +24,14 @@ const Sidebar = () => {
   ]
     return (
       <aside>
+        
         {location.pathname === '/' && (
           <>
             <h2>Empresas</h2>
   
-            <button className='btn btn-light'>AGREGAR EMPRESA</button>
+            <button className='btn btn-light' onClick={()=>{
+              setDisplay(true)
+            }}>AGREGAR EMPRESA</button>
   
             <div className="cardContainer_aside">
               {

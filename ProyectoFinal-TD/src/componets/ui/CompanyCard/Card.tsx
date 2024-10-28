@@ -1,6 +1,7 @@
 import React from 'react'
 import IEmpresa from '../../../types/IEmpresa'
-import 'bootstrap-icons/font/bootstrap-icons.css'
+
+
 import styles from './Card.module.css'
 
 const Card: React.FC<{ item: IEmpresa }> = ({ item }) => {
@@ -8,8 +9,12 @@ const Card: React.FC<{ item: IEmpresa }> = ({ item }) => {
     <div className="card" key={item.id}>
       <p className={styles.card_title}>{item.name}</p>
       <div className={styles.btn_group}>
-        <button style={{ width: '50px' }} className='btn btn-outline-primary'><i className="bi bi-eye-fill"></i></button>
-        <button style={{ width: '50px' }} className='btn btn-outline-dark'><i className="bi bi-pencil-fill"></i></button>
+        <button style={{ width: '50px' }} className='btn btn-outline-primary'><span className="material-symbols-outlined">
+                    visibility
+                </span></button>
+        <button style={{ width: '50px' }} className='btn btn-outline-dark'><span  className="material-symbols-outlined">
+                    edit
+                </span></button>
       </div>
     </div>
   )
