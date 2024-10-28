@@ -7,9 +7,6 @@ interface IDisplayPopUp{
     setDisplay:Function
 }
 export const PopUpMakeEnterprise: FC<IDisplayPopUp> = ({display,setDisplay}) => {
-    {/*Si quieren sacar el popup cambien el true a false*/}
-    
-    
     
 return (
     <div style={{
@@ -53,7 +50,9 @@ return (
                 label="Cuit">
                 <Form.Control style={{
                         width:"20rem",  
-                }} type="text" placeholder="462984313" />
+                }} type="text" placeholder="462984313" onChange={()=>{
+                    
+                }} />
             </FloatingLabel>
             {/*Imagen*/}
             <div style={{
