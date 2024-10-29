@@ -12,9 +12,12 @@ interface IDisplayPopUp{
 }
 export const PopUpChekEnterprise :FC<IDisplayPopUp> = ({displayModalCheckEnterprise,setdisplayModalCheckEnterprise}) => {
     const dispach=useAppDispatch()
+    
+    
     const elementActive = useAppSelector(
         (state) => state.ActiveEntrepriseReducer.activeEnterprise
     )
+    console.log(elementActive);
     const handleCloseModal=()=>{
         setdisplayModalCheckEnterprise(false)
         dispach(removeActiveEnterprise())
@@ -24,9 +27,9 @@ return (
         <div className={styles.main_modal_container}>
             <h1 style={{marginLeft:"30%", marginBottom:"3rem"}}>Empresa</h1>
             
-            <h1 className={styles.text_font_format}>Nombre:{elementActive?.name}</h1>
-            <h1 className={styles.text_font_format}>Razon social:{elementActive?.sR}</h1>
-            <h1 className={styles.text_font_format}>Cuit:{elementActive?.cuit}</h1>
+            <h1 className={styles.text_font_format}>Nombre: {elementActive?.nombre}</h1>
+            <h1 className={styles.text_font_format}>Razon social: {elementActive?.razonSocial}</h1>
+            <h1 className={styles.text_font_format}>Cuit: {elementActive?.cuit}</h1>
             <h1 className={styles.text_font_format}>Logo:
                 <img src={elementActive?.logo} style={{width:"10rem"}} /></h1>
             <div className={styles.button_container}>
