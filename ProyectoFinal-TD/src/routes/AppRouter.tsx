@@ -16,6 +16,7 @@ export const AppRouter = () => {
 
   return (
     <div className="grid_container">
+      
       <BrowserRouter>
         <nav>
           <ul>

@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { Button, Card } from 'react-bootstrap'
 import { ICompany } from '../../../types/ICompany'
 interface ICompanyCard{
-    company:ICompany
+    company:ICompany 
 }
 export const CompanyCard :FC<ICompanyCard> = ({company}) => {
 return (
