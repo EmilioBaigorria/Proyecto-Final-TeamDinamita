@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react"
+import { FC, useEffect, useState } from "react"
 import { Button, FloatingLabel, Form } from "react-bootstrap"
 import { EmpresaService } from "../../../services/EmpresaService";
 import { IPais } from "../../../types/IPais";
@@ -12,21 +12,18 @@ interface IDisplayPopUp{
     setDisplay:Function
 }
 export const PopUpMakeEnterprise: FC<IDisplayPopUp> = ({display,setDisplay}) => {
-    async function handleSumit(id: number,
-        nombre: string,
-        razonSocial: string,
-        cuit: number,
-        logo: string | null,
-        sucursales?: ISucursal[],
-        pais?: IPais,
-        eliminado?: boolean) {
+    const [name,setName]=useState("")
+    const [rS,setrS]=useState("")
+    const [cut,setCut]=useState<number>(0)
+    async function handleSumit() {
         try {
             const createEmpresa = await new EmpresaService(API_URL + "/empresas").post({
-                id: 0,
-                nombre: "TIA RADDA",
-                razonSocial: "LAS MEJORES MILANESAS",
-                cuit: 30546791,
-                logo: "https://benditorufian.com/resources/brand.svg"
+                id: 1,
+                nombre: name,
+                razonSocial: rS,
+                cuit: cut,
+                logo: "https://mtek3d.com/wp-content/uploads/2018/01/image-placeholder-500x500.jpg",
+                
             });
         } catch (err) {
             console.error("Error al cargar las empresas:", err);
@@ -42,20 +39,24 @@ return (
                 label="Ingrese nombre">
                 <Form.Control style={{
                         width:"20rem",  
-                }} type="text" placeholder="JonhDoe" />
+                }} type="text" placeholder="JonhDoe" onChange={(e)=>{
+                    setName(e.target.value)
+                }} />
             </FloatingLabel>
             <FloatingLabel
                 label="Razon social">
                 <Form.Control style={{
                         width:"20rem",  
-                }} type="text" placeholder="22331155" />
+                }} type="text" placeholder="22331155" onChange={(e)=>{
+                    setrS(e.target.value)
+                }} />
             </FloatingLabel>
             <FloatingLabel
                 label="Cuit">
                 <Form.Control style={{
                         width:"20rem",  
-                }} type="text" placeholder="462984313" onChange={()=>{
-                    
+                }} type="text" placeholder="462984313" onChange={(e)=>{
+                    setCut(Number(e.target.value))
                 }} />
             </FloatingLabel>
             {/*Imagen*/}
@@ -71,7 +72,9 @@ return (
                 <Button variant="danger" onClick={()=>{
                     setDisplay(!display)   
                 }}>Cancelar</Button>
-                <Button variant="success">Aceptar</Button>
+                <Button variant="success" onClick={()=>{
+                    handleSumit()
+                }}>Aceptar</Button>
             </div>
             
         </div>

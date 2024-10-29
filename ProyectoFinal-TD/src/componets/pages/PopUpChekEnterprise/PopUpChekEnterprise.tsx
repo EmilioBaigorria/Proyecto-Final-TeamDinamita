@@ -17,7 +17,6 @@ export const PopUpChekEnterprise :FC<IDisplayPopUp> = ({displayModalCheckEnterpr
     const elementActive = useAppSelector(
         (state) => state.ActiveEntrepriseReducer.activeEnterprise
     )
-    console.log(elementActive);
     const handleCloseModal=()=>{
         setdisplayModalCheckEnterprise(false)
         dispach(removeActiveEnterprise())
