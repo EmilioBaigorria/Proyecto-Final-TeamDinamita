@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { EmpresaService } from "../../services/EmpresaService";
-import { IEmpresa } from '../../types/dtos/empresa/IEmpresa';
+
 import { SucursalService } from '../../services/SucursalService';
-import { ISucursal } from '../../types/dtos/sucursal/ISucursal';
+
 
 const API_URL = import.meta.env.VITE_API_URL;
 

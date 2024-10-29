@@ -1,37 +1,41 @@
-import { FC } from "react"
+import { FC, useEffect } from "react"
 import { Button, FloatingLabel, Form } from "react-bootstrap"
+import { EmpresaService } from "../../../services/EmpresaService";
+import { IPais } from "../../../types/IPais";
+import { ISucursal } from "../../../types/dtos/sucursal/ISucursal";
+import Styles from "./PopUpMakeEnterprise.module.css"
 
+const API_URL = import.meta.env.VITE_API_URL;
 
 interface IDisplayPopUp{
     display:boolean,
     setDisplay:Function
 }
 export const PopUpMakeEnterprise: FC<IDisplayPopUp> = ({display,setDisplay}) => {
+    async function handleSumit(id: number,
+        nombre: string,
+        razonSocial: string,
+        cuit: number,
+        logo: string | null,
+        sucursales?: ISucursal[],
+        pais?: IPais,
+        eliminado?: boolean) {
+        try {
+            const createEmpresa = await new EmpresaService(API_URL + "/empresas").post({
+                id: 0,
+                nombre: "TIA RADDA",
+                razonSocial: "LAS MEJORES MILANESAS",
+                cuit: 30546791,
+                logo: "https://benditorufian.com/resources/brand.svg"
+            });
+        } catch (err) {
+            console.error("Error al cargar las empresas:", err);
+        }
+    } 
     
 return (
-    <div style={{
-        position:"absolute",
-        width:"100vw",
-        height:"100vh",
-        display:display ? "flex" : "none",
-        alignItems:"center",
-        justifyContent:"center",
-        backdropFilter:"blur(4px)"  
-
-    }}>
-        <div style={{
-            width:"30vw",
-            height:"60vh",
-            backgroundColor:"#E5E7C6",
-            borderRadius:".4rem",
-            position:"absolute",
-            display:"flex",
-            flexDirection:"column",
-            justifyContent:"space-between",
-            alignItems:"center",
-            gap:".4rem",
-            boxShadow:"5px 2px 10px 10px grey",
-        }}>
+    <div className={Styles.main_background_container} style={{display:display ? "flex" : "none",}}>
+        <div className={Styles.main_content_container}>
             <h2>Crear empresa</h2>
             {/*Inputs*/}
             <FloatingLabel
@@ -55,15 +59,7 @@ return (
                 }} />
             </FloatingLabel>
             {/*Imagen*/}
-            <div style={{
-                width:"60%",
-                height:"60%",
-                display:"flex",
-                flexDirection:"row",
-                justifyContent:"center",
-                alignItems:"center",
-                gap:"1rem"
-            }}>
+            <div className={Styles.main_image_container}>
                 <Button  variant="warning">Agregar Imagen</Button>
                 {/*Un placeholder hasta que se añada la funcion de subir imagenes*/}
                 <img src="https://mtek3d.com/wp-content/uploads/2018/01/image-placeholder-500x500.jpg" style={{
@@ -71,15 +67,7 @@ return (
                 }}/>
             </div>
             {/*Botones inferiores*/}
-            <div style={{
-                width:"100%",
-                height:"100%",
-                display:"flex",
-                flexDirection:"row",
-                justifyContent:"center",
-                alignItems:"center",
-                gap:"25%"
-            }}>
+            <div className={Styles.main_button_container}>
                 <Button variant="danger" onClick={()=>{
                     setDisplay(!display)   
                 }}>Cancelar</Button>
