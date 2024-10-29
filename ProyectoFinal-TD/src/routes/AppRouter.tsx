@@ -11,6 +11,7 @@ import { PopUpChekEnterprise } from "../componets/pages/PopUpChekEnterprise/PopU
 
 export const AppRouter = () => {
   const [display,setDisplay]=useState(false)
+  const [displayModalCheckEnterprise,setdisplayModalCheckEnterprise]=useState(false)
 
 
   return (
@@ -23,9 +24,9 @@ export const AppRouter = () => {
           </ul>
         </nav>
         
-        <PopUpChekEnterprise display={false} setDisplay={setDisplay} />
+        <PopUpChekEnterprise displayModalCheckEnterprise={displayModalCheckEnterprise} setdisplayModalCheckEnterprise={setdisplayModalCheckEnterprise} />
         <PopUpMakeEnterprise display={display} setDisplay={setDisplay}/>
-        <Sidebar  setDisplay={setDisplay}/>
+        <Sidebar  setDisplay={setDisplay} setdisplayModalCheckEnterprise={setdisplayModalCheckEnterprise}/>
         
         
 

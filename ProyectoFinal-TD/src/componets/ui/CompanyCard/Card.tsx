@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import IEmpresa from '../../../types/IEmpresa'
 
 
@@ -7,10 +7,12 @@ import { useAppDispatch } from '../../../hooks/redux'
 import { setActiveEnterprise } from '../../../redux/slices/ActiveEnterpriseReducer'
 interface ICard{
   item:IEmpresa
+  setdisplayModalCheckEnterprise:Function
 }
-const Card:FC<ICard> = ({ item }) => {
+const Card:FC<ICard> = ({ item,setdisplayModalCheckEnterprise }) => {
   const dispatch = useAppDispatch();
   const handleOpenSetActiveEntreprise=(item :IEmpresa)=>{
+    setdisplayModalCheckEnterprise(true)
     dispatch(setActiveEnterprise({element :item}))
   }
   return (

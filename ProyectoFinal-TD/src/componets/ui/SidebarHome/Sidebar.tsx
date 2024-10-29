@@ -6,9 +6,10 @@ import { FC } from 'react';
 
 interface IDisplayPopUp{
   setDisplay:Function
+  setdisplayModalCheckEnterprise:Function
 }
 
-const Sidebar: FC<IDisplayPopUp> = ({setDisplay}) => {
+const Sidebar: FC<IDisplayPopUp> = ({setDisplay,setdisplayModalCheckEnterprise}) => {
   
     
     const location = useLocation(); // Obtener la ubicación actual
@@ -20,7 +21,21 @@ const Sidebar: FC<IDisplayPopUp> = ({setDisplay}) => {
     {
       id: '123435',
       name: 'Cedeco'
-    }
+    },
+    {
+      id :"1",
+      name:"Capsule Corp",
+      sR:"12123",
+      cuit:"14232",
+      logo:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHL5KYyweSzNrl-eztRVQQf-wi6HMxOlJAdg&s"
+  },
+  {
+      id :"2",
+      name:"Umbrella",
+      sR:"12123",
+      cuit:"14232",
+      logo:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmPh18D98XMKGY638FFXKxthVOjbE6Za8fCQ&s"
+  }
   ]
     return (
       <aside>
@@ -36,7 +51,7 @@ const Sidebar: FC<IDisplayPopUp> = ({setDisplay}) => {
             <div className="cardContainer_aside">
               {
                 empresas.map(( empresa => {
-                  return <Card key={empresa.id} item={empresa} />
+                  return <Card key={empresa.id} item={empresa} setdisplayModalCheckEnterprise={setdisplayModalCheckEnterprise} />
                 }))
               }
             </div>
