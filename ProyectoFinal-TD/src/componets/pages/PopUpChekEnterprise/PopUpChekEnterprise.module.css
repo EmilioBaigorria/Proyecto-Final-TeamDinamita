@@ -1,0 +1,18 @@
+.main_background_cointainer{
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+}
+.main_modal_container{
+    width: 30vw;
+    height: 60vh;
+    background-color: #E5E7C6;
+    border-radius: .4rem;
+    position: absolute;
+    display: flex;
+    box-shadow: 5px 2px 10px 10px 
+}

@@ -4,6 +4,7 @@ import Administration from "../componets/pages/Administration";
 import Sidebar from "../componets/ui/SidebarHome/Sidebar";
 import { useState } from "react";
 import { PopUpMakeEnterprise } from "../componets/pages/PopUpMakeEnterprise/PopUpMakeEnterprise";
+import { PopUpChekEnterprise } from "../componets/pages/PopUpChekEnterprise/PopUpChekEnterprise";
 
 
 
@@ -21,6 +22,8 @@ export const AppRouter = () => {
             <li><Link to='/admin'>Administración</Link></li>
           </ul>
         </nav>
+        
+        <PopUpChekEnterprise display={false} setDisplay={setDisplay} />
         <PopUpMakeEnterprise display={display} setDisplay={setDisplay}/>
         <Sidebar  setDisplay={setDisplay}/>
         
