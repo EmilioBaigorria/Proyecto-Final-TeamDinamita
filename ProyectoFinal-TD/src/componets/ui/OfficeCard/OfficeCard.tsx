@@ -15,11 +15,12 @@ export const OfficeCard: FC<IOfficeCardCard> = ({office}) => {
         <div className={Styles.upperText_container}>
             {office?.nombre}
         </div>
-        <div className={Styles.open_and_close_times_container}>
-            <h1>{office?.horarioApertura}-{office?.horarioCierre}</h1>
+        <div >
+            <h1 className={Styles.open_and_close_times_container}>{office?.horarioApertura}-{office?.horarioCierre}</h1>
         </div>
         <div>
-            <img src={office?.logo} style={{width:"5rem"}} />
+            {/*TO DO VERIFICAR ERROR*/}
+            <img src={office?.empresa.logo} style={{width:"5rem"}} />
         </div>
         <div className={Styles.buttons_container}>
             <Button variant="outline-success">

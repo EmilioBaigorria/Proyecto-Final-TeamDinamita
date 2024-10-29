@@ -2,20 +2,23 @@
     color: white;
     background-color: #54426B;
     width: 20%;
-    height: 45%;
+    height: 20rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     border-radius: .4rem;
+    padding: 10px;
+    text-align: center;
 }
 .upperText_container{
 
 }
 .open_and_close_times_container{
-
+    font-size: 1.1rem;
 }
 .buttons_container{
+    margin: 4px;
     display: flex;
     gap: 5px;
 }

@@ -17,18 +17,10 @@ export const Home = () => {
         const fetchSucursales = async () => {
             try {
                 //consulto todas las sucursales por ID de empresa
-                const sucusal  = await new SucursalService(API_URL + "/sucursales/porEmpresa").getById(1);
-                //consulto si la sucrsal es casa Matriz
-                const isCasaMatriz = await new SucursalService(API_URL + "/sucursales/existCasaMatriz").getById(1);
-                
-                console.log("---------- Todas las sucursales por empresa ----------");
-                console.log(sucusal);
-                if(sucusal){
-                    setSucursales(Array.isArray(sucusal) ? sucusal : [sucusal])
-                }
-                console.log("---------- Es casa matriz? ----------");
-                console.log(isCasaMatriz);
-
+                const suc  = await new SucursalService(API_URL + "/sucursales/porEmpresa").getById(1);
+                if(suc){
+                    setSucursales(Array.isArray(suc) ? suc : [suc])
+                }                
             } catch (err) {
                 console.error("Error al cargar las empresas:", err);
             }

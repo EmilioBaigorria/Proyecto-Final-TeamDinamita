@@ -1,7 +1,12 @@
 import { useLocation } from 'react-router-dom'
-import IEmpresa from '../../../types/IEmpresa';
+
 import Card from '../CompanyCard/Card';
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
+import { EmpresaService } from '../../../services/EmpresaService';
+import { IEmpresa } from '../../../types/dtos/empresa/IEmpresa';
+
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 
 interface IDisplayPopUp{
@@ -10,33 +15,27 @@ interface IDisplayPopUp{
 }
 
 const Sidebar: FC<IDisplayPopUp> = ({setDisplay,setdisplayModalCheckEnterprise}) => {
+  const [enterprises,setEnterprises]=useState<IEmpresa[]>([])
+  useEffect(() => {
+    const fetchEmpresas = async () => {
+        try {
+            //consulto todas las empresas
+            const empresas = await new EmpresaService(API_URL + "/empresas").getAll();
+            console.log("---------- Todas las empresas ----------");
+            console.log(empresas);
+            setEnterprises(Array.isArray(empresas) ? empresas : [empresas])
+        } catch (err) {
+            console.error("Error al cargar las empresas:", err);
+        }
+    };
+
+    fetchEmpresas();
+}, []);
   
     
     const location = useLocation(); // Obtener la ubicación actual
   
-    const empresas :Array<IEmpresa> = [{
-      id: '12345',
-      name: 'Taringa.net'
-    },
-    {
-      id: '123435',
-      name: 'Cedeco'
-    },
-    {
-      id :"1",
-      name:"Capsule Corp",
-      sR:"12123",
-      cuit:"14232",
-      logo:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHL5KYyweSzNrl-eztRVQQf-wi6HMxOlJAdg&s"
-  },
-  {
-      id :"2",
-      name:"Umbrella",
-      sR:"12123",
-      cuit:"14232",
-      logo:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmPh18D98XMKGY638FFXKxthVOjbE6Za8fCQ&s"
-  }
-  ]
+    
     return (
       <aside>
         
@@ -50,7 +49,7 @@ const Sidebar: FC<IDisplayPopUp> = ({setDisplay,setdisplayModalCheckEnterprise})
   
             <div className="cardContainer_aside">
               {
-                empresas.map(( empresa => {
+                enterprises.map(( empresa => {
                   return <Card key={empresa.id} item={empresa} setdisplayModalCheckEnterprise={setdisplayModalCheckEnterprise} />
                 }))
               }

@@ -27,7 +27,7 @@ return (
             position:"absolute",
             display:"flex",
             flexDirection:"column",
-            justifyContent:"center",
+            justifyContent:"space-between",
             alignItems:"center",
             gap:".4rem",
             boxShadow:"5px 2px 10px 10px grey",
@@ -56,8 +56,8 @@ return (
             </FloatingLabel>
             {/*Imagen*/}
             <div style={{
-                width:"100%",
-                height:"100%",
+                width:"60%",
+                height:"60%",
                 display:"flex",
                 flexDirection:"row",
                 justifyContent:"center",
