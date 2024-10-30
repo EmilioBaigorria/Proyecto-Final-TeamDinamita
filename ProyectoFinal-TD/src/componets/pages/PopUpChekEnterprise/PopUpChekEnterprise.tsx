@@ -1,42 +1,47 @@
 
 import { FC } from "react"
 import styles from "./PopUpChekEnterprise.module.css"
-
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux"
-import { Button } from "react-bootstrap"
+import { Button, Modal } from "react-bootstrap"
 import { removeActiveEnterprise } from "../../../redux/slices/ActiveEnterpriseReducer"
-interface IDisplayPopUp{
-    displayModalCheckEnterprise:boolean
-    setdisplayModalCheckEnterprise:Function
+import { IEmpresa } from "../../../types/dtos/empresa/IEmpresa"
+interface IDisplayPopUp {
+    displayModalCheckEnterprise: boolean
+    setdisplayModalCheckEnterprise: Function
 
 }
-export const PopUpChekEnterprise :FC<IDisplayPopUp> = ({displayModalCheckEnterprise,setdisplayModalCheckEnterprise}) => {
-    const dispach=useAppDispatch()
-    
-    
-    const elementActive = useAppSelector(
+export const PopUpChekEnterprise: FC<IDisplayPopUp> = ({ displayModalCheckEnterprise, setdisplayModalCheckEnterprise }) => {
+    const dispach = useAppDispatch()
+
+
+    const elementActive: IEmpresa = useAppSelector(
         (state) => state.ActiveEntrepriseReducer.activeEnterprise
     )
-    const handleCloseModal=()=>{
+    const handleCloseModal = () => {
         setdisplayModalCheckEnterprise(false)
         dispach(removeActiveEnterprise())
-    }   
-return (
-    <div className={styles.main_background_cointainer} style={{display:displayModalCheckEnterprise ? "flex" : "none"}}>
-        <div className={styles.main_modal_container}>
-            <h1 style={{marginLeft:"30%", marginBottom:"3rem"}}>Empresa</h1>
-            
-            <h1 className={styles.text_font_format}>Nombre: {elementActive?.nombre}</h1>
-            <h1 className={styles.text_font_format}>Razon social: {elementActive?.razonSocial}</h1>
-            <h1 className={styles.text_font_format}>Cuit: {elementActive?.cuit}</h1>
-            <h1 className={styles.text_font_format}>Logo:
-                <img src={elementActive?.logo} style={{width:"25%"}} /></h1>
-            <div className={styles.button_container}>
-                <Button className={styles.button_Style} variant="danger"  onClick={()=>{
-                    handleCloseModal()
-                }}>Cerrar</Button>
-            </div>
-        </div>
-    </div>
-)
+    }
+    return (
+        <Modal
+            show={displayModalCheckEnterprise}
+            onHide={handleCloseModal}
+            dialogClassName={styles.modal_empresa}
+        >
+            <Modal.Header closeButton>
+                <Modal.Title>{elementActive?.nombre}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <h1 className={styles.text_font_format}>Nombre: {elementActive?.nombre}</h1>
+                <h1 className={styles.text_font_format}>Razon social: {elementActive?.razonSocial}</h1>
+                <h1 className={styles.text_font_format}>Cuit: {elementActive?.cuit}</h1>
+                <h1 className={styles.text_font_format}>Logo:
+                    <img src={elementActive?.logo} style={{ width: "25%" }} /></h1>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={handleCloseModal}>
+                    Cerrar
+                </Button>
+            </Modal.Footer>
+        </Modal>
+    )
 }

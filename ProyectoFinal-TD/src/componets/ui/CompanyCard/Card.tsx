@@ -6,11 +6,17 @@ import { IEmpresa } from '../../../types/dtos/empresa/IEmpresa'
 interface ICard{
   item:IEmpresa
   setdisplayModalCheckEnterprise:Function
+  setDisplayModalEditEnterprise: Function
 }
-const Card:FC<ICard> = ({ item,setdisplayModalCheckEnterprise }) => {
+const Card:FC<ICard> = ({ item,setdisplayModalCheckEnterprise, setDisplayModalEditEnterprise }) => {
   const dispatch = useAppDispatch();
   const handleOpenSetActiveEntreprise=(item :IEmpresa)=>{
     setdisplayModalCheckEnterprise(true)
+    dispatch(setActiveEnterprise({element :item}))
+  }
+
+  const handleOpenEditModal = (item :IEmpresa) => {
+    setDisplayModalEditEnterprise(true)
     dispatch(setActiveEnterprise({element :item}))
   }
   return (
@@ -22,7 +28,7 @@ const Card:FC<ICard> = ({ item,setdisplayModalCheckEnterprise }) => {
         }}><span className="material-symbols-outlined">
                     visibility
                 </span></button>
-        <button style={{ width: '50px' }} className='btn btn-outline-dark'><span  className="material-symbols-outlined">
+        <button style={{ width: '50px' }} className='btn btn-outline-dark' onClick={()=>handleOpenEditModal(item)}><span  className="material-symbols-outlined">
                     edit
                 </span></button>
       </div>

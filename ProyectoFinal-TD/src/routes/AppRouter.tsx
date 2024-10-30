@@ -14,6 +14,7 @@ export const AppRouter = () => {
   const [displayModalCheckEnterprise,setdisplayModalCheckEnterprise]=useState(false)
 
 
+
   return (
     <div className="grid_container">
       
@@ -27,6 +28,7 @@ export const AppRouter = () => {
         
         <PopUpChekEnterprise displayModalCheckEnterprise={displayModalCheckEnterprise} setdisplayModalCheckEnterprise={setdisplayModalCheckEnterprise} />
         <PopUpMakeEnterprise display={display} setDisplay={setDisplay}/>
+      
         <Sidebar  setDisplay={setDisplay} setdisplayModalCheckEnterprise={setdisplayModalCheckEnterprise}/>
         
         
