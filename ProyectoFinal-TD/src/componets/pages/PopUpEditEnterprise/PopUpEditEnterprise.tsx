@@ -1,7 +1,8 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { useAppSelector } from "../../../hooks/redux";
 import { IEmpresa } from "../../../types/dtos/empresa/IEmpresa";
+import { EmpresaService } from "../../../services/EmpresaService";
 
 interface IDisplayPopUp{
     display:boolean,
@@ -15,16 +16,27 @@ export const EditEnterpriseModal: FC<IDisplayPopUp> = ({ display, setDisplay }) 
     );
 
     // Estado para los campos editables
-    const [nombre, setNombre] = useState(elementActive?.nombre || "");
-    const [razonSocial, setRazonSocial] = useState(elementActive?.razonSocial || "");
-    const [cuit, setCuit] = useState(elementActive?.cuit || "");
-    const [logo, setLogo] = useState(elementActive?.logo || "");
+    const [nombre, setNombre] = useState("");
+    const [razonSocial, setRazonSocial] = useState("");
+    const [cuit, setCuit] = useState("");
+    const [logo, setLogo] = useState("");
+    const API_URL = import.meta.env.VITE_API_URL;
+
+    useEffect(() => {
+        if (elementActive) {
+            setNombre(elementActive.nombre || "");
+            setRazonSocial(elementActive.razonSocial || "");
+            setCuit(elementActive.cuit ? elementActive.cuit.toString() : "");
+            setLogo(elementActive.logo || "");
+        }
+    }, [elementActive]);
 
     const handleClose = ()=>{
         setDisplay(false)
     }
 
-    const handleSaveChanges = () => {
+    const handleSaveChanges = async ()  => {
+        const id = elementActive.id;
         const updatedEnterprise: IEmpresa = {
             ...elementActive,
             nombre,
@@ -32,8 +44,13 @@ export const EditEnterpriseModal: FC<IDisplayPopUp> = ({ display, setDisplay }) 
             cuit: Number.parseInt(cuit.toString()),
             logo,
         };
-        //Actualizar contacto en servicio
-        handleClose(); // Cierra el modal
+
+        try {
+            return await new EmpresaService(API_URL + "/empresas").put(id,updatedEnterprise);
+            handleClose(); // Cierra el modal
+        } catch (err) {
+            console.error("Error al editar  empresa:", err);
+        }
     };
 
     return (
