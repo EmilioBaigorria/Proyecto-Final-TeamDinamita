@@ -5,6 +5,7 @@ import Sidebar from "../componets/ui/SidebarHome/Sidebar";
 import { useState } from "react";
 import { PopUpMakeEnterprise } from "../componets/pages/PopUpMakeEnterprise/PopUpMakeEnterprise";
 import { PopUpChekEnterprise } from "../componets/pages/PopUpChekEnterprise/PopUpChekEnterprise";
+import { EditEnterpriseModal } from "../componets/pages/PopUpEditEnterprise/PopUpEditEnterprise";
 
 
 
@@ -12,6 +13,7 @@ import { PopUpChekEnterprise } from "../componets/pages/PopUpChekEnterprise/PopU
 export const AppRouter = () => {
   const [display,setDisplay]=useState(false)
   const [displayModalCheckEnterprise,setdisplayModalCheckEnterprise]=useState(false)
+  const [displayModalEditEnterprise, setDisplayModalEditEnterprise]=useState(false)
 
 
 
@@ -28,9 +30,9 @@ export const AppRouter = () => {
         
         <PopUpChekEnterprise displayModalCheckEnterprise={displayModalCheckEnterprise} setdisplayModalCheckEnterprise={setdisplayModalCheckEnterprise} />
         <PopUpMakeEnterprise display={display} setDisplay={setDisplay}/>
+        <EditEnterpriseModal display={displayModalEditEnterprise} setDisplay={setDisplayModalEditEnterprise}/>
       
-        <Sidebar  setDisplay={setDisplay} setdisplayModalCheckEnterprise={setdisplayModalCheckEnterprise}/>
-        
+        <Sidebar  setDisplay={setDisplay} setdisplayModalCheckEnterprise={setdisplayModalCheckEnterprise} setDisplayModalEditEnterprise={setDisplayModalEditEnterprise}  />
         
 
         <Routes>
