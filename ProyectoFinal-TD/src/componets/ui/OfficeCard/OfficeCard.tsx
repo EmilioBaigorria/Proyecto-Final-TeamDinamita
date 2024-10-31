@@ -7,7 +7,7 @@ import { Button } from 'react-bootstrap'
 
 interface IOfficeCardCard{
     /*El null es unicamente para desarrollo hasta poder obtener infor de sucursal desde la db*/
-    office:ISucursal | null
+    office:ISucursal 
 }
 export const OfficeCard: FC<IOfficeCardCard> = ({office}) => {
   return (
