@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import ActiveEntrepriseReducer from "../slices/ActiveEnterpriseReducer"
+import ActiveOfficeReducer from "../slices/ActiveOfficeReducer"
 // ...
 
 export const store = configureStore({
   reducer: {
-    ActiveEntrepriseReducer:ActiveEntrepriseReducer
+    ActiveEntrepriseReducer:ActiveEntrepriseReducer,
+    ActiveOfficeReducer:ActiveOfficeReducer,
   },
 })
 

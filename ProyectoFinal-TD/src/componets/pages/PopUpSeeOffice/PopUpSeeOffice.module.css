@@ -1,0 +1,16 @@
+.mainDiv {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(4px);
+    z-index: 5000;
+}
+
+.popUpOffice {
+    width: 30vw;
+    height: 60vh;
+    background-color: #E5E7C6;
+    border-radius: .4rem;
+}
