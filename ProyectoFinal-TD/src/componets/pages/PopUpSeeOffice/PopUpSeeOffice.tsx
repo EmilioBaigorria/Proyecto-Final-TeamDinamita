@@ -4,10 +4,14 @@ import { FC } from "react"
 import { ISucursal } from "../../../types/dtos/sucursal/ISucursal"
 import { useAppSelector } from "../../../hooks/redux"
 
+const API_KEY = import.meta.env.VITE_API_KEY_GOOGLE_MAPS;
+
 interface IPopUpSeeOffice {
     setDisplayPopUpOffice: Function
     displayPopUpOffice: boolean
 }
+
+
 
 export const PopUpSeeOffice: FC<IPopUpSeeOffice> = ({setDisplayPopUpOffice, displayPopUpOffice}) => {
 
@@ -16,11 +20,13 @@ export const PopUpSeeOffice: FC<IPopUpSeeOffice> = ({setDisplayPopUpOffice, disp
     )
 
     // ! ! ! ! ! !
-    // IMPORTANTE: La api key se cambió por las dudas, por el robo de api keys. Le borre la primer letra que es una A (a mayuscula), asi que para usarlo hay que agregarsela
+    // IMPORTANTE: La api key se debe configurar en el archivo .env variable VITE_API_KEY_GOOGLE_MAPS, por temas de seguridad.
     // ! ! ! ! ! !
     
+    
+    
     const mapDireccion = `${activeOffice?.domicilio.calle} ${activeOffice?.domicilio.numero}, ${activeOffice?.domicilio.localidad.nombre}, ${activeOffice?.domicilio.localidad.provincia.nombre}`
-    const mapUrl = `https://www.google.com/maps/embed/v1/place?key=IzaSyByWg1vXPNMDy9hRjtjiF8ubbCbR0E_nUo&q=${encodeURIComponent(mapDireccion)}`
+    const mapUrl = `https://www.google.com/maps/embed/v1/place?key=${API_KEY}&q=${encodeURIComponent(mapDireccion)}`
 
     return (
 
