@@ -2,15 +2,18 @@
 // import { SidebarHome } from '../ui/SidebarHome/SidebarHome'
 // import { PopUpMakeEnterprise } from './PopUpMakeEnterprise/PopUpMakeEnterprise'
 
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { ListOffice } from "../ui/ListOffice/ListOffice";
 import { SucursalService } from "../../services/SucursalService";
 import { ISucursal } from "../../types/dtos/sucursal/ISucursal";
 const API_URL = import.meta.env.VITE_API_URL;
 
 
+interface IHome {
+    setDisplayOffice: Function
+}
 
-export const Home = () => {
+export const Home : FC<IHome> = ({setDisplayOffice}) => {
     const [sucursales,setSucursales]=useState<ISucursal[]>([])
 
     useEffect(() => {
@@ -29,7 +32,7 @@ export const Home = () => {
     }, []);
 
     return (<>
-            <ListOffice offices={sucursales}/>   
+            <ListOffice offices={sucursales} setDisplayOffice={setDisplayOffice}/>   
         
     </>)
 }

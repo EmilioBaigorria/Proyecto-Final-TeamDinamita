@@ -12,9 +12,10 @@ const API_URL = import.meta.env.VITE_API_URL;
 interface IDisplayPopUp{
   setDisplay:Function
   setdisplayModalCheckEnterprise:Function
+  setDisplayModalEditEnterprise :Function
 }
 
-const Sidebar: FC<IDisplayPopUp> = ({setDisplay,setdisplayModalCheckEnterprise}) => {
+const Sidebar: FC<IDisplayPopUp> = ({setDisplay,setdisplayModalCheckEnterprise, setDisplayModalEditEnterprise}) => {
   const [enterprises,setEnterprises]=useState<IEmpresa[]>([])
   useEffect(() => {
     const fetchEmpresas = async () => {
@@ -50,7 +51,11 @@ const Sidebar: FC<IDisplayPopUp> = ({setDisplay,setdisplayModalCheckEnterprise})
             <div className="cardContainer_aside">
               {
                 enterprises.map(( empresa => {
-                  return <Card key={empresa.id} item={empresa} setdisplayModalCheckEnterprise={setdisplayModalCheckEnterprise} />
+                  return <Card key={empresa.id} 
+                  item={empresa} 
+                  setdisplayModalCheckEnterprise={setdisplayModalCheckEnterprise}
+                  setDisplayModalEditEnterprise={setDisplayModalEditEnterprise}
+                  />
                 }))
               }
             </div>

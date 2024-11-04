@@ -5,6 +5,8 @@ import Sidebar from "../componets/ui/SidebarHome/Sidebar";
 import { useState } from "react";
 import { PopUpMakeEnterprise } from "../componets/pages/PopUpMakeEnterprise/PopUpMakeEnterprise";
 import { PopUpChekEnterprise } from "../componets/pages/PopUpChekEnterprise/PopUpChekEnterprise";
+import { EditEnterpriseModal } from "../componets/pages/PopUpEditEnterprise/PopUpEditEnterprise";
+import { PopUpSeeOffice } from "../componets/pages/PopUpSeeOffice/PopUpSeeOffice";
 
 
 
@@ -12,6 +14,9 @@ import { PopUpChekEnterprise } from "../componets/pages/PopUpChekEnterprise/PopU
 export const AppRouter = () => {
   const [display,setDisplay]=useState(false)
   const [displayModalCheckEnterprise,setdisplayModalCheckEnterprise]=useState(false)
+  const [displayModalEditEnterprise, setDisplayModalEditEnterprise]=useState(false)
+  const [displayPopUpOffice, setDisplayPopUpOffice] = useState(false)
+
 
 
   return (
@@ -27,12 +32,14 @@ export const AppRouter = () => {
         
         <PopUpChekEnterprise displayModalCheckEnterprise={displayModalCheckEnterprise} setdisplayModalCheckEnterprise={setdisplayModalCheckEnterprise} />
         <PopUpMakeEnterprise display={display} setDisplay={setDisplay}/>
-        <Sidebar  setDisplay={setDisplay} setdisplayModalCheckEnterprise={setdisplayModalCheckEnterprise}/>
-        
+        <EditEnterpriseModal display={displayModalEditEnterprise} setDisplay={setDisplayModalEditEnterprise}/>
+        <PopUpSeeOffice displayPopUpOffice={displayPopUpOffice} setDisplayPopUpOffice={setDisplayPopUpOffice}/>
+      
+        <Sidebar  setDisplay={setDisplay} setdisplayModalCheckEnterprise={setdisplayModalCheckEnterprise} setDisplayModalEditEnterprise={setDisplayModalEditEnterprise}  />
         
 
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home setDisplayOffice={setDisplayPopUpOffice}/>} />
           <Route path="/admin" element={<Administration />} />
         </Routes>
 

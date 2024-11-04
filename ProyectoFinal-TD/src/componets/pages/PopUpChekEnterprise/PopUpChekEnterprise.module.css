@@ -35,3 +35,10 @@
 .button_Style{
     width: 6rem;
 }
+
+.modal_empresa {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
