@@ -72,6 +72,7 @@ return (
                 }}>Cancelar</Button>
                 <Button variant="success" onClick={()=>{
                     handleSumit()
+                    setDisplay(false)
                 }}>Aceptar</Button>
             </div>
             
