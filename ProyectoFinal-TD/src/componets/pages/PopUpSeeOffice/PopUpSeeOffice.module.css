@@ -9,8 +9,26 @@
 }
 
 .popUpOffice {
-    width: 30vw;
-    height: 60vh;
+    width: 35vw;
+    height: auto;
     background-color: #E5E7C6;
+    border-radius: .4rem;
+    padding: 1rem;
+}
+
+h2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.insideText {
+    padding: 0;
+
+}
+
+.googleMapsAPI {
+    display: flex;
+    justify-content: center;
     border-radius: .4rem;
 }
