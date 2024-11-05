@@ -3,6 +3,7 @@ import { Button, FloatingLabel, Form, Modal } from 'react-bootstrap'
 import { useAppSelector } from '../../../hooks/redux'
 import { ISucursal } from '../../../types/dtos/sucursal/ISucursal'
 import { UploadImage } from '../../UploadImage'
+import styles from "./PopUpEditOffice.module.css"
 
 interface IPopUpEditOffice{
     displayPopUpEditOffice :boolean,
@@ -12,35 +13,51 @@ export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,se
     const [name,setName]=useState("")
     const [openingHour,setOpeningHour]=useState("")
     const [closingHour,setClosingHour]=useState("")
-    const[logo,setLogo]=useState<string | null>(null)
-    
+    const[logo,setLogo]=useState<string | null | undefined>(null)
+    const [country,setCountry]=useState<string | undefined>("")
+    {/*ISucursal no tine provinci, what da heeeeellllllll, lo dejo para preguntar al profe */}
+    const [province,setProvince]=useState("")
+    const[locality,setLocality]=useState("")
+    const[latitude,setLatitude]=useState(0)
+    const[longitude,setLongitude]=useState(0)
     
     const activeOffice : ISucursal | null = useAppSelector(
         (state)=>state.ActiveOfficeReducer.activeOffice
     )
+    
     useEffect(()=>{
         if (activeOffice){
-            
+            setName(activeOffice.nombre)
+            setOpeningHour(activeOffice.horarioApertura)
+            setClosingHour(activeOffice.horarioCierre)
+            setLogo(activeOffice.logo)
+            setCountry(activeOffice.empresa.pais?.nombre)
+            setProvince(activeOffice.domicilio.localidad.provincia.nombre)
+            setLocality(activeOffice.domicilio.localidad.nombre)
+            setLatitude(activeOffice.latitud)
+            setLongitude(activeOffice.longitud)
         }
-    })
+    }, [activeOffice])
     const handleClose = () => setDisplayPopUpEditOffice(false);
     const handleShow = () => setDisplayPopUpEditOffice(true);
 
 return (
     <>
-    <Modal show={displayPopUpEditOffice} onHide={handleClose}>
+    {/*Por el momento lo puse en fullscreen porque me staba sacando de quicio  */}
+    <Modal show={displayPopUpEditOffice} onHide={handleClose} fullscreen={true}>
         <Modal.Header closeButton >
             <Modal.Title>Editar Sucursal</Modal.Title>
-        </Modal.Header>
+        </Modal.Header> 
         {/*Datos de entrada*/}
         <Modal.Body>
-        <div>
+        <div className={styles.main_container_inputs}>
+            {/*primer set de inputs*/}
             <div>
                 <FloatingLabel
                     label="Ingrese nombre">
                     <Form.Control style={{
                             width:"20rem",  
-                    }} value={activeOffice?.nombre} type="text" placeholder="JonhDoe" onChange={(e)=>{
+                    }} value={name} type="text" placeholder="JonhDoe" onChange={(e)=>{
                         setName(e.target.value)
                     }} />
                 </FloatingLabel>
@@ -48,7 +65,7 @@ return (
                     label="Hora de Apertura">
                     <Form.Control style={{
                             width:"20rem",  
-                    }} value={activeOffice?.horarioApertura}  type="text" placeholder="JonhDoe" onChange={(e)=>{
+                    }} value={openingHour}  type="text" placeholder="JonhDoe" onChange={(e)=>{
                         setOpeningHour(e.target.value)
                     }} />
                 </FloatingLabel>
@@ -56,15 +73,56 @@ return (
                     label="Hora de Cierre">
                     <Form.Control style={{
                             width:"20rem",  
-                    }} value={activeOffice?.horarioCierre}  type="text" placeholder="JonhDoe" onChange={(e)=>{
+                    }} value={closingHour}  type="text" placeholder="JonhDoe" onChange={(e)=>{
                         setClosingHour(e.target.value)
                     }} />
-                    <UploadImage image={logo} setImage={setLogo} />
                 </FloatingLabel>
-
+                <div>
+                    <UploadImage image={logo} setImage={setLogo} />
+                </div>
             </div>
+            {/*Segundo set de inputs */}
             <div>
-
+                <FloatingLabel
+                    label="Pais">
+                    <Form.Control style={{
+                            width:"20rem",  
+                    }} value={country}  type="text" placeholder="Argentina" onChange={(e)=>{
+                        setCountry(e.target.value)
+                    }} />
+                </FloatingLabel>
+                <FloatingLabel
+                    label="Provincia">
+                    <Form.Control style={{
+                            width:"20rem",  
+                    }} value={province}  type="text" placeholder="Mendoza" onChange={(e)=>{
+                        setProvince(e.target.value)
+                    }} />
+                </FloatingLabel>
+                <FloatingLabel
+                    label="Localidad">
+                    <Form.Control style={{
+                            width:"20rem",  
+                    }} value={locality}  type="text" placeholder="Mendoza" onChange={(e)=>{
+                        setLocality(e.target.value)
+                    }} />
+                </FloatingLabel>
+                <FloatingLabel
+                    label="Latitud">
+                    <Form.Control style={{
+                            width:"20rem",  
+                    }} value={latitude}  type="text" placeholder="1242" onChange={(e)=>{
+                        setLatitude(Number(e.target.value))
+                    }} />
+                </FloatingLabel>
+                <FloatingLabel
+                    label="Longitud">
+                    <Form.Control style={{
+                            width:"20rem",  
+                    }} value={longitude}  type="text" placeholder="9876" onChange={(e)=>{
+                        setLongitude(Number(e.target.value))
+                    }} />
+                </FloatingLabel>
             </div>
             <div>
 
