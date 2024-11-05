@@ -8,6 +8,7 @@ import { SucursalService } from '../../../services/SucursalService'
 import { ILocalidad } from '../../../types/ILocalidad'
 import { IEmpresa } from '../../../types/dtos/empresa/IEmpresa'
 import { ICategorias } from '../../../types/dtos/categorias/ICategorias'
+import { IUpdateSucursal } from '../../../types/dtos/sucursal/IUpdateSucursal'
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -33,7 +34,7 @@ export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,se
     const[floorNumber,setFloorNumber]=useState(0)
     const[deparmentNumber,setDeparmentNumber]=useState(0)
     
-    const[empresa,setempresa]=useState<IEmpresa[]>([])
+
     
     const activeOffice : ISucursal | null = useAppSelector(
         (state)=>state.ActiveOfficeReducer.activeOffice
@@ -63,12 +64,11 @@ export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,se
     const handleClose = () => setDisplayPopUpEditOffice(false);
     {/*No puedo arreglar este problea mañana preguntar al profe */}
     const handleSave= async ()=>{
-        const updatedSucursal :ISucursal={
+        if(activeOffice){
+        const updatedSucursal :IUpdateSucursal={
             idEmpresa:Number(activeOffice?.empresa.id),
-            empresa:activeOffice?.empresa as IEmpresa,
             nombre: name,
             id: Number(activeOffice?.id),
-            calle:streetName,
             eliminado: isDeleted,
             latitud: latitude,
             longitud: longitude,
@@ -79,22 +79,22 @@ export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,se
             cp: postalCode,
             piso: floorNumber,
             nroDpto: deparmentNumber,
-            localidad:activeOffice?.domicilio.localidad as ILocalidad
+            idLocalidad:Number(activeOffice?.domicilio.localidad.id)
             },
             logo: String(logo),
-            categorias: activeOffice?.categorias as ICategorias[],
+            categorias: activeOffice?.categorias,
             esCasaMatriz: Boolean(activeOffice?.esCasaMatriz),
             horarioApertura: openingHour,
             horarioCierre: closingHour
         }
-        console.log(updatedSucursal)
+        
         try{
             const updateSucursal = await new SucursalService(API_URL + "/sucursales/update").put(Number(activeOffice?.id), updatedSucursal)
             setDisplayPopUpEditOffice(false)
         }catch(e){
             console.error("Error al editar sucursal:",e)
         }
-    }
+    }}
     const handleShow = () => setDisplayPopUpEditOffice(true);
 
 return (
