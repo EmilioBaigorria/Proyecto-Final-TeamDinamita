@@ -5,6 +5,7 @@ import Styles from "./OfficeCard.module.css"
 import { Button } from 'react-bootstrap'
 import { useAppDispatch } from '../../../hooks/redux'
 import { setActiveOfficeReducer } from '../../../redux/slices/ActiveOfficeReducer'
+import noImage from "../../../assets/images/noImage.jpeg";
 
 
 
@@ -31,8 +32,7 @@ export const OfficeCard: FC<IOfficeCardCard> = ({ office, setDisplayOffice }) =>
                 <h1 className={Styles.open_and_close_times_container}>{office?.horarioApertura}-{office?.horarioCierre}</h1>
             </div>
             <div>
-                {/*TO DO VERIFICAR ERROR*/}
-                <img src={office?.empresa.logo} style={{ width: "5rem" }} />
+                <img src={office?.logo ?? noImage} style={{ width: "5rem" }} />
             </div>
             <div className={Styles.buttons_container}>
                 <Button variant="outline-success">
