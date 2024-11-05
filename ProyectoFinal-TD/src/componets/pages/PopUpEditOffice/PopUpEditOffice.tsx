@@ -18,6 +18,27 @@ interface IPopUpEditOffice{
 }
 
 export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,setDisplayPopUpEditOffice}) => {
+    const initialValues :IUpdateSucursal={
+        idEmpresa:0,
+        nombre: "",
+        id: 0,
+        eliminado: false,
+        latitud: 0,
+        longitud: 0,
+        domicilio: {
+        id: 0,
+        calle: "",
+        numero: 0,
+        cp: 0,
+        piso: 0,
+        nroDpto: 0,
+        idLocalidad:0
+        },
+        logo:"",
+        categorias: [],
+        esCasaMatriz: false,
+        horarioApertura: "",
+        horarioCierre: ""}
     const [name,setName]=useState("")
     const [openingHour,setOpeningHour]=useState("")
     const [closingHour,setClosingHour]=useState("")
@@ -33,12 +54,13 @@ export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,se
     const[postalCode,setPostalCode]=useState(0)
     const[floorNumber,setFloorNumber]=useState(0)
     const[deparmentNumber,setDeparmentNumber]=useState(0)
-    
-
+    const[updatedSucursal,setUpdatedsucursal]=useState(initialValues)
     
     const activeOffice : ISucursal | null = useAppSelector(
         (state)=>state.ActiveOfficeReducer.activeOffice
     )
+    
+    
     
     useEffect(()=>{
         if (activeOffice){
@@ -55,14 +77,12 @@ export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,se
             setStreetNumber(activeOffice.domicilio.numero)
             setPostalCode(activeOffice.domicilio.cp)
             setFloorNumber(activeOffice.domicilio.piso)
-            setDeparmentNumber(activeOffice.domicilio.nroDpto)
-            
-            
+            setDeparmentNumber(activeOffice.domicilio.nroDpto) 
         }
     }, [activeOffice])
     
     const handleClose = () => setDisplayPopUpEditOffice(false);
-    {/*No puedo arreglar este problea mañana preguntar al profe */}
+    
     const handleSave= async ()=>{
         if(activeOffice){
         const updatedSucursal :IUpdateSucursal={
