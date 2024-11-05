@@ -20,7 +20,6 @@ export const PopUpMakeEnterprise: FC<IDisplayPopUp> = ({display,setDisplay}) => 
     async function handleSumit() {
         try {
             const createEmpresa = await new EmpresaService(API_URL + "/empresas").post({
-                id: 1,
                 nombre: name,
                 razonSocial: rS,
                 cuit: cut,
