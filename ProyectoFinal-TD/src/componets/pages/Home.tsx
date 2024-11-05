@@ -6,6 +6,7 @@ import { FC, useEffect, useState } from "react";
 import { ListOffice } from "../ui/ListOffice/ListOffice";
 import { SucursalService } from "../../services/SucursalService";
 import { ISucursal } from "../../types/dtos/sucursal/ISucursal";
+import { HomeHeader } from "../ui/HomeHeader/HomeHeader";
 const API_URL = import.meta.env.VITE_API_URL;
 
 
@@ -32,10 +33,14 @@ export const Home : FC<IHome> = ({setDisplayOffice,setDisplayPopUpEditOffice}) =
         fetchSucursales();
     }, []);
 
-    return (<>
+    return (<div style={{
+        display:"flex",
+        flexDirection:"column"
+    }}>
+            <HomeHeader/>
             <ListOffice offices={sucursales} setDisplayOffice={setDisplayOffice} setDisplayPopUpEditOffice={setDisplayPopUpEditOffice}/>   
         
-    </>)
+        </div>)
 }
 
 export default Home
