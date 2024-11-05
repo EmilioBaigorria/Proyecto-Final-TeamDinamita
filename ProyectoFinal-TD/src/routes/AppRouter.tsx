@@ -7,6 +7,7 @@ import { PopUpMakeEnterprise } from "../componets/pages/PopUpMakeEnterprise/PopU
 import { PopUpChekEnterprise } from "../componets/pages/PopUpChekEnterprise/PopUpChekEnterprise";
 import { EditEnterpriseModal } from "../componets/pages/PopUpEditEnterprise/PopUpEditEnterprise";
 import { PopUpSeeOffice } from "../componets/pages/PopUpSeeOffice/PopUpSeeOffice";
+import { PopUpEditOffice } from "../componets/pages/PopUpEditOffice/PopUpEditOffice";
 
 
 
@@ -16,6 +17,7 @@ export const AppRouter = () => {
   const [displayModalCheckEnterprise,setdisplayModalCheckEnterprise]=useState(false)
   const [displayModalEditEnterprise, setDisplayModalEditEnterprise]=useState(false)
   const [displayPopUpOffice, setDisplayPopUpOffice] = useState(false)
+  const [displayPopUpEditOffice,setDisplayPopUpEditOffice]=useState(false)
 
 
 
@@ -29,7 +31,7 @@ export const AppRouter = () => {
             <li><Link to='/admin'>Administración</Link></li>
           </ul>
         </nav>
-        
+        <PopUpEditOffice displayPopUpEditOffice={displayPopUpEditOffice} setDisplayPopUpEditOffice={setDisplayPopUpEditOffice}/>
         <PopUpChekEnterprise displayModalCheckEnterprise={displayModalCheckEnterprise} setdisplayModalCheckEnterprise={setdisplayModalCheckEnterprise} />
         <PopUpMakeEnterprise display={display} setDisplay={setDisplay}/>
         <EditEnterpriseModal display={displayModalEditEnterprise} setDisplay={setDisplayModalEditEnterprise}/>
@@ -39,7 +41,7 @@ export const AppRouter = () => {
         
 
         <Routes>
-          <Route path="/" element={<Home setDisplayOffice={setDisplayPopUpOffice}/>} />
+          <Route path="/" element={<Home setDisplayOffice={setDisplayPopUpOffice} setDisplayPopUpEditOffice={setDisplayPopUpEditOffice}/>} />
           <Route path="/admin" element={<Administration />} />
         </Routes>
 

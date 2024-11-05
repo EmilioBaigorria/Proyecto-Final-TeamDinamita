@@ -6,14 +6,16 @@ import { FC, useEffect, useState } from "react";
 import { ListOffice } from "../ui/ListOffice/ListOffice";
 import { SucursalService } from "../../services/SucursalService";
 import { ISucursal } from "../../types/dtos/sucursal/ISucursal";
+import { HomeHeader } from "../ui/HomeHeader/HomeHeader";
 const API_URL = import.meta.env.VITE_API_URL;
 
 
 interface IHome {
-    setDisplayOffice: Function
+    setDisplayOffice: Function,
+    setDisplayPopUpEditOffice:Function
 }
 
-export const Home : FC<IHome> = ({setDisplayOffice}) => {
+export const Home : FC<IHome> = ({setDisplayOffice,setDisplayPopUpEditOffice}) => {
     const [sucursales,setSucursales]=useState<ISucursal[]>([])
 
     useEffect(() => {
@@ -31,10 +33,14 @@ export const Home : FC<IHome> = ({setDisplayOffice}) => {
         fetchSucursales();
     }, []);
 
-    return (<>
-            <ListOffice offices={sucursales} setDisplayOffice={setDisplayOffice}/>   
+    return (<div style={{
+        display:"flex",
+        flexDirection:"column"
+    }}>
+            <HomeHeader/>
+            <ListOffice offices={sucursales} setDisplayOffice={setDisplayOffice} setDisplayPopUpEditOffice={setDisplayPopUpEditOffice}/>   
         
-    </>)
+        </div>)
 }
 
 export default Home
