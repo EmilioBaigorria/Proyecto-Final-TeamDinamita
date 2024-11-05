@@ -9,17 +9,21 @@ import { setActiveOfficeReducer } from '../../../redux/slices/ActiveOfficeReduce
 
 
 interface IOfficeCardCard {
-    /*El null es unicamente para desarrollo hasta poder obtener infor de sucursal desde la db*/
+    
     office: ISucursal
     setDisplayOffice: Function
+    setDisplayPopUpEditOffice:Function
 }
-export const OfficeCard: FC<IOfficeCardCard> = ({ office, setDisplayOffice }) => {
+export const OfficeCard: FC<IOfficeCardCard> = ({ office, setDisplayOffice,setDisplayPopUpEditOffice }) => {
 
     const dispatch = useAppDispatch()
 
-    const handleOpenModal = ()=>{
+    const handleOpenModalSeeOffice = ()=>{
         setDisplayOffice(true)
         dispatch(setActiveOfficeReducer({element:office}))
+    }
+    const handleOpenModalEditOffice=()=>{
+        setDisplayPopUpEditOffice(true)
     }
 
     return (
@@ -40,13 +44,15 @@ export const OfficeCard: FC<IOfficeCardCard> = ({ office, setDisplayOffice }) =>
                         apartment
                     </span>
                 </Button>
-                <Button variant="outline-primary">
+                <Button variant="outline-primary" onClick={()=>{
+                    handleOpenModalEditOffice()
+                }}>
                     <span className="material-symbols-outlined">
                         edit
                     </span>
                 </Button>
                 <Button variant="outline-warning" onClick={()=>{
-                    handleOpenModal()
+                    handleOpenModalSeeOffice()
                 }}>
                     <span className="material-symbols-outlined">
                         visibility

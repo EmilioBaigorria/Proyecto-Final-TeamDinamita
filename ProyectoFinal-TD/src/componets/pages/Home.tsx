@@ -10,10 +10,11 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 
 interface IHome {
-    setDisplayOffice: Function
+    setDisplayOffice: Function,
+    setDisplayPopUpEditOffice:Function
 }
 
-export const Home : FC<IHome> = ({setDisplayOffice}) => {
+export const Home : FC<IHome> = ({setDisplayOffice,setDisplayPopUpEditOffice}) => {
     const [sucursales,setSucursales]=useState<ISucursal[]>([])
 
     useEffect(() => {
@@ -32,7 +33,7 @@ export const Home : FC<IHome> = ({setDisplayOffice}) => {
     }, []);
 
     return (<>
-            <ListOffice offices={sucursales} setDisplayOffice={setDisplayOffice}/>   
+            <ListOffice offices={sucursales} setDisplayOffice={setDisplayOffice} setDisplayPopUpEditOffice={setDisplayPopUpEditOffice}/>   
         
     </>)
 }
