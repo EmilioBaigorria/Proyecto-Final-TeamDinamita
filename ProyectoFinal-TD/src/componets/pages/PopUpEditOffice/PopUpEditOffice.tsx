@@ -96,7 +96,7 @@ return (
         <Modal.Body>
         <div className={styles.main_container_inputs}>
             {/*primer set de inputs*/}
-            <div>
+            <div className={styles.inpunts_style}>
                 <FloatingLabel
                     label="Ingrese nombre">
                     <Form.Control style={{
@@ -126,7 +126,7 @@ return (
                 </div>
             </div>
             {/*Segundo set de inputs */}
-            <div>
+            <div className={styles.inpunts_style}>
                 <FloatingLabel
                     label="Pais">
                     <Form.Control style={{
@@ -169,7 +169,7 @@ return (
                 </FloatingLabel>
             </div>
             {/*Tercer set de inputs */}
-            <div>
+            <div className={styles.inpunts_style}>
             <FloatingLabel
                     label="Nombre Calle">
                     <Form.Control style={{
