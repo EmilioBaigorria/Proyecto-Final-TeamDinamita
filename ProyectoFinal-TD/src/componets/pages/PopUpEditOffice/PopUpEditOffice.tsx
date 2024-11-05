@@ -1,9 +1,13 @@
-import React, { FC, useEffect, useState } from 'react'
+import { act, FC, useEffect, useState } from 'react'
 import { Button, FloatingLabel, Form, Modal } from 'react-bootstrap'
 import { useAppSelector } from '../../../hooks/redux'
 import { ISucursal } from '../../../types/dtos/sucursal/ISucursal'
 import { UploadImage } from '../../UploadImage'
 import styles from "./PopUpEditOffice.module.css"
+import { SucursalService } from '../../../services/SucursalService'
+import { ILocalidad } from '../../../types/ILocalidad'
+import { ICategorias } from '../../../types/dtos/categorias/ICategorias'
+const API_URL = import.meta.env.VITE_API_URL;
 
 interface IPopUpEditOffice{
     displayPopUpEditOffice :boolean,
@@ -13,7 +17,8 @@ export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,se
     const [name,setName]=useState("")
     const [openingHour,setOpeningHour]=useState("")
     const [closingHour,setClosingHour]=useState("")
-    const[logo,setLogo]=useState<string | null | undefined>(null)
+    const[isDeleted,setIsDeleted]=useState(false)
+    const[logo,setLogo]=useState<string | null >(null)
     const [country,setCountry]=useState<string | undefined>("")
     const [province,setProvince]=useState("")
     const[locality,setLocality]=useState("")
@@ -33,7 +38,7 @@ export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,se
             setName(activeOffice.nombre)
             setOpeningHour(activeOffice.horarioApertura)
             setClosingHour(activeOffice.horarioCierre)
-            setLogo(activeOffice.logo)
+            setLogo(String(activeOffice.logo))
             setCountry(activeOffice.empresa.pais?.nombre)
             setProvince(activeOffice.domicilio.localidad.provincia.nombre)
             setLocality(activeOffice.domicilio.localidad.nombre)
@@ -46,7 +51,38 @@ export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,se
             setDeparmentNumber(activeOffice.domicilio.nroDpto)
         }
     }, [activeOffice])
+    const catet:ICategorias[]=[]
     const handleClose = () => setDisplayPopUpEditOffice(false);
+    {/*No puedo arreglar este problea mañana preguntar al profe */}
+    const handleSave= async ()=>{
+        const updatedSucursal :ISucursal={
+            nombre: name,
+            idEmpresa: activeOffice?.id,
+            eliminado: isDeleted,
+            latitud: latitude,
+            longitud: longitude,
+            domicilio: {
+            id: Number(activeOffice?.domicilio.id),
+            calle: streetName,
+            numero: streetNumber,
+            cp: postalCode,
+            piso: floorNumber,
+            nroDpto: deparmentNumber,
+            localidad:activeOffice?.domicilio.localidad as ILocalidad
+            },
+            logo: String(logo),
+            categorias: activeOffice?.categorias,
+            esCasaMatriz: Boolean(activeOffice?.esCasaMatriz),
+            horarioApertura: openingHour,
+            horarioCierre: closingHour
+        }
+        try{
+            const updateSucursal = await new SucursalService(API_URL + "/sucursales").put(Number(activeOffice?.id), updatedSucursal)
+            setDisplayPopUpEditOffice(false)
+        }catch(e){
+            console.error("Error al editar sucursal:",e)
+        }
+    }
     const handleShow = () => setDisplayPopUpEditOffice(true);
 
 return (
