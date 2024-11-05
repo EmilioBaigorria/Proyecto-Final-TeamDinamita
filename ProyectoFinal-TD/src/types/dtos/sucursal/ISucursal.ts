@@ -17,4 +17,5 @@ export interface ISucursal {
   eliminado: boolean;
   horarioCierre: string;
   logo?: string;
+  idEmpresa:number
 }

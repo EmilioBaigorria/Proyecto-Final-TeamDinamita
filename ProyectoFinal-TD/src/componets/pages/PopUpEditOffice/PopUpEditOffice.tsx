@@ -1,4 +1,4 @@
-import { act, FC, useEffect, useState } from 'react'
+import {  FC, useEffect, useState } from 'react'
 import { Button, FloatingLabel, Form, Modal } from 'react-bootstrap'
 import { useAppSelector } from '../../../hooks/redux'
 import { ISucursal } from '../../../types/dtos/sucursal/ISucursal'
@@ -6,13 +6,16 @@ import { UploadImage } from '../../UploadImage'
 import styles from "./PopUpEditOffice.module.css"
 import { SucursalService } from '../../../services/SucursalService'
 import { ILocalidad } from '../../../types/ILocalidad'
+import { IEmpresa } from '../../../types/dtos/empresa/IEmpresa'
 import { ICategorias } from '../../../types/dtos/categorias/ICategorias'
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 interface IPopUpEditOffice{
     displayPopUpEditOffice :boolean,
     setDisplayPopUpEditOffice: Function
 }
+
 export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,setDisplayPopUpEditOffice}) => {
     const [name,setName]=useState("")
     const [openingHour,setOpeningHour]=useState("")
@@ -29,6 +32,9 @@ export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,se
     const[postalCode,setPostalCode]=useState(0)
     const[floorNumber,setFloorNumber]=useState(0)
     const[deparmentNumber,setDeparmentNumber]=useState(0)
+    
+    const[empresa,setempresa]=useState<IEmpresa[]>([])
+    
     const activeOffice : ISucursal | null = useAppSelector(
         (state)=>state.ActiveOfficeReducer.activeOffice
     )
@@ -49,15 +55,20 @@ export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,se
             setPostalCode(activeOffice.domicilio.cp)
             setFloorNumber(activeOffice.domicilio.piso)
             setDeparmentNumber(activeOffice.domicilio.nroDpto)
+            
+            
         }
     }, [activeOffice])
-    const catet:ICategorias[]=[]
+    
     const handleClose = () => setDisplayPopUpEditOffice(false);
     {/*No puedo arreglar este problea mañana preguntar al profe */}
     const handleSave= async ()=>{
         const updatedSucursal :ISucursal={
+            idEmpresa:Number(activeOffice?.empresa.id),
+            empresa:activeOffice?.empresa as IEmpresa,
             nombre: name,
-            idEmpresa: activeOffice?.id,
+            id: Number(activeOffice?.id),
+            calle:streetName,
             eliminado: isDeleted,
             latitud: latitude,
             longitud: longitude,
@@ -71,13 +82,14 @@ export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,se
             localidad:activeOffice?.domicilio.localidad as ILocalidad
             },
             logo: String(logo),
-            categorias: activeOffice?.categorias,
+            categorias: activeOffice?.categorias as ICategorias[],
             esCasaMatriz: Boolean(activeOffice?.esCasaMatriz),
             horarioApertura: openingHour,
             horarioCierre: closingHour
         }
+        console.log(updatedSucursal)
         try{
-            const updateSucursal = await new SucursalService(API_URL + "/sucursales").put(Number(activeOffice?.id), updatedSucursal)
+            const updateSucursal = await new SucursalService(API_URL + "/sucursales/update").put(Number(activeOffice?.id), updatedSucursal)
             setDisplayPopUpEditOffice(false)
         }catch(e){
             console.error("Error al editar sucursal:",e)
@@ -217,7 +229,9 @@ return (
             <Button variant="danger" onClick={handleClose}>
                 Cerrar
             </Button>
-            <Button variant="success" onClick={handleClose}>
+            <Button variant="success" onClick={()=>{
+                handleSave()
+            }}>
                 Guardar Cambios
             </Button>
         </Modal.Footer>
