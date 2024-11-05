@@ -15,12 +15,15 @@ export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,se
     const [closingHour,setClosingHour]=useState("")
     const[logo,setLogo]=useState<string | null | undefined>(null)
     const [country,setCountry]=useState<string | undefined>("")
-    {/*ISucursal no tine provinci, what da heeeeellllllll, lo dejo para preguntar al profe */}
     const [province,setProvince]=useState("")
     const[locality,setLocality]=useState("")
     const[latitude,setLatitude]=useState(0)
     const[longitude,setLongitude]=useState(0)
-    
+    const[streetName,setStreetName]=useState("")
+    const[streetNumber,setStreetNumber]=useState(0)
+    const[postalCode,setPostalCode]=useState(0)
+    const[floorNumber,setFloorNumber]=useState(0)
+    const[deparmentNumber,setDeparmentNumber]=useState(0)
     const activeOffice : ISucursal | null = useAppSelector(
         (state)=>state.ActiveOfficeReducer.activeOffice
     )
@@ -36,6 +39,11 @@ export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,se
             setLocality(activeOffice.domicilio.localidad.nombre)
             setLatitude(activeOffice.latitud)
             setLongitude(activeOffice.longitud)
+            setStreetName(activeOffice.domicilio.calle)
+            setStreetNumber(activeOffice.domicilio.numero)
+            setPostalCode(activeOffice.domicilio.cp)
+            setFloorNumber(activeOffice.domicilio.piso)
+            setDeparmentNumber(activeOffice.domicilio.nroDpto)
         }
     }, [activeOffice])
     const handleClose = () => setDisplayPopUpEditOffice(false);
@@ -124,8 +132,48 @@ return (
                     }} />
                 </FloatingLabel>
             </div>
+            {/*Tercer set de inputs */}
             <div>
-
+            <FloatingLabel
+                    label="Nombre Calle">
+                    <Form.Control style={{
+                            width:"20rem",  
+                    }} value={streetName}  type="text" placeholder="EmilioCivit" onChange={(e)=>{
+                        setStreetName(e.target.value)
+                    }} />
+                </FloatingLabel>
+                <FloatingLabel
+                    label="Numero de Calle">
+                    <Form.Control style={{
+                            width:"20rem",  
+                    }} value={streetNumber}  type="text" placeholder="1212" onChange={(e)=>{
+                        setStreetNumber(Number(e.target.value))
+                    }} />
+                </FloatingLabel>
+                <FloatingLabel
+                    label="Codigo postal">
+                    <Form.Control style={{
+                            width:"20rem",  
+                    }} value={postalCode}  type="text" placeholder="4450" onChange={(e)=>{
+                        setPostalCode(Number(e.target.value))
+                    }} />
+                </FloatingLabel>
+                <FloatingLabel
+                    label="Piso">
+                    <Form.Control style={{
+                            width:"20rem",  
+                    }} value={floorNumber}  type="text" placeholder="3" onChange={(e)=>{
+                        setFloorNumber(Number(e.target.value))
+                    }} />
+                </FloatingLabel>
+                <FloatingLabel
+                    label="Departamento">
+                    <Form.Control style={{
+                            width:"20rem",  
+                    }} value={deparmentNumber}  type="text" placeholder="14" onChange={(e)=>{
+                        setDeparmentNumber(Number(e.target.value))
+                    }} />
+                </FloatingLabel>
             </div>
         </div>
         </Modal.Body>
