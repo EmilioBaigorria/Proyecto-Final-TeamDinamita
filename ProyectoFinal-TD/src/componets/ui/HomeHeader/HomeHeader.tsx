@@ -11,7 +11,7 @@ export const HomeHeader = () => {
 return (
     <div className={styles.main_header_container} >
         <div className={styles.text_container}>
-            <h1 className={styles.text}>Sucursales de:{activeEnterprise?.nombre}</h1>
+            <h1 className={styles.text}>Sucursales de: {activeEnterprise?.nombre}</h1>
         </div>
         <div className={styles.button_container}>
             <Button variant="info">Agregar sucursal</Button>
