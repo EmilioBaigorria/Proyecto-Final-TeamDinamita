@@ -24,6 +24,7 @@ export const OfficeCard: FC<IOfficeCardCard> = ({ office, setDisplayOffice,setDi
     }
     const handleOpenModalEditOffice=()=>{
         setDisplayPopUpEditOffice(true)
+        dispatch(setActiveOfficeReducer({element:office}))
     }
 
     return (
