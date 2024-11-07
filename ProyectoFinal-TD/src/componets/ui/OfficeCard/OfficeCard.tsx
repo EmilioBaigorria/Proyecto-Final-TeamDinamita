@@ -5,20 +5,26 @@ import Styles from "./OfficeCard.module.css"
 import { Button } from 'react-bootstrap'
 import { useAppDispatch } from '../../../hooks/redux'
 import { setActiveOfficeReducer } from '../../../redux/slices/ActiveOfficeReducer'
+import noImage from "../../../assets/images/noImage.jpeg";
 
 
 
 interface IOfficeCardCard {
-    /*El null es unicamente para desarrollo hasta poder obtener infor de sucursal desde la db*/
+    
     office: ISucursal
     setDisplayOffice: Function
+    setDisplayPopUpEditOffice:Function
 }
-export const OfficeCard: FC<IOfficeCardCard> = ({ office, setDisplayOffice }) => {
+export const OfficeCard: FC<IOfficeCardCard> = ({ office, setDisplayOffice,setDisplayPopUpEditOffice }) => {
 
     const dispatch = useAppDispatch()
 
-    const handleOpenModal = ()=>{
+    const handleOpenModalSeeOffice = ()=>{
         setDisplayOffice(true)
+        dispatch(setActiveOfficeReducer({element:office}))
+    }
+    const handleOpenModalEditOffice=()=>{
+        setDisplayPopUpEditOffice(true)
         dispatch(setActiveOfficeReducer({element:office}))
     }
 
@@ -31,8 +37,7 @@ export const OfficeCard: FC<IOfficeCardCard> = ({ office, setDisplayOffice }) =>
                 <h1 className={Styles.open_and_close_times_container}>{office?.horarioApertura}-{office?.horarioCierre}</h1>
             </div>
             <div>
-                {/*TO DO VERIFICAR ERROR*/}
-                <img src={office?.empresa.logo} style={{ width: "5rem" }} />
+                <img src={office?.logo ?? noImage} style={{ width: "5rem" }} />
             </div>
             <div className={Styles.buttons_container}>
                 <Button variant="outline-success">
@@ -40,13 +45,15 @@ export const OfficeCard: FC<IOfficeCardCard> = ({ office, setDisplayOffice }) =>
                         apartment
                     </span>
                 </Button>
-                <Button variant="outline-primary">
+                <Button variant="outline-primary" onClick={()=>{
+                    handleOpenModalEditOffice()
+                }}>
                     <span className="material-symbols-outlined">
                         edit
                     </span>
                 </Button>
                 <Button variant="outline-warning" onClick={()=>{
-                    handleOpenModal()
+                    handleOpenModalSeeOffice()
                 }}>
                     <span className="material-symbols-outlined">
                         visibility
