@@ -17,12 +17,12 @@ interface IHome {
 
 export const Home : FC<IHome> = ({setDisplayOffice,setDisplayPopUpEditOffice}) => {
     const [sucursales,setSucursales]=useState<ISucursal[]>([])
-
+    const sucuService=new SucursalService(API_URL + "/sucursales/porEmpresa")
     useEffect(() => {
         const fetchSucursales = async () => {
             try {
                 //consulto todas las sucursales por ID de empresa
-                const suc  = await new SucursalService(API_URL + "/sucursales/porEmpresa").getById(1);
+                const suc  = await sucuService.getById(1);
                 if(suc){
                     setSucursales(Array.isArray(suc) ? suc : [suc])
                 }                

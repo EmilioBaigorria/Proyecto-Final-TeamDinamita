@@ -4,22 +4,42 @@ import { useAppSelector } from '../../../hooks/redux'
 import { ISucursal } from '../../../types/dtos/sucursal/ISucursal'
 import { UploadImage } from '../../UploadImage'
 import styles from "./PopUpEditOffice.module.css"
+import { SucursalService } from '../../../services/SucursalService'
 import { IUpdateSucursal } from '../../../types/dtos/sucursal/IUpdateSucursal'
+import { ICategorias } from '../../../types/dtos/categorias/ICategorias'
 const API_URL = import.meta.env.VITE_API_URL;
 
 interface IPopUpEditOffice{
     displayPopUpEditOffice :boolean,
     setDisplayPopUpEditOffice: Function
 }
+interface IInitialValues{
+    idEmpresa: number ,
+        nombre: string,
+        id: number,
+        eliminado: boolean,
+        latitud:number,
+        longitud: number,
+        calle: string,
+        numero: number,
+        cp: number,
+        piso:number,
+        nroDpto:number,
+        idLocalidad:number,
+        logo:string,
+        categorias:ICategorias[],
+        esCasaMatriz:Boolean,
+        horarioApertura: string,
+        horarioCierre: string
+}
 
 export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,setDisplayPopUpEditOffice}) => {
     const activeOffice : ISucursal | null = useAppSelector(
         (state)=>state.ActiveOfficeReducer.activeOffice
     )
-    
-    const initialValues ={
-        idEmpresa: activeOffice?.empresa.id || 0,
-        nombre: activeOffice?.nombre|| "" ,
+    const initialValues  ={
+        idEmpresa: activeOffice?.empresa.id|| 0 ,
+        nombre: activeOffice?.nombre || "",
         id: activeOffice?.id|| 0,
         eliminado: activeOffice?.eliminado || false,
         latitud:activeOffice?.latitud|| 0,
@@ -38,10 +58,41 @@ export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,se
     }   
     const[updatedSucursal,setUpdatedsucursal]=useState(initialValues)
     const[logo,setLogo]=useState<string | null>(null)
-    
+    const sucurSevice= new SucursalService(API_URL+"/sucursales/update")
+    useEffect(()=>{
+        setUpdatedsucursal(initialValues)
+    },[displayPopUpEditOffice])
     const handleClose = () => setDisplayPopUpEditOffice(false);
-    const handleSave=()=>{
+    const handleSave=async ()=>{
+        const upSucur :IUpdateSucursal={
+            id: Number(activeOffice?.id),
+            nombre:String( updatedSucursal.nombre),
+            idEmpresa: Number(updatedSucursal.idEmpresa),
+            eliminado: Boolean(updatedSucursal.eliminado),
+            latitud: Number(updatedSucursal.latitud),
+            longitud: Number(updatedSucursal.longitud),
+            domicilio: {
+                id: Number(activeOffice?.domicilio.id),
+                calle: String(updatedSucursal.calle),
+                numero: Number(updatedSucursal.numero),
+                cp: Number(updatedSucursal.cp),
+                piso: Number(updatedSucursal.piso),
+                nroDpto: Number(updatedSucursal.nroDpto),
+                idLocalidad: Number(updatedSucursal.idLocalidad)
+                },
+            logo: String(updatedSucursal.logo),
+            categorias: updatedSucursal.categorias,
+            esCasaMatriz:  Boolean(updatedSucursal.esCasaMatriz),
+            horarioApertura: String(updatedSucursal.horarioApertura),
+            horarioCierre: String(updatedSucursal.horarioCierre)
+        }
         console.log(updatedSucursal)
+        console.log(upSucur)
+        try{
+            await sucurSevice.put(Number(upSucur.id),upSucur)
+        }catch(err){
+            console.log("Ocurrio un error gurdando la nueva sucursal: ",err)
+        }
     }
     
     const handleShow = () => setDisplayPopUpEditOffice(true);
@@ -49,8 +100,13 @@ export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,se
 
     const handleChangeInputs = (event: ChangeEvent<HTMLInputElement>)=>{
         const {value, name} = event.target
+        console.log(value, name)
+        console.log(initialValues)
+        console.log(updatedSucursal)
         
+
         setUpdatedsucursal((prev)=>({...prev, [`${name}`]: value}))
+        
     }
     
 
@@ -70,7 +126,7 @@ return (
                     label="Ingrese nombre">
                     <Form.Control style={{
                             width:"20rem",  
-                    }} value={updatedSucursal.nombre} type="text" placeholder="JonhDoe" name={"nombre"} onChange={handleChangeInputs} />
+                    }} value={updatedSucursal.nombre} type="text"  name={"nombre"} onChange={handleChangeInputs} />
                 </FloatingLabel>
                 <FloatingLabel
                     label="Hora de Apertura">

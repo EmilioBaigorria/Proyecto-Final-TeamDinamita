@@ -48,7 +48,7 @@ export const EditEnterpriseModal: FC<IDisplayPopUp> = ({ display, setDisplay }) 
         };
 
         try {
-            const update = await new EmpresaService(API_URL + "/empresas").put(id,updatedEnterprise);
+            const update = await new EmpresaService(API_URL + "/empresas").put(Number(id),updatedEnterprise);
             handleClose(); // Cierra el modal
         } catch (err) {
             console.error("Error al editar  empresa:", err);
