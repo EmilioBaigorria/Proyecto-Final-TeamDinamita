@@ -12,17 +12,19 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 interface IHome {
     setDisplayOffice: Function,
-    setDisplayPopUpEditOffice:Function
+    setDisplayPopUpEditOffice:Function,
+    displayListOffice:boolean,
+    displayPopUpEditOffice: boolean
 }
 
-export const Home : FC<IHome> = ({setDisplayOffice,setDisplayPopUpEditOffice}) => {
+export const Home : FC<IHome> = ({setDisplayOffice,setDisplayPopUpEditOffice,displayListOffice,displayPopUpEditOffice}) => {
     const [sucursales,setSucursales]=useState<ISucursal[]>([])
-    const sucuService=new SucursalService(API_URL + "/sucursales/porEmpresa")
+    const sucuService=new SucursalService(API_URL)
     useEffect(() => {
         const fetchSucursales = async () => {
             try {
                 //consulto todas las sucursales por ID de empresa
-                const suc  = await sucuService.getById(1);
+                const suc  = await sucuService.sucursalPorEmpresa(1);
                 if(suc){
                     setSucursales(Array.isArray(suc) ? suc : [suc])
                 }                
@@ -31,16 +33,17 @@ export const Home : FC<IHome> = ({setDisplayOffice,setDisplayPopUpEditOffice}) =
             }
         };
         fetchSucursales();
-    }, []);
+    }, [displayPopUpEditOffice]);
+
 
     return (<div style={{
-        display:"flex",
+        display:displayListOffice ? "flex":"none",
         flexDirection:"column"
     }}>
             <HomeHeader/>
-            <ListOffice offices={sucursales} setDisplayOffice={setDisplayOffice} setDisplayPopUpEditOffice={setDisplayPopUpEditOffice}/>   
-        
-        </div>)
+            <ListOffice offices={sucursales} setDisplayOffice={setDisplayOffice} setDisplayPopUpEditOffice={setDisplayPopUpEditOffice}/>     
+        </div>
+        )
 }
 
 export default Home

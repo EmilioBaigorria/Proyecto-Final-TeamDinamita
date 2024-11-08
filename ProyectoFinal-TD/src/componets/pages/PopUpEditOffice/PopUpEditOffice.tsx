@@ -10,9 +10,10 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 interface IPopUpEditOffice{
     displayPopUpEditOffice :boolean,
-    setDisplayPopUpEditOffice: Function
+    setDisplayPopUpEditOffice: Function,
+    setDisplayListOffice:Function
 }
-export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,setDisplayPopUpEditOffice}) => {
+export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,setDisplayPopUpEditOffice,setDisplayListOffice}) => {
     const activeOffice : ISucursal | null = useAppSelector(
         (state)=>state.ActiveOfficeReducer.activeOffice
     )
@@ -68,8 +69,10 @@ export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,se
         }
         
         try{
-            {/*await sucurSevice.put(Number(upSucur.id),upSucur)*/}
+            
             await sucurSevice.updateSucursal(Number(upSucur.id),upSucur)
+            setDisplayListOffice(false)
+            setDisplayListOffice(true)
             setDisplayPopUpEditOffice(false)
         }catch(err){
             console.log("Ocurrio un error gurdando la nueva sucursal: ",err)

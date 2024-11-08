@@ -8,5 +8,16 @@ export class SucursalService extends BackendClient<ISucursal|IUpdateSucursal | I
       this.baseUrl=this.baseUrl+"/sucursales/update"
         return await this.put(id, data);
       }
+      async sucursalPorEmpresa(id: number): Promise<ISucursal|IUpdateSucursal | ICreateSucursal | null> {
+        this.baseUrl=this.baseUrl+"/sucursales/porEmpresa"
+        const rep=await this.getById(id)
+        if(rep){
+          return rep
+        }else{
+          return null
+        }
+        
+        }
+      
     
 }
