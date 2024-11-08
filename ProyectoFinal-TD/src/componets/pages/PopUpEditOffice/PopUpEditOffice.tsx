@@ -6,33 +6,12 @@ import { UploadImage } from '../../UploadImage'
 import styles from "./PopUpEditOffice.module.css"
 import { SucursalService } from '../../../services/SucursalService'
 import { IUpdateSucursal } from '../../../types/dtos/sucursal/IUpdateSucursal'
-import { ICategorias } from '../../../types/dtos/categorias/ICategorias'
 const API_URL = import.meta.env.VITE_API_URL;
 
 interface IPopUpEditOffice{
     displayPopUpEditOffice :boolean,
     setDisplayPopUpEditOffice: Function
 }
-interface IInitialValues{
-    idEmpresa: number ,
-        nombre: string,
-        id: number,
-        eliminado: boolean,
-        latitud:number,
-        longitud: number,
-        calle: string,
-        numero: number,
-        cp: number,
-        piso:number,
-        nroDpto:number,
-        idLocalidad:number,
-        logo:string,
-        categorias:ICategorias[],
-        esCasaMatriz:Boolean,
-        horarioApertura: string,
-        horarioCierre: string
-}
-
 export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,setDisplayPopUpEditOffice}) => {
     const activeOffice : ISucursal | null = useAppSelector(
         (state)=>state.ActiveOfficeReducer.activeOffice
@@ -96,10 +75,6 @@ export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,se
             console.log("Ocurrio un error gurdando la nueva sucursal: ",err)
         }
     }
-    
-    const handleShow = () => setDisplayPopUpEditOffice(true);
-    
-
     const handleChangeInputs = (event: ChangeEvent<HTMLInputElement>)=>{
         const {value, name} = event.target
         
