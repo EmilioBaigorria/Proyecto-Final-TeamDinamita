@@ -5,6 +5,7 @@ import { BackendClient } from "./BackendClient";
 
 export class SucursalService extends BackendClient<ISucursal|IUpdateSucursal | ICreateSucursal> {
     async updateSucursal(id: number, data: IUpdateSucursal): Promise<ISucursal|IUpdateSucursal | ICreateSucursal> {
+      this.baseUrl=this.baseUrl+"/sucursales/update"
         return await this.put(id, data);
       }
     

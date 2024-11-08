@@ -58,9 +58,10 @@ export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,se
     }   
     const[updatedSucursal,setUpdatedsucursal]=useState(initialValues)
     const[logo,setLogo]=useState<string | null>(null)
-    const sucurSevice= new SucursalService(API_URL+"/sucursales/update")
+    const sucurSevice= new SucursalService(API_URL)
     useEffect(()=>{
         setUpdatedsucursal(initialValues)
+        setLogo(initialValues.logo)
     },[displayPopUpEditOffice])
     const handleClose = () => setDisplayPopUpEditOffice(false);
     const handleSave=async ()=>{
@@ -80,16 +81,17 @@ export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,se
                 nroDpto: Number(updatedSucursal.nroDpto),
                 idLocalidad: Number(updatedSucursal.idLocalidad)
                 },
-            logo: String(updatedSucursal.logo),
+            logo: String(logo),
             categorias: updatedSucursal.categorias,
             esCasaMatriz:  Boolean(updatedSucursal.esCasaMatriz),
             horarioApertura: String(updatedSucursal.horarioApertura),
             horarioCierre: String(updatedSucursal.horarioCierre)
         }
-        console.log(updatedSucursal)
-        console.log(upSucur)
+        
         try{
-            await sucurSevice.put(Number(upSucur.id),upSucur)
+            {/*await sucurSevice.put(Number(upSucur.id),upSucur)*/}
+            await sucurSevice.updateSucursal(Number(upSucur.id),upSucur)
+            setDisplayPopUpEditOffice(false)
         }catch(err){
             console.log("Ocurrio un error gurdando la nueva sucursal: ",err)
         }
@@ -100,9 +102,6 @@ export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,se
 
     const handleChangeInputs = (event: ChangeEvent<HTMLInputElement>)=>{
         const {value, name} = event.target
-        console.log(value, name)
-        console.log(initialValues)
-        console.log(updatedSucursal)
         
 
         setUpdatedsucursal((prev)=>({...prev, [`${name}`]: value}))
