@@ -4,6 +4,7 @@ import { EmpresaService } from "../../../services/EmpresaService";
 import { IPais } from "../../../types/IPais";
 import { ISucursal } from "../../../types/dtos/sucursal/ISucursal";
 import Styles from "./PopUpMakeEnterprise.module.css"
+import { UploadImage } from "../../UploadImage";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -15,14 +16,14 @@ export const PopUpMakeEnterprise: FC<IDisplayPopUp> = ({display,setDisplay}) => 
     const [name,setName]=useState("")
     const [rS,setrS]=useState("")
     const [cut,setCut]=useState<number>(0)
+    const [image, setImage] = useState<string | null>(null);
     async function handleSumit() {
         try {
             const createEmpresa = await new EmpresaService(API_URL + "/empresas").post({
-                id: 1,
                 nombre: name,
                 razonSocial: rS,
                 cuit: cut,
-                logo: "https://mtek3d.com/wp-content/uploads/2018/01/image-placeholder-500x500.jpg",
+                logo: image,
                 
             });
         } catch (err) {
@@ -61,11 +62,7 @@ return (
             </FloatingLabel>
             {/*Imagen*/}
             <div className={Styles.main_image_container}>
-                <Button  variant="warning">Agregar Imagen</Button>
-                {/*Un placeholder hasta que se añada la funcion de subir imagenes*/}
-                <img src="https://mtek3d.com/wp-content/uploads/2018/01/image-placeholder-500x500.jpg" style={{
-                    width:"128px"
-                }}/>
+                <UploadImage image={image} setImage={setImage} />
             </div>
             {/*Botones inferiores*/}
             <div className={Styles.main_button_container}>
@@ -74,6 +71,7 @@ return (
                 }}>Cancelar</Button>
                 <Button variant="success" onClick={()=>{
                     handleSumit()
+                    setDisplay(false)
                 }}>Aceptar</Button>
             </div>
             

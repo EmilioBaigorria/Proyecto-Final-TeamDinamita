@@ -1,0 +1,15 @@
+
+.main_container_inputs{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: auto;
+    gap: 6rem;
+    
+}
+.inpunts_style{
+    display: flex;
+    flex-direction: column;
+    height: 90%;
+    gap: 1rem; 
+}

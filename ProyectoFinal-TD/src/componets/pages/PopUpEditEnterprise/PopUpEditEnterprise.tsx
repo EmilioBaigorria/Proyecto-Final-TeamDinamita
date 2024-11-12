@@ -3,6 +3,7 @@ import { Modal, Button } from "react-bootstrap";
 import { useAppSelector } from "../../../hooks/redux";
 import { IEmpresa } from "../../../types/dtos/empresa/IEmpresa";
 import { EmpresaService } from "../../../services/EmpresaService";
+import { UploadImage } from "../../UploadImage";
 
 interface IDisplayPopUp{
     display:boolean,
@@ -19,7 +20,8 @@ export const EditEnterpriseModal: FC<IDisplayPopUp> = ({ display, setDisplay }) 
     const [nombre, setNombre] = useState("");
     const [razonSocial, setRazonSocial] = useState("");
     const [cuit, setCuit] = useState("");
-    const [logo, setLogo] = useState("");
+    const [logo, setLogo] = useState<string | null>(null);
+    
     const API_URL = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
@@ -46,7 +48,7 @@ export const EditEnterpriseModal: FC<IDisplayPopUp> = ({ display, setDisplay }) 
         };
 
         try {
-            const update = await new EmpresaService(API_URL + "/empresas").put(id,updatedEnterprise);
+            const update = await new EmpresaService(API_URL + "/empresas").put(Number(id),updatedEnterprise);
             handleClose(); // Cierra el modal
         } catch (err) {
             console.error("Error al editar  empresa:", err);
@@ -88,13 +90,17 @@ export const EditEnterpriseModal: FC<IDisplayPopUp> = ({ display, setDisplay }) 
                         />
                     </div>
                     <div>
-                        <label>Logo URL:</label>
+                    <label>Logo:</label>
+                        <UploadImage image={logo} setImage={setLogo} />
+                        {/*
+                            <label>Logo URL:</label>
                         <input
                             type="text"
                             value={logo}
                             onChange={(e) => setLogo(e.target.value)}
                             className="form-control"
                         />
+                        */}
                     </div>
                 </div>
             </Modal.Body>

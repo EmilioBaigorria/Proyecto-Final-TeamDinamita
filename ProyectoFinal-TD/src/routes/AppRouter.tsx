@@ -6,6 +6,8 @@ import { useState } from "react";
 import { PopUpMakeEnterprise } from "../componets/pages/PopUpMakeEnterprise/PopUpMakeEnterprise";
 import { PopUpChekEnterprise } from "../componets/pages/PopUpChekEnterprise/PopUpChekEnterprise";
 import { EditEnterpriseModal } from "../componets/pages/PopUpEditEnterprise/PopUpEditEnterprise";
+import { PopUpSeeOffice } from "../componets/pages/PopUpSeeOffice/PopUpSeeOffice";
+import { PopUpEditOffice } from "../componets/pages/PopUpEditOffice/PopUpEditOffice";
 
 
 
@@ -14,6 +16,9 @@ export const AppRouter = () => {
   const [display,setDisplay]=useState(false)
   const [displayModalCheckEnterprise,setdisplayModalCheckEnterprise]=useState(false)
   const [displayModalEditEnterprise, setDisplayModalEditEnterprise]=useState(false)
+  const [displayPopUpOffice, setDisplayPopUpOffice] = useState(false)
+  const [displayPopUpEditOffice,setDisplayPopUpEditOffice]=useState(false)
+  const[displayListOffice,setDisplayListOffice]=useState(true)
 
 
 
@@ -27,16 +32,17 @@ export const AppRouter = () => {
             <li><Link to='/admin'>Administración</Link></li>
           </ul>
         </nav>
-        
+        <PopUpEditOffice displayPopUpEditOffice={displayPopUpEditOffice} setDisplayPopUpEditOffice={setDisplayPopUpEditOffice} setDisplayListOffice={setDisplayListOffice}/>
         <PopUpChekEnterprise displayModalCheckEnterprise={displayModalCheckEnterprise} setdisplayModalCheckEnterprise={setdisplayModalCheckEnterprise} />
         <PopUpMakeEnterprise display={display} setDisplay={setDisplay}/>
         <EditEnterpriseModal display={displayModalEditEnterprise} setDisplay={setDisplayModalEditEnterprise}/>
+        <PopUpSeeOffice displayPopUpOffice={displayPopUpOffice} setDisplayPopUpOffice={setDisplayPopUpOffice}/>
       
         <Sidebar  setDisplay={setDisplay} setdisplayModalCheckEnterprise={setdisplayModalCheckEnterprise} setDisplayModalEditEnterprise={setDisplayModalEditEnterprise}  />
         
 
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home setDisplayOffice={setDisplayPopUpOffice} setDisplayPopUpEditOffice={setDisplayPopUpEditOffice} displayListOffice={displayListOffice} displayPopUpEditOffice={displayPopUpEditOffice}  />} />
           <Route path="/admin" element={<Administration />} />
         </Routes>
 
