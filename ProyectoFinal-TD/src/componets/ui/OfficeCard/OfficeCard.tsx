@@ -6,6 +6,8 @@ import { Button } from 'react-bootstrap'
 import { useAppDispatch } from '../../../hooks/redux'
 import { setActiveOfficeReducer } from '../../../redux/slices/ActiveOfficeReducer'
 import noImage from "../../../assets/images/noImage.jpeg";
+import { Link, useNavigate } from 'react-router-dom'
+import Administration from '../../pages/Administration'
 
 
 
@@ -28,6 +30,12 @@ export const OfficeCard: FC<IOfficeCardCard> = ({ office, setDisplayOffice,setDi
         dispatch(setActiveOfficeReducer({element:office}))
     }
 
+    const navigate = useNavigate()
+
+    const handleNavigate = ()=>{
+        navigate(`/admin`)
+    }
+
     return (
         <div className={Styles.main_container_card}>
             <div className={Styles.upperText_container}>
@@ -40,7 +48,7 @@ export const OfficeCard: FC<IOfficeCardCard> = ({ office, setDisplayOffice,setDi
                 <img src={office?.logo ?? noImage} style={{ width: "5rem" }} />
             </div>
             <div className={Styles.buttons_container}>
-                <Button variant="outline-success">
+                <Button variant="outline-success" onClick={handleNavigate}>
                     <span className="material-symbols-outlined">
                         apartment
                     </span>
