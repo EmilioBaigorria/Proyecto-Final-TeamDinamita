@@ -15,9 +15,8 @@ export const HomeHeader :FC<IHomeHeader> = ({setDisplayPopUpCreateOffice,setDisp
         setDisplayPopUpCreateOffice(true)
     }
     const handleReload=()=>{
-        console.log("working")
-        setDisplayListOffice(false)
         
+        setDisplayListOffice(false)
     }
     
 return (

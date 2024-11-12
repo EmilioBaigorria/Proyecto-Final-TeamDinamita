@@ -38,11 +38,13 @@ export const Home : FC<IHome> = ({setDisplayOffice,setDisplayPopUpEditOffice,dis
                     if(suc){
                     setSucursales(Array.isArray(suc) ? suc : [suc])
                     }
-                    setDisplayListOffice(true)
+                    
                 }             
             } catch (err) {
                 console.error("Error al cargar las empresas:", err);
+                
             }
+            setDisplayListOffice(true)
         };
         fetchSucursales();
     }, [displayPopUpEditOffice,displayPopUpCreateOffice,displayListOffice]);
