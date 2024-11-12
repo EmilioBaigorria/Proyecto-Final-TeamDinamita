@@ -3,11 +3,18 @@ import { Button, FloatingLabel, Form, Modal } from 'react-bootstrap'
 
 import styles from "./PopUpCreateOffice.module.css"
 import { UploadImage } from '../../UploadImage'
+import { SucursalService } from '../../../services/SucursalService'
+import { ICreateSucursal } from '../../../types/dtos/sucursal/ICreateSucursal'
+import { useAppSelector } from '../../../hooks/redux'
+const API_URL = import.meta.env.VITE_API_URL;
 interface IPopUpCreateOffice{
     displayPopUpCreateOffice:boolean
     setDisplayPopUpCreateOffice:Function
 }
 export const PopUpCreateOffice:FC<IPopUpCreateOffice> = ({displayPopUpCreateOffice,setDisplayPopUpCreateOffice}) => {
+    const activeEnterprise=useAppSelector(
+        (state)=>state.ActiveEntrepriseReducer.activeEnterprise
+    )
     const initialValues={
         nombre:"",
         horarioApertura: "",
@@ -24,6 +31,7 @@ export const PopUpCreateOffice:FC<IPopUpCreateOffice> = ({displayPopUpCreateOffi
         idEmpresa: 0,
         logo: ""
     }
+    const sucuService=new SucursalService(API_URL)
     const [newScursal,setNewScursal]=useState(initialValues)
     const[logo,setLogo]=useState<null | string>(null)
 
@@ -38,14 +46,39 @@ export const PopUpCreateOffice:FC<IPopUpCreateOffice> = ({displayPopUpCreateOffi
         setDisplayPopUpCreateOffice(false)
     }
     const handleSave=()=>{
+        const newSucu:ICreateSucursal={
+            nombre: newScursal.nombre,
+            horarioApertura: newScursal.horarioApertura,
+            horarioCierre: newScursal.horarioCierre,
+            esCasaMatriz: newScursal.esCasaMatriz,
+            latitud: newScursal.latitud,
+            longitud: newScursal.longitud,
+            domicilio: {
+                calle: newScursal.calle,
+                numero: newScursal.numero,
+                cp: newScursal.cp,
+                piso: newScursal.piso,
+                nroDpto: newScursal.nroDpto,
+                idLocalidad: newScursal.idLocalidad
+            },
+            idEmpresa: Number(activeEnterprise?.id),
+            logo: logo
+
+        }
+        try {
+            sucuService.createSucursal(newSucu)
+            setDisplayPopUpCreateOffice(false)
+        } catch (error) {
+            console.log("Hubor un error creando la nueva sucursal: ",error)
+        }
         
     }
     
-  return (
+return (
     <>
     <Modal show={displayPopUpCreateOffice} onHide={handleClose} fullscreen={true}>
         <Modal.Header closeButton={true} >
-            <Modal.Title>Editar Sucursal</Modal.Title>
+            <Modal.Title>Crear Sucursal</Modal.Title>
         </Modal.Header> 
         {/*Datos de entrada*/}
         <Modal.Body>
@@ -137,7 +170,7 @@ export const PopUpCreateOffice:FC<IPopUpCreateOffice> = ({displayPopUpCreateOffi
             <Button variant="success" onClick={()=>{
                 handleSave()
             }}>
-                Guardar Cambios
+                Crear Sucursal
             </Button>
         </Modal.Footer>
     </Modal>
