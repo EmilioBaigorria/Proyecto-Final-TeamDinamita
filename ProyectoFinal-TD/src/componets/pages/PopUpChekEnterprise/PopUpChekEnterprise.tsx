@@ -3,7 +3,6 @@ import { FC } from "react"
 import styles from "./PopUpChekEnterprise.module.css"
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux"
 import { Button, Modal } from "react-bootstrap"
-import { removeActiveEnterprise } from "../../../redux/slices/ActiveEnterpriseReducer"
 import { IEmpresa } from "../../../types/dtos/empresa/IEmpresa"
 interface IDisplayPopUp {
     displayModalCheckEnterprise: boolean
@@ -19,7 +18,7 @@ export const PopUpChekEnterprise: FC<IDisplayPopUp> = ({ displayModalCheckEnterp
     )
     const handleCloseModal = () => {
         setdisplayModalCheckEnterprise(false)
-        dispach(removeActiveEnterprise())
+        
     }
     return (
         <Modal

@@ -8,6 +8,7 @@ import { PopUpChekEnterprise } from "../componets/pages/PopUpChekEnterprise/PopU
 import { EditEnterpriseModal } from "../componets/pages/PopUpEditEnterprise/PopUpEditEnterprise";
 import { PopUpSeeOffice } from "../componets/pages/PopUpSeeOffice/PopUpSeeOffice";
 import { PopUpEditOffice } from "../componets/pages/PopUpEditOffice/PopUpEditOffice";
+import { PopUpCreateOffice } from "../componets/pages/PopUpCreateOffice/PopUpCreateOffice";
 
 
 
@@ -19,6 +20,7 @@ export const AppRouter = () => {
   const [displayPopUpOffice, setDisplayPopUpOffice] = useState(false)
   const [displayPopUpEditOffice,setDisplayPopUpEditOffice]=useState(false)
   const[displayListOffice,setDisplayListOffice]=useState(true)
+  const[displayPopUpCreateOffice,setDisplayPopUpCreateOffice]=useState(false)
 
 
 
@@ -32,6 +34,7 @@ export const AppRouter = () => {
             <li><Link to='/admin'>Administración</Link></li>
           </ul>
         </nav>
+        <PopUpCreateOffice displayPopUpCreateOffice={displayPopUpCreateOffice} setDisplayPopUpCreateOffice={setDisplayPopUpCreateOffice}/>
         <PopUpEditOffice displayPopUpEditOffice={displayPopUpEditOffice} setDisplayPopUpEditOffice={setDisplayPopUpEditOffice} setDisplayListOffice={setDisplayListOffice}/>
         <PopUpChekEnterprise displayModalCheckEnterprise={displayModalCheckEnterprise} setdisplayModalCheckEnterprise={setdisplayModalCheckEnterprise} />
         <PopUpMakeEnterprise display={display} setDisplay={setDisplay}/>
@@ -42,7 +45,7 @@ export const AppRouter = () => {
         
 
         <Routes>
-          <Route path="/" element={<Home setDisplayOffice={setDisplayPopUpOffice} setDisplayPopUpEditOffice={setDisplayPopUpEditOffice} displayListOffice={displayListOffice} displayPopUpEditOffice={displayPopUpEditOffice}  />} />
+          <Route path="/" element={<Home setDisplayOffice={setDisplayPopUpOffice} setDisplayPopUpEditOffice={setDisplayPopUpEditOffice} displayListOffice={displayListOffice} setDisplayListOffice={setDisplayListOffice} displayPopUpEditOffice={displayPopUpEditOffice} setDisplayPopUpCreateOffice={setDisplayPopUpCreateOffice} displayPopUpCreateOffice={displayPopUpCreateOffice} />} />
           <Route path="/admin" element={<Administration />} />
         </Routes>
 

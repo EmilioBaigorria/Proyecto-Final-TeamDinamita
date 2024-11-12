@@ -1,11 +1,50 @@
-import React from 'react'
+import React, { ChangeEvent, FC, useState } from 'react'
+import { Button, FloatingLabel, Form, Modal } from 'react-bootstrap'
 
-export const PopUpCreateOffice = () => {
+import styles from "./PopUpCreateOffice.module.css"
+import { UploadImage } from '../../UploadImage'
+interface IPopUpCreateOffice{
+    displayPopUpCreateOffice:boolean
+    setDisplayPopUpCreateOffice:Function
+}
+export const PopUpCreateOffice:FC<IPopUpCreateOffice> = ({displayPopUpCreateOffice,setDisplayPopUpCreateOffice}) => {
+    const initialValues={
+        nombre:"",
+        horarioApertura: "",
+        horarioCierre: "",
+        esCasaMatriz: false,
+        latitud: 0,
+        longitud: 0,
+        calle: "",
+        numero: 0,
+        cp: 0,
+        piso: 0,
+        nroDpto: 0,
+        idLocalidad: 0,
+        idEmpresa: 0,
+        logo: ""
+    }
+    const [newScursal,setNewScursal]=useState(initialValues)
+    const[logo,setLogo]=useState<null | string>(null)
+
+
+
+    const handleChangeInputs = (event: ChangeEvent<HTMLInputElement>)=>{
+        const {value, name} = event.target
+        setNewScursal((prev)=>({...prev, [`${name}`]: value}))
+        
+    }
+    const handleClose=()=>{
+        setDisplayPopUpCreateOffice(false)
+    }
+    const handleSave=()=>{
+        
+    }
+    
   return (
     <>
-    
-    <Modal show={displayPopUpEditOffice} onHide={handleClose} fullscreen={true}>
-        <Modal.Header closeButton >
+    <Modal show={displayPopUpCreateOffice} onHide={handleClose} fullscreen={true}>
+        <Modal.Header closeButton={true} >
             <Modal.Title>Editar Sucursal</Modal.Title>
         </Modal.Header> 
         {/*Datos de entrada*/}
@@ -17,63 +56,43 @@ export const PopUpCreateOffice = () => {
                     label="Ingrese nombre">
                     <Form.Control style={{
                             width:"20rem",  
-                    }} value={updatedSucursal.nombre} type="text" placeholder="JonhDoe" name={"nombre"} onChange={handleChangeInputs} />
+                    }} value={newScursal.nombre} type="text" placeholder="JonhDoe" name={"nombre"} onChange={handleChangeInputs} />
                 </FloatingLabel>
                 <FloatingLabel
                     label="Hora de Apertura">
                     <Form.Control style={{
                             width:"20rem",  
-                    }} value={updatedSucursal.horarioApertura}  type="text" name='horarioApertura' onChange={handleChangeInputs} />
+                    }} value={newScursal.horarioApertura}  type="text" name='horarioApertura' onChange={handleChangeInputs} />
                 </FloatingLabel>
                 <FloatingLabel
                     label="Hora de Cierre">
                     <Form.Control style={{
                             width:"20rem",  
-                    }} value={updatedSucursal.horarioCierre}  type="text" name='horarioCierre' onChange={handleChangeInputs} />
+                    }} value={newScursal.horarioCierre}  type="text" name='horarioCierre' onChange={handleChangeInputs} />
                 </FloatingLabel>
                 <div>
-                    <UploadImage image={updatedSucursal.logo} setImage={()=>{
-                        updatedSucursal.logo=logo
-                    }} />
+                    <UploadImage image={newScursal.logo} setImage={setLogo} />
                 </div>
             </div>
             {/*Segundo set de inputs */}
             <div className={styles.inpunts_style}>
                 <FloatingLabel
-                    label="Pais">
+                    label="IdLocalidad">
                     <Form.Control style={{
                             width:"20rem",  
-                    }} value={country}  type="text" placeholder="Argentina" onChange={(e)=>{
-                        (e.target.value)
-                    }} />
-                </FloatingLabel>
-                <FloatingLabel
-                    label="Provincia">
-                    <Form.Control style={{
-                            width:"20rem",  
-                    }} value={province}  type="text" placeholder="Mendoza" onChange={(e)=>{
-                        setProvince(e.target.value)
-                    }} />
-                </FloatingLabel>
-                <FloatingLabel
-                    label="Localidad">
-                    <Form.Control style={{
-                            width:"20rem",  
-                    }} value={locality}  type="text" placeholder="Mendoza" onChange={(e)=>{
-                        setLocality(e.target.value)
-                    }} />
+                    }} value={newScursal.idLocalidad}  type="text" name='idLocalidad' onChange={handleChangeInputs} />
                 </FloatingLabel>
                 <FloatingLabel
                     label="Latitud">
                     <Form.Control style={{
                             width:"20rem",  
-                    }} value={updatedSucursal.latitud}  type="text" name='latitud' onChange={handleChangeInputs} />
+                    }} value={newScursal.latitud}  type="text" name='latitud' onChange={handleChangeInputs} />
                 </FloatingLabel>
                 <FloatingLabel
                     label="Longitud">
                     <Form.Control style={{
                             width:"20rem",  
-                    }} value={updatedSucursal.longitud}  type="text" name='longitud' onChange={handleChangeInputs} />
+                    }} value={newScursal.longitud}  type="text" name='longitud' onChange={handleChangeInputs} />
                 </FloatingLabel>
             </div>
             {/*Tercer set de inputs */}
@@ -82,41 +101,31 @@ export const PopUpCreateOffice = () => {
                     label="Nombre Calle">
                     <Form.Control style={{
                             width:"20rem",  
-                    }} value={updatedSucursal.domicilio.calle}  type="text" name='domicilio' onChange={(e)=>{
-                        updatedSucursal.domicilio.calle=e.target.value
-                    }} />
+                    }} value={newScursal.calle}  type="text" name='calle' onChange={handleChangeInputs} />
                 </FloatingLabel>
                 <FloatingLabel
                     label="Numero de Calle">
                     <Form.Control style={{
                             width:"20rem",  
-                    }} value={streetNumber}  type="text" placeholder="1212" onChange={(e)=>{
-                        updatedSucursal.domicilio.numero=Number(e.target.value)
-                    }} />
+                    }} value={newScursal.numero}  type="text" name='numero' onChange={handleChangeInputs} />
                 </FloatingLabel>
                 <FloatingLabel
                     label="Codigo postal">
                     <Form.Control style={{
                             width:"20rem",  
-                    }} value={postalCode}  type="text" placeholder="4450" onChange={(e)=>{
-                        setPostalCode(Number(e.target.value))
-                    }} />
+                    }} value={newScursal.cp}  type="text" name='cp' onChange={handleChangeInputs} />
                 </FloatingLabel>
                 <FloatingLabel
                     label="Piso">
                     <Form.Control style={{
                             width:"20rem",  
-                    }} value={floorNumber}  type="text" placeholder="3" onChange={(e)=>{
-                        setFloorNumber(Number(e.target.value))
-                    }} />
+                    }} value={newScursal.piso}  type="text" name='piso' onChange={handleChangeInputs} />
                 </FloatingLabel>
                 <FloatingLabel
                     label="Departamento">
                     <Form.Control style={{
                             width:"20rem",  
-                    }} value={deparmentNumber}  type="text" placeholder="14" onChange={(e)=>{
-                        setDeparmentNumber(Number(e.target.value))
-                    }} />
+                    }} value={newScursal.nroDpto}  type="text" name='nroDpto' onChange={handleChangeInputs} />
                 </FloatingLabel>
             </div>
         </div>

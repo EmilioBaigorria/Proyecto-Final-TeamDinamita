@@ -69,10 +69,9 @@ export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,se
         }
         
         try{
-            
             await sucurSevice.updateSucursal(Number(upSucur.id),upSucur)
             setDisplayListOffice(false)
-            setDisplayListOffice(true)
+            setDisplayListOffice(true)  
             setDisplayPopUpEditOffice(false)
         }catch(err){
             console.log("Ocurrio un error gurdando la nueva sucursal: ",err)
