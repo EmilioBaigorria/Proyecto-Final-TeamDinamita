@@ -1,6 +1,5 @@
 
 import { useAppSelector } from '../../../hooks/redux'
-import { IEmpresa } from '../../../types/dtos/empresa/IEmpresa'
 import { Button } from 'react-bootstrap'
 import styles from "./HomeHeader.module.css"
 import { FC } from 'react'
@@ -9,17 +8,20 @@ interface IHomeHeader{
     setDisplayListOffice:Function,
 }
 export const HomeHeader :FC<IHomeHeader> = ({setDisplayPopUpCreateOffice,setDisplayListOffice}) => {
-    const activeEnterprise : IEmpresa |null =useAppSelector(
+    const activeEnterprise =useAppSelector(
         (state)=>state.ActiveEntrepriseReducer.activeEnterprise
     )
-    const handleOpenModa=()=>{
+    const handleOpenModal=()=>{
         setDisplayPopUpCreateOffice(true)
     }
     const handleReload=()=>{
+        console.log("working")
         setDisplayListOffice(false)
-        setDisplayListOffice(true)
+        
     }
+    
 return (
+    <>
     <div className={styles.main_header_container}>
         <div className={styles.text_container}>
             <h1 className={styles.text}>Sucursales de: {activeEnterprise?.nombre}</h1>
@@ -30,8 +32,10 @@ return (
             </span></Button>
         </div>
         <div className={styles.button_container}>
-            <Button variant="info" onClick={handleOpenModa}>Agregar sucursal</Button>
+            <Button variant="info" onClick={handleOpenModal}>Agregar sucursal</Button>
         </div>
     </div>
+    </>
 )
 }
+

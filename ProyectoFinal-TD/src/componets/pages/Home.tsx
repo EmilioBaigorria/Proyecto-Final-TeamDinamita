@@ -12,10 +12,10 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 
 interface IHome {
+    setDisplayListOffice:Function
     setDisplayPopUpCreateOffice:Function,
     setDisplayOffice: Function,
     setDisplayPopUpEditOffice:Function,
-    setDisplayListOffice:Function,
     displayListOffice:boolean,
     displayPopUpEditOffice: boolean,
     displayPopUpCreateOffice:boolean
@@ -33,17 +33,19 @@ export const Home : FC<IHome> = ({setDisplayOffice,setDisplayPopUpEditOffice,dis
             try {
                 //consulto todas las sucursales por ID de empresa
                 if(typeof activeEnterprise?.id=="number"){
+                    
                     const suc  = await sucuService.sucursalPorEmpresa(activeEnterprise?.id);
                     if(suc){
                     setSucursales(Array.isArray(suc) ? suc : [suc])
-                    }   
+                    }
+                    setDisplayListOffice(true)
                 }             
             } catch (err) {
                 console.error("Error al cargar las empresas:", err);
             }
         };
         fetchSucursales();
-    }, [displayPopUpEditOffice,displayPopUpCreateOffice]);
+    }, [displayPopUpEditOffice,displayPopUpCreateOffice,displayListOffice]);
 
 
     return (<div style={{
