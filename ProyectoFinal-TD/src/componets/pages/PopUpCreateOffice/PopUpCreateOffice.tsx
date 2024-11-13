@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useState } from 'react'
+import { ChangeEvent, FC, useState } from 'react'
 import { Button, FloatingLabel, Form, Modal } from 'react-bootstrap'
 
 import styles from "./PopUpCreateOffice.module.css"
@@ -175,5 +175,5 @@ return (
         </Modal.Footer>
     </Modal>
     </>
-  )
+)
 }

@@ -4,6 +4,8 @@ import Card from '../CompanyCard/Card';
 import { FC, useEffect, useState } from 'react';
 import { EmpresaService } from '../../../services/EmpresaService';
 import { IEmpresa } from '../../../types/dtos/empresa/IEmpresa';
+import { Button } from 'react-bootstrap';
+import styles from "./SidebarHome.module.css"
 
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -63,11 +65,12 @@ const Sidebar: FC<IDisplayPopUp> = ({setDisplay,setdisplayModalCheckEnterprise, 
         )}
   
         {location.pathname === '/admin' && (
-          <ul>
-            <li>Opción 1</li>
-            <li>Opción 2</li>
-            <li>Opción 3</li>
-          </ul>
+          <div className={styles.button_container}>
+            <h2>Administracion</h2>
+            <Button variant="light" className={styles.button_styles}>Categorias</Button>
+            <Button variant="light" className={styles.button_styles}>Productos</Button>
+            <Button variant="light" className={styles.button_styles}>Alergenos</Button>
+          </div>
         )}
       </aside>
     );
