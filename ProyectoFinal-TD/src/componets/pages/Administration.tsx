@@ -1,10 +1,20 @@
-import React from 'react'
+import { FC } from "react"
+import { CategoriasPage } from "../ui/CategoriasPage/CategoriasPage"
+import { ProductosPage } from "../ui/ProductosPage/ProductosPage"
+import { AlergenosPage } from "../ui/AlergenosPage/AlergenosPage"
 
-const Administration = () => {
+interface IAdministracion{
+  activeSubPage:string
+}
+const Administration: FC<IAdministracion> = ({activeSubPage}) => {
+  
   return (
     <main>
-      <h2>Administration</h2>
-    </main>
+      {activeSubPage=="categorias"?<CategoriasPage/>:
+      activeSubPage=="productos"? <ProductosPage/>:
+      activeSubPage=="alergenos"?<AlergenosPage/>:
+      <div><h1>Administracion</h1></div>}
+    </main> 
   )
 }
 

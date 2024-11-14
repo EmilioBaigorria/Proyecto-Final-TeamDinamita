@@ -21,12 +21,12 @@ export const AppRouter = () => {
     const [displayPopUpEditOffice, setDisplayPopUpEditOffice] = useState(false)
     const [displayListOffice, setDisplayListOffice] = useState(true)
     const [displayPopUpCreateOffice, setDisplayPopUpCreateOffice] = useState(false)
+    const [activeSubPage,setActiveSubPage]=useState("none")
 
 
 
     return (
         <div className="grid_container">
-
             <BrowserRouter>
                 <nav>
                     <ul>
@@ -41,7 +41,10 @@ export const AppRouter = () => {
                 <EditEnterpriseModal display={displayModalEditEnterprise} setDisplay={setDisplayModalEditEnterprise} />
                 <PopUpSeeOffice displayPopUpOffice={displayPopUpOffice} setDisplayPopUpOffice={setDisplayPopUpOffice} />
 
-                <Sidebar setDisplay={setDisplay} setdisplayModalCheckEnterprise={setdisplayModalCheckEnterprise} setDisplayModalEditEnterprise={setDisplayModalEditEnterprise} />
+                <Sidebar setDisplay={setDisplay} 
+                setdisplayModalCheckEnterprise={setdisplayModalCheckEnterprise} 
+                setDisplayModalEditEnterprise={setDisplayModalEditEnterprise}
+                setActiveSubPage={setActiveSubPage} />
 
 
                 <Routes>
@@ -53,7 +56,7 @@ export const AppRouter = () => {
                         displayPopUpEditOffice={displayPopUpEditOffice}
                         setDisplayPopUpCreateOffice={setDisplayPopUpCreateOffice}
                         displayPopUpCreateOffice={displayPopUpCreateOffice} />} />
-                    <Route path="/admin" element={<Administration />} />
+                    <Route path="/admin" element={<Administration activeSubPage={activeSubPage} />} />
                 </Routes>
 
             </BrowserRouter>
