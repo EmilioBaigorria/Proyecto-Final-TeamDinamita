@@ -6,13 +6,11 @@ import { Button } from 'react-bootstrap'
 import { useAppDispatch } from '../../../hooks/redux'
 import { setActiveOfficeReducer } from '../../../redux/slices/ActiveOfficeReducer'
 import noImage from "../../../assets/images/noImage.jpeg";
-import { Link, useNavigate } from 'react-router-dom'
-import Administration from '../../pages/Administration'
+import { useNavigate } from 'react-router-dom'
 
 
 
 interface IOfficeCardCard {
-    
     office: ISucursal
     setDisplayOffice: Function
     setDisplayPopUpEditOffice:Function
@@ -34,6 +32,7 @@ export const OfficeCard: FC<IOfficeCardCard> = ({ office, setDisplayOffice,setDi
 
     const handleNavigate = ()=>{
         navigate(`/admin`)
+        dispatch(setActiveOfficeReducer({element:office}))
     }
 
     return (
