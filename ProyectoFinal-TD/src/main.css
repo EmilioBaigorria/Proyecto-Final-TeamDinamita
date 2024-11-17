@@ -1,16 +1,16 @@
 :root {
     --primary-color: #623CEA;
     --secondary-color: #54426B;
-    --ligth-color: #E7DFC6;
+    --ligth-color: #f5f5f5;
     --background-color: #e9f1f7;
     --background-color-secondary: #DBd5B2;
     --text-color: #333;
 }
 
-
 body {
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
 }
 
 .grid_container {
@@ -18,6 +18,13 @@ body {
     grid-template-columns: 1fr 3fr;
     grid-template-rows: auto 1fr;
     height: 100vh;
+    width: 100vw;
+    background-color: var(--background-color);
+    transition: grid-template-columns 0.3s ease;
+}
+
+.grid_container.no-aside {
+    grid-template-columns: 1fr;
 }
 
 nav {
@@ -25,6 +32,8 @@ nav {
     padding: 10px;
     grid-column: 1 / 3;
     grid-row: 1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    z-index: 2;
 }
 
 nav ul {
@@ -46,6 +55,40 @@ aside {
     padding: 10px;
     grid-column: 1;
     grid-row: 2;
+    position: relative;
+    top: 0;
+    left: -100%;
+    width: 280px;
+    height: 100%;
+    box-shadow: 4px 0px 8px rgba(0, 0, 0, 0.5);
+    transition: all 0.6s ease;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    align-items: center;
+    color: var(--ligth-color);
+}
+
+.opened {
+    left: 0;
+}
+
+aside h2 {
+    text-transform: uppercase;
+    color: white;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    font-size: 1.5rem;
+    margin: 0;
+    padding: 10px 0;
+    transition: all 0.3s ease;
+}
+
+aside h2:hover {
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.6);
+    color: #f0f0f0;
 }
 
 main {
@@ -53,13 +96,28 @@ main {
     padding: 10px;
     grid-column: 2 / 3;
     grid-row: 2;
+    transition: grid-column 0.3s ease;
 }
 
-aside {
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;   
-    align-items: center;
+aside > button {
+    background-color: var(--ligth-color);
+    color: var(--text-color);
+    border: 0.2rem solid var(--primary-color);
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+}
+
+aside > button:hover {
+    background-color: var(--secondary-color);
+    color: var(--ligth-color);
+    border-color: var(--secondary-color);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
 .card {
@@ -68,3 +126,46 @@ aside {
     border: 1px solid #33333362;
     padding: 0.5rem;
 }
+
+
+/* Hamburguesa absoluta por que el sidebar es relativo, y queremos que este siempre pegado al mismo. en caso de q este abierto, lo incluimos dentro del sidebar */
+.hamburger {
+    position: absolute;
+    top: 10px;
+    right: -110px;
+    background-color: var(--ligth-color);
+    color: var(--text-color);
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 20;
+    transition: right 0.3s ease;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.hamburger:hover {
+    background-color: var(--secondary-color);
+    color: var(--ligth-color);
+}
+
+aside.opened .hamburger {
+    right: 10px;
+}
+
+
+/* Cuando el aside no este visible, le damos a main toda la pantalla. colocar padding para que pueda verse la burguer*/
+aside:not(.opened) + main {
+    grid-column: 1 / 3; 
+    padding: 0 6rem;
+    transition: grid-column 1s ease, padding 1s ease;
+}
+

@@ -11,7 +11,6 @@
     font-size:large;
 }
 .button_container{
-    position: absolute;
-    left: 90%;
-
+    position: fixed;
+    right: 0.5rem;
 }
