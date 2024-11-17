@@ -1,13 +1,11 @@
 import { useLocation } from 'react-router-dom'
 
 import Card from '../CompanyCard/Card';
-import { FC, MouseEventHandler, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { EmpresaService } from '../../../services/EmpresaService';
 import { IEmpresa } from '../../../types/dtos/empresa/IEmpresa';
 import { Button } from 'react-bootstrap';
 import styles from "./SidebarHome.module.css"
-import { ButtonClickAction } from '@mui/base';
-
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -26,6 +24,7 @@ const Sidebar: FC<IDisplayPopUp> = ({setDisplay,setdisplayModalCheckEnterprise, 
     const fetchEmpresas = async () => {
         try {
             //consulto todas las empresas
+            
             const empresas = await new EmpresaService(API_URL + "/empresas").getAll();
             console.log("---------- Todas las empresas ----------");
             console.log(empresas);

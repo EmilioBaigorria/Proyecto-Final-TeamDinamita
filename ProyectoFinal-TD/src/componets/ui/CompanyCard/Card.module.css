@@ -1,14 +1,56 @@
-.btn_group {
+/* Estilos para el contenedor de la tarjeta */
+.card {
+    background-color: #ebebeb;
+    border-radius: 0.2rem;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
+    color: white;
     display: flex;
-    flex-direction: row;
-    gap: 1rem;
+    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
+    min-height: 100px;
 }
 
-.card_title{
+
+.card:hover {
+    transform: translateY(-0.1rem); 
+}
+
+.card_title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #5e5e5e;
+    margin-bottom: 0.2rem;
+    text-align: center;
+    text-transform: capitalize;
+}
+
+.btn_group {
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    gap: 12px;
     justify-content: center;
+    margin-top: 0.5rem;
+}
+
+/* Ajustes para dispositivos móviles */
+@media (max-width: 768px) {
+    .card {
+        padding: 15px;
+    }
+
+    .card_title {
+        font-size: 1.1rem; /* Fuente más pequeña en pantallas pequeñas */
+    }
+
+    .btn_group {
+        gap: 10px;
+    }
+
+    button {
+        font-size: 1rem;
+        padding: 6px 12px;
+    }
 }

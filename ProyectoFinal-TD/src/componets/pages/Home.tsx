@@ -1,7 +1,4 @@
 
-// import { SidebarHome } from '../ui/SidebarHome/SidebarHome'
-// import { PopUpMakeEnterprise } from './PopUpMakeEnterprise/PopUpMakeEnterprise'
-
 import { FC, useEffect, useState } from "react";
 import { ListOffice } from "../ui/ListOffice/ListOffice";
 import { SucursalService } from "../../services/SucursalService";
@@ -42,7 +39,6 @@ export const Home : FC<IHome> = ({setDisplayOffice,setDisplayPopUpEditOffice,dis
                 }             
             } catch (err) {
                 console.error("Error al cargar las empresas:", err);
-                
             }
             setDisplayListOffice(true)
         };
