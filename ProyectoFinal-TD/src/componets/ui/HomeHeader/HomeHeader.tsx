@@ -23,7 +23,7 @@ return (
     <>
     <div className={styles.main_header_container}>
         <div className={styles.text_container}>
-            <h1 className={styles.text}>Sucursales de: {activeEnterprise?.nombre}</h1>
+            {activeEnterprise && (<h1 className={styles.text}>Sucursales de: {activeEnterprise?.nombre}</h1>)}
         </div>
         <div>
             <Button variant="link" onClick={handleReload}><span className="material-symbols-outlined">

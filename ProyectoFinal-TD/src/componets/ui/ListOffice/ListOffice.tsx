@@ -2,22 +2,27 @@ import { FC } from 'react'
 import { ISucursal } from '../../../types/dtos/sucursal/ISucursal'
 
 import { OfficeCard } from '../OfficeCard/OfficeCard'
-import Styles from "./ListOffice.module.css"
+import styles from "./ListOffice.module.css"
+
 interface IListOffice {
     offices: ISucursal[]
     setDisplayOffice: Function
-    setDisplayPopUpEditOffice:Function
-    
+    setDisplayPopUpEditOffice: Function
+
 }
-export const ListOffice: FC<IListOffice> = ({ offices, setDisplayOffice,setDisplayPopUpEditOffice }) => {
-    
+export const ListOffice: FC<IListOffice> = ({ offices, setDisplayOffice, setDisplayPopUpEditOffice }) => {
+
     return (
-        <div className={Styles.main_map_container}>
-            {
-                offices.map((office) => (
-                    <OfficeCard office={office} key={office.id} setDisplayOffice={setDisplayOffice} setDisplayPopUpEditOffice={setDisplayPopUpEditOffice}/>
-                ))
-            }
+        <div className={styles.grid_container}>
+            {offices.map((office) => (
+                <OfficeCard 
+                    key={office.id} 
+                    office={office} 
+                    setDisplayOffice={setDisplayOffice}
+                    setDisplayPopUpEditOffice={setDisplayPopUpEditOffice} 
+                />
+            ))}
         </div>
-    )
+
+        )
 }

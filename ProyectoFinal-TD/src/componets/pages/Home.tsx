@@ -31,7 +31,7 @@ export const Home: FC<IHome> = ({ setDisplayOffice, setDisplayPopUpEditOffice, d
                 //consulto todas las sucursales por ID de empresa
                 if (typeof activeEnterprise?.id == "number") {
 
-                    const suc = await sucuService.sucursalPorEmpresa(activeEnterprise?.id);
+                    const suc: ISucursal | null = await sucuService.sucursalPorEmpresa(activeEnterprise?.id);
                     if (suc) {
                         setSucursales(Array.isArray(suc) ? suc : [suc])
                     }
