@@ -18,9 +18,7 @@ export const CategoriasPage:FC<ICategoriasPage> = ({office}) => {
   const handleuwumoment=()=>{
     console.log(office?.categorias)
   }
-  /*Por alguna razon me tira error 500, parece ser un problema con el backend, preguntar al profe 
 
-  (Comentado para evitar mostrar el error en la consola)
   const getCategories=useEffect(()=>{
     const getCate=async ()=>{
       try {
@@ -32,7 +30,7 @@ export const CategoriasPage:FC<ICategoriasPage> = ({office}) => {
     }
     getCate()
     
-  },[])*/
+  },[])
   return (
     <div>CategoriasPage
       <h2>{office ? office.nombre: "hubo un error"}</h2>

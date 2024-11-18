@@ -5,7 +5,7 @@ import { BackendClient } from "./BackendClient";
 
 export class CategoriaService extends BackendClient<ICreateCategoria | ICategorias | IUpdateCategoria>{
     async updateCategoria(id:number, data:IUpdateCategoria):Promise<IUpdateCategoria>{
-        const response=await fetch(`${this.baseUrl}/update/${id}`,{
+        const response=await fetch(`${this.baseUrl}/categorias/update/${id}`,{
             method: "PUT",
             headers: {
             "Content-Type": "application/json",
@@ -16,7 +16,7 @@ export class CategoriaService extends BackendClient<ICreateCategoria | ICategori
         return newData as IUpdateCategoria
     }
     async createCategoria(data:ICreateCategoria):Promise<ICreateCategoria>{
-        const response=await fetch(`${this.baseUrl}/create`,{
+        const response=await fetch(`${this.baseUrl}/categorias/create`,{
             method: "POST",
             headers: {
             "Content-Type": "application/json",
@@ -27,7 +27,7 @@ export class CategoriaService extends BackendClient<ICreateCategoria | ICategori
         return newData as ICreateCategoria
     }
     async todasCategoriasHijaPorIdPadre(idPadre:number,idSucursal:number):Promise<ICategorias[] | null>{
-        const response=await fetch(`${this.baseUrl}/allSubCategoriasPorCategoriaPadre/${idPadre}/${idSucursal}`)
+        const response=await fetch(`${this.baseUrl}/categorias/allSubCategoriasPorCategoriaPadre/${idPadre}/${idSucursal}`)
         if(!response.ok){
             return null
         }
@@ -36,7 +36,7 @@ export class CategoriaService extends BackendClient<ICreateCategoria | ICategori
 
     }
     async todasCategoriasHijasPorSucursal(idSucursal:number):Promise<ICategorias[] | null>{
-        const response=await fetch(`${this.baseUrl}/allSubCategoriasPorSucursal/${idSucursal}`)
+        const response=await fetch(`${this.baseUrl}/categorias/allSubCategoriasPorSucursal/${idSucursal}`)
         if(!response.ok){
             return null
         }
@@ -44,7 +44,7 @@ export class CategoriaService extends BackendClient<ICreateCategoria | ICategori
         return data as ICategorias[] 
     }
     async todasCategoriasPadresPorSucursal(idSucursal:number):Promise<ICategorias[] | null>{
-        const response=await fetch(`${this.baseUrl}/allCategoriasPadrePorSucursal/${idSucursal}`)
+        const response=await fetch(`${this.baseUrl}/categorias/allCategoriasPadrePorSucursal/${idSucursal}`)
         if(!response.ok){
             return null
         }
