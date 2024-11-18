@@ -9,6 +9,7 @@ interface ICategoryDropdown{
 export const CategoryDropdown :FC<ICategoryDropdown> = ({category}) => {
 return (
     <>
+    
         <div className={styles.main_container}>
             <div className={styles.main_upper_container}>
                 <h3 style={{fontSize:"1.6rem"}}>{category.denominacion}</h3>
