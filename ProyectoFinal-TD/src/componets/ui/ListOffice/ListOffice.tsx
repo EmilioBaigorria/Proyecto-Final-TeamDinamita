@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import { ISucursal } from '../../../types/dtos/sucursal/ISucursal'
 
 import { OfficeCard } from '../OfficeCard/OfficeCard'
@@ -15,7 +15,7 @@ export const ListOffice: FC<IListOffice> = ({ offices, setDisplayOffice,setDispl
         <div className={Styles.main_map_container}>
             {
                 offices.map((office) => (
-                    <OfficeCard office={office} setDisplayOffice={setDisplayOffice} setDisplayPopUpEditOffice={setDisplayPopUpEditOffice}/>
+                    <OfficeCard office={office} key={office.id} setDisplayOffice={setDisplayOffice} setDisplayPopUpEditOffice={setDisplayPopUpEditOffice}/>
                 ))
             }
         </div>
