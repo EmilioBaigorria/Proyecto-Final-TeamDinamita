@@ -15,9 +15,6 @@ export const CategoriasPage:FC<ICategoriasPage> = ({office}) => {
   
   const cateService=new CategoriaService(API_URL)
   const [categories,setCategories]=useState<ICategorias[] | null>([])
-  const handleuwumoment=()=>{
-    console.log(office?.categorias)
-  }
 
   const getCategories=useEffect(()=>{
     const getCate=async ()=>{
@@ -32,13 +29,19 @@ export const CategoriasPage:FC<ICategoriasPage> = ({office}) => {
     
   },[])
   return (
-    <div>CategoriasPage
+    <div>
       <h2>{office ? office.nombre: "hubo un error"}</h2>
-      <Button variant="light" onClick={handleuwumoment}>Tocame uwu</Button>
-      {categories?.map((cate)=>(
-        <CategoryDropdown/>
-      ))
-      }
+      <div style={{
+        width:"90%",
+        display:"flex",
+        flexDirection:"column",
+        backgroundColor:"red"
+      }}>
+        {categories?.map((cate)=>(
+          <CategoryDropdown category={cate}/>
+        ))
+        }
+      </div>
     </div>
   )
 }
