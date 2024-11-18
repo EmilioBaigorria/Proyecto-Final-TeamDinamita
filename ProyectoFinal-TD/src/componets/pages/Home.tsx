@@ -28,22 +28,22 @@ export const Home: FC<IHome> = ({ setDisplayOffice, setDisplayPopUpEditOffice, d
     useEffect(() => {
         const fetchSucursales = async () => {
             try {
-                //consulto todas las sucursales por ID de empresa
-                if (typeof activeEnterprise?.id == "number") {
-
-                    const suc: ISucursal | null = await sucuService.sucursalPorEmpresa(activeEnterprise?.id);
-                    if (suc) {
-                        setSucursales(Array.isArray(suc) ? suc : [suc])
+                if (typeof activeEnterprise?.id === "number") {
+                    const suc: ISucursal | null = await sucuService.sucursalPorEmpresa(activeEnterprise.id);
+                    if (suc && Array.isArray(suc)) {
+                        setSucursales(suc);
+                    } else if (suc) {
+                        setSucursales([suc]); 
                     }
-
                 }
+
             } catch (err) {
-                console.error("Error al cargar las empresas:", err);
+                console.error("Error al cargar las sucursales:", err);
             }
-            setDisplayListOffice(true)
+            setDisplayListOffice(true);
         };
         fetchSucursales();
-    }, [displayPopUpEditOffice, displayPopUpCreateOffice, displayListOffice]);
+    }, [activeEnterprise?.id]);
 
 
     return (<main style={{

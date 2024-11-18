@@ -15,12 +15,16 @@ const Card: FC<ICard> = ({ item, setdisplayModalCheckEnterprise, setDisplayModal
     dispatch(setActiveEnterprise({ element: item }))
   }
 
+  const handleActivateEnterprise = ( item: IEmpresa) => {
+    dispatch(setActiveEnterprise({ element: item }))
+  }
+
   const handleOpenEditModal = (item: IEmpresa) => {
     setDisplayModalEditEnterprise(true)
     dispatch(setActiveEnterprise({ element: item }))
   }
   return (
-    <div className={styles.card} key={item.id}>
+    <div className={styles.card} key={item.id} onClick={()=>{handleActivateEnterprise(item)}}>
       <p className={styles.card_title}>{item.nombre}</p>
       <div className={styles.btn_group}>
         <button style={{ width: '50px' }} className='btn btn-outline-primary d-flex align-items-center justify-content-center'

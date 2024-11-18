@@ -66,7 +66,7 @@ const Sidebar: FC<IDisplayPopUp> = ({ setDisplay, setdisplayModalCheckEnterprise
         <>
           <h2>Empresas</h2>
 
-          <button className='btnAddEmpresa' onClick={() => {
+          <button className='btnAdd' onClick={() => {
             setDisplay(true)
           }}>AGREGAR EMPRESA</button>
 

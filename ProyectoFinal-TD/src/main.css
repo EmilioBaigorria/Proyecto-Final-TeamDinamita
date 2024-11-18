@@ -19,6 +19,7 @@ body {
     grid-template-rows: auto 1fr;
     height: 100vh;
     width: 100vw;
+    padding-right: 0.5rem;
     background-color: var(--background-color);
     transition: grid-template-columns 0.3s ease;
 }
@@ -99,10 +100,10 @@ main {
     transition: grid-column 0.3s ease;
 }
 
-aside > button {
+.btnAdd {
     background-color: var(--ligth-color);
     color: var(--text-color);
-    border: 0.2rem solid var(--primary-color);
+    border: 1px solid var(--primary-color);
     padding: 0.5rem 1rem;
     font-size: 1rem;
     font-weight: 600;
@@ -113,7 +114,7 @@ aside > button {
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
 }
 
-aside > button:hover {
+.btnAdd:hover {
     background-color: var(--secondary-color);
     color: var(--ligth-color);
     border-color: var(--secondary-color);
