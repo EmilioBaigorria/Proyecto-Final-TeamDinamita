@@ -2,14 +2,12 @@
     position: absolute;
     width: 100vw;
     height: 100vh;
-    height:100vh;
     align-items: center;
     justify-content: center;
     backdrop-filter: blur(4px); 
+    z-index: 11;
 }
 .main_content_container{
-    width: 30vw;
-    height: 60vh;
     background-color: #E5E7C6 ;
     border-radius: .4rem;
     position: absolute;
@@ -18,24 +16,19 @@
     justify-content: space-between;
     align-items: center;
     gap: .4rem;
-    box-shadow: 5px 2px 10px 10px grey;
+    padding: 0.4rem;
+    box-shadow: 0px 5px 10px rgba(0,0,0,0.5);
     
 }
 .main_image_container{
-    width: 60%;
-    height: 60%;
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-around;
     gap: 1rem;
 }
 .main_button_container{
-    width: 100%;
-    height: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 25%;
+    justify-content: space-between;
+    gap: 0.2rem;
 }

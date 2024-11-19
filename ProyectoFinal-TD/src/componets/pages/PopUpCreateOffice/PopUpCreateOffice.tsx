@@ -6,6 +6,12 @@ import { UploadImage } from '../../UploadImage'
 import { SucursalService } from '../../../services/SucursalService'
 import { ICreateSucursal } from '../../../types/dtos/sucursal/ICreateSucursal'
 import { useAppSelector } from '../../../hooks/redux'
+
+import {useDispatch, useSelector} from "react-redux"
+import { RootState } from '../../../redux/store/store'
+import { addSucursal } from '../../../redux/slices/sucursalSlice'
+import { ISucursal } from '../../../types/dtos/sucursal/ISucursal'
+
 const API_URL = import.meta.env.VITE_API_URL;
 interface IPopUpCreateOffice{
     displayPopUpCreateOffice:boolean
@@ -35,6 +41,9 @@ export const PopUpCreateOffice:FC<IPopUpCreateOffice> = ({displayPopUpCreateOffi
     const [newScursal,setNewScursal]=useState(initialValues)
     const[logo,setLogo]=useState<null | string>(null)
 
+    //Estado Global
+    const dispatch = useDispatch()
+    const sucursales = useSelector((state: RootState) => state.sucursales.sucursales)
 
 
     const handleChangeInputs = (event: ChangeEvent<HTMLInputElement>)=>{
@@ -45,8 +54,8 @@ export const PopUpCreateOffice:FC<IPopUpCreateOffice> = ({displayPopUpCreateOffi
     const handleClose=()=>{
         setDisplayPopUpCreateOffice(false)
     }
-    const handleSave=()=>{
-        const newSucu:ICreateSucursal={
+    const handleSave= async ()=>{
+        const newSucu :ICreateSucursal={
             nombre: newScursal.nombre,
             horarioApertura: newScursal.horarioApertura,
             horarioCierre: newScursal.horarioCierre,
@@ -66,7 +75,8 @@ export const PopUpCreateOffice:FC<IPopUpCreateOffice> = ({displayPopUpCreateOffi
 
         }
         try {
-            sucuService.createSucursal(newSucu)
+            const createdSucursal:ISucursal= await sucuService.createSucursal(newSucu) as ISucursal 
+            dispatch(addSucursal(createdSucursal))
             setDisplayPopUpCreateOffice(false)
         } catch (error) {
             console.log("Hubor un error creando la nueva sucursal: ",error)

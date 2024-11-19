@@ -23,7 +23,7 @@ s
     height: 100%;
     opacity: 0.5;
     padding: 2rem;
-    
+    z-index: 1;
 }
 
 .noEnterpriseMessage {

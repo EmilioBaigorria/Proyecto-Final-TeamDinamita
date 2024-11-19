@@ -5,6 +5,10 @@ import { IPais } from "../../../types/IPais";
 import { ISucursal } from "../../../types/dtos/sucursal/ISucursal";
 import Styles from "./PopUpMakeEnterprise.module.css"
 import { UploadImage } from "../../UploadImage";
+import { useDispatch, useSelector } from "react-redux";
+import { addEmpresa } from "../../../redux/slices/EmpresasSlice";
+import { IEmpresa } from "../../../types/dtos/empresa/IEmpresa";
+import { RootState } from "../../../redux/store/store";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -13,19 +17,24 @@ interface IDisplayPopUp{
     setDisplay:Function
 }
 export const PopUpMakeEnterprise: FC<IDisplayPopUp> = ({display,setDisplay}) => {
+
+    const dispatch = useDispatch()
+    const enterprises = useSelector((state: RootState) => state.enterprises.enterprises)
+
     const [name,setName]=useState("")
     const [rS,setrS]=useState("")
     const [cut,setCut]=useState<number>(0)
     const [image, setImage] = useState<string | null>(null);
     async function handleSumit() {
         try {
-            const createEmpresa = await new EmpresaService(API_URL + "/empresas").post({
+            const createdEmpresa :IEmpresa = await new EmpresaService(API_URL + "/empresas").post({
                 nombre: name,
                 razonSocial: rS,
                 cuit: cut,
-                logo: image,
-                
-            });
+                logo: image,    
+            })
+            dispatch(addEmpresa(createdEmpresa))
+            console.log(enterprises)    
         } catch (err) {
             console.error("Error al cargar las empresas:", err);
         }

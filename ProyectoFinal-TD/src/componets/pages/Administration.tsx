@@ -14,7 +14,7 @@ const Administration: FC<IAdministracion> = ({activeSubPage}) => {
   return (
     <main>
       {activeSubPage=="categorias"?<CategoriasPage office={activeOffice}/>:
-      activeSubPage=="productos"? <ProductosPage/>:
+      activeSubPage=="productos"? <ProductosPage office={activeOffice}/>:
       activeSubPage=="alergenos"?<AlergenosPage/>:
       <div><h1>Administracion</h1></div>}
     </main> 

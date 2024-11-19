@@ -5,6 +5,9 @@ import { SucursalService } from "../../services/SucursalService";
 import { ISucursal } from "../../types/dtos/sucursal/ISucursal";
 import { HomeHeader } from "../ui/HomeHeader/HomeHeader";
 import { useAppSelector } from "../../hooks/redux";
+import { RootState } from "../../redux/store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { setSucursales } from "../../redux/slices/sucursalSlice";
 const API_URL = import.meta.env.VITE_API_URL;
 
 
@@ -20,20 +23,25 @@ interface IHome {
 }
 
 export const Home: FC<IHome> = ({ setDisplayOffice, setDisplayPopUpEditOffice, displayListOffice, setDisplayListOffice, displayPopUpEditOffice, setDisplayPopUpCreateOffice, displayPopUpCreateOffice }) => {
-    const [sucursales, setSucursales] = useState<ISucursal[]>([])
+    //const [sucursales, setSucursales] = useState<ISucursal[]>([])
     const sucuService = new SucursalService(API_URL)
     const activeEnterprise = useAppSelector(
         (state) => state.ActiveEntrepriseReducer.activeEnterprise
     )
+
+    //Estado Global
+    const dispatch = useDispatch()
+    const sucursales = useSelector((state: RootState) => state.sucursales.sucursales)
+
     useEffect(() => {
         const fetchSucursales = async () => {
             try {
                 if (typeof activeEnterprise?.id === "number") {
                     const suc: ISucursal | null = await sucuService.sucursalPorEmpresa(activeEnterprise.id);
                     if (suc && Array.isArray(suc)) {
-                        setSucursales(suc);
+                        dispatch(setSucursales(suc));
                     } else if (suc) {
-                        setSucursales([suc]); 
+                        dispatch(setSucursales([suc])); 
                     }
                 }
 
