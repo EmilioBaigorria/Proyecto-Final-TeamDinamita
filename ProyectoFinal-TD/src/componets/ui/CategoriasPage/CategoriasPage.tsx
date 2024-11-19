@@ -7,7 +7,7 @@ import { CategoryDropdown } from "../CategoryDropdown/CategoryDropdown";
 const API_URL = import.meta.env.VITE_API_URL;
 
 interface ICategoriasPage{
-  office:ISucursal
+  office:ISucursal |null
 }
 
 export const CategoriasPage: FC<ICategoriasPage> = ({ office }) => {
@@ -18,7 +18,7 @@ export const CategoriasPage: FC<ICategoriasPage> = ({ office }) => {
   const getCategories = useEffect(() => {
     const getCate = async () => {
       try {
-        const categoryData=await cateService.todasCategoriasPadresPorSucursal(office?.id)
+        const categoryData=await cateService.todasCategoriasPadresPorSucursal(Number(office?.id))
         setCategories(categoryData)
       } catch (error) {
         console.log("Hubo un error con el fetch de las categorias: ", error)

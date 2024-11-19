@@ -9,6 +9,8 @@ import { EditEnterpriseModal } from "../componets/pages/PopUpEditEnterprise/PopU
 import { PopUpSeeOffice } from "../componets/pages/PopUpSeeOffice/PopUpSeeOffice";
 import { PopUpEditOffice } from "../componets/pages/PopUpEditOffice/PopUpEditOffice";
 import { PopUpCreateOffice } from "../componets/pages/PopUpCreateOffice/PopUpCreateOffice";
+import { PopUpCreateUpdateAlergeno } from "../componets/pages/PopUpCreateUpdateAlergeno/PopUpCreateUpdateAlergeno";
+
 
 
 
@@ -22,6 +24,8 @@ export const AppRouter = () => {
     const [displayListOffice, setDisplayListOffice] = useState(true)
     const [displayPopUpCreateOffice, setDisplayPopUpCreateOffice] = useState(false)
     const [activeSubPage,setActiveSubPage]=useState("none")
+
+    const [displayCreateUpdateAlergeno,setDisplayCreateUpdateAlergeno]=useState(false)
 
 
 
@@ -41,6 +45,11 @@ export const AppRouter = () => {
                 <EditEnterpriseModal display={displayModalEditEnterprise} setDisplay={setDisplayModalEditEnterprise} />
                 <PopUpSeeOffice displayPopUpOffice={displayPopUpOffice} setDisplayPopUpOffice={setDisplayPopUpOffice} />
 
+                <PopUpCreateUpdateAlergeno
+                isCreate={true}
+                displayCreateUpdateAlergeno={displayCreateUpdateAlergeno} 
+                setDisplayCreateUpdateAlergeno={setDisplayCreateUpdateAlergeno}/>
+
                 <Sidebar setDisplay={setDisplay} 
                 setdisplayModalCheckEnterprise={setdisplayModalCheckEnterprise} 
                 setDisplayModalEditEnterprise={setDisplayModalEditEnterprise}
@@ -56,7 +65,9 @@ export const AppRouter = () => {
                         displayPopUpEditOffice={displayPopUpEditOffice}
                         setDisplayPopUpCreateOffice={setDisplayPopUpCreateOffice}
                         displayPopUpCreateOffice={displayPopUpCreateOffice} />} />
-                    <Route path="/admin" element={<Administration activeSubPage={activeSubPage} />} />
+                    <Route path="/admin" element={<Administration 
+                        activeSubPage={activeSubPage}
+                        setDisplayCreateUpdateAlergeno={setDisplayCreateUpdateAlergeno} />} />
                 </Routes>
 
             </BrowserRouter>
