@@ -37,7 +37,7 @@ export const CategoriasPage: FC<ICategoriasPage> = ({ office }) => {
         
       }}>
         {categories?.map((cate) => (
-          <CategoryDropdown category={cate} />
+          <CategoryDropdown category={cate} key={cate.id} />
         ))
         }
       </div>
