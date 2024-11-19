@@ -34,7 +34,8 @@ export const CategoriasPage: FC<ICategoriasPage> = ({ office }) => {
       <div style={{
         width: "90%",
         display: "flex",
-        flexDirection: "column"
+        flexDirection: "column",
+        color: "#4a4a4a"
       }}>
         {categories?.map((cate) => (
           <CategoryDropdown category={cate} />
