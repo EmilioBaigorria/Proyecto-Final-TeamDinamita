@@ -14,7 +14,7 @@ export const ProductoCard: FC<IProductoCard> = ({product}) => {
 return (
     <div>
         <Card style={{ width: '18rem' }}>
-        {/*<Card.Img variant="top" src={product.imagenes[0].url} />*/}
+        <Card.Img variant="top" src={product.imagenes[0] ? product.imagenes[0].url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMeVgKGC9MMGYtkEoy3zKDpVHa2BPZYWmOfg&s" } />
         <Card.Body>
             <Card.Title>{product.denominacion}</Card.Title>
             <Card.Text>
