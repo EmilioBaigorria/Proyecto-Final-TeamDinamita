@@ -8,6 +8,7 @@ import { UploadImage } from "../../UploadImage";
 import { useDispatch, useSelector } from "react-redux";
 import { addEmpresa } from "../../../redux/slices/EmpresasSlice";
 import { IEmpresa } from "../../../types/dtos/empresa/IEmpresa";
+import { RootState } from "../../../redux/store/store";
 
 const API_URL = import.meta.env.VITE_API_URL;
 

@@ -1,7 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
 import ActiveEntrepriseReducer from "../slices/ActiveEnterpriseReducer"
 import ActiveOfficeReducer from "../slices/ActiveOfficeReducer"
-import enterprisesReducer from "../slices/EmpresasSlice"
+import enterprisesReducer from "../slices/empresasSlice"
+import sucursalesReducer from "../slices/sucursalSlice"
 
 
 export const store = configureStore({
@@ -9,10 +10,10 @@ export const store = configureStore({
     ActiveEntrepriseReducer:ActiveEntrepriseReducer,
     ActiveOfficeReducer:ActiveOfficeReducer,
     enterprises: enterprisesReducer,
+    sucursales: sucursalesReducer,
   },
 })
 
-// Infer the `RootState` and `AppDispatch` types from the store itself
+
 export type RootState = ReturnType<typeof store.getState>
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch
