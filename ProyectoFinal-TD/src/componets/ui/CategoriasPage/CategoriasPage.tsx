@@ -26,9 +26,9 @@ export const CategoriasPage: FC<ICategoriasPage> = ({ office }) => {
     }
     getCate()
 
-  }, [])
+  }, [cateService, office?.id])
   return (
-    <div>
+    <div style={{overflow: "auto"}}>
       <h2>{office ? office.nombre : "Hubo un error."}</h2>
       <div style={{
         width:"90%",
@@ -37,7 +37,7 @@ export const CategoriasPage: FC<ICategoriasPage> = ({ office }) => {
         
       }}>
         {categories?.map((cate) => (
-          <CategoryDropdown category={cate} key={cate.id} />
+          <CategoryDropdown key={cate.id} category={cate} idSucursal={office.id}/>
         ))
         }
       </div>
