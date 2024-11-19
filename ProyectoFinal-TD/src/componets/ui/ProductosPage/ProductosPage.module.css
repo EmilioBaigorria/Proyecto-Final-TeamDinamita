@@ -1,0 +1,11 @@
+.main_products_container{
+    display: flex;
+}
+.products_container{
+    display: grid;
+    grid-template: repeat(4,1fr);
+    width: 100vw;
+    height: 100vh;
+    
+    overflow: auto;
+}   
