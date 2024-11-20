@@ -32,44 +32,7 @@ export const CategoryDropdown: FC<ICategoryDropdown> = ({ category, idSucursal }
                 console.error("No se encontraron subcategorias");
             }
         }
-    };
-
-    // Esto actualiza las subcategorias
-    const handleUpdateSubcategory = async (subId: number, nuevaDenominacion: string) => {
-        try {
-            const categoriaService = new CategoriaService(import.meta.env.VITE_API_URL);
-            
-            const updatedSubcategory = await categoriaService.updateCategoria(subId, {
-                id: subId,
-                denominacion: nuevaDenominacion,
-                eliminado: false,
-                idEmpresa: 1,
-                idSucursales: [1],
-                idCategoriaPadre: category.id,
-            });
-    
-            if (updatedSubcategory) {
-                setSubcategories((prev) =>
-                    prev
-                        ? prev.map((sub) =>
-                              sub.id === subId
-                                  ? { ...sub, denominacion: updatedSubcategory.denominacion }
-                                  : sub
-                          )
-                        : null
-                );
-                console.log(`Subcategoría ${subId} actualizada exitosamente.`);
-            } else {
-                console.error(`No se pudo actualizar la subcategoría ${subId}.`);
-            }
-        } catch (error) {
-            console.error(`Error al actualizar la subcategoría ${subId}:`, error);
-        }
-    };
-    
-    
-    
-
+    };   
 
     return (
         <>
@@ -96,18 +59,7 @@ export const CategoryDropdown: FC<ICategoryDropdown> = ({ category, idSucursal }
                     </div>
 
                 </div>
-                {isDropdownOpen && subcategories && (
-                    <div className={styles.main_dropdown_container}>
-                        {subcategories.map((sub) => (
-                            <div key={sub.id} className={styles.subcategory_item}>
-                                <p>{sub.denominacion}</p>
-                                <Button variant="light" onClick={() => handleUpdateSubcategory(sub.id)}>
-                                    <span className="material-symbols-outlined">edit</span>
-                                </Button>
-                            </div>
-                        ))}
-                    </div>
-                )}
+                
             </div>
         </>
     )
