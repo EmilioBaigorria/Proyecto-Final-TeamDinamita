@@ -59,7 +59,18 @@ export const CategoryDropdown: FC<ICategoryDropdown> = ({ category, idSucursal }
                     </div>
 
                 </div>
-                
+                {isDropdownOpen && subcategories && (
+                    <div className={styles.main_dropdown_container}>
+                        {subcategories.map((sub) => (
+                            <div key={sub.id} className={styles.subcategory_item}>
+                                <p>{sub.denominacion}</p>
+                                <Button variant="light">
+                                    <span className="material-symbols-outlined">edit</span>
+                                </Button>
+                            </div>
+                        ))}
+                    </div>
+                )}
             </div>
         </>
     )
