@@ -15,7 +15,7 @@ export class AlergenoService extends BackendClient<IAlergenos|IUpdateAlergeno|IC
         const newData=await response.json()
         return newData as ICreateAlergeno
     }
-    async updateAlergeno(id:number ,data:ICreateAlergeno):Promise<IUpdateAlergeno>{
+    async updateAlergeno(id:number ,data:IUpdateAlergeno):Promise<IUpdateAlergeno>{
         const response=await fetch(`${this.baseUrl}/alergenos/${id}`,{
             method:"PUT",
             headers: {
