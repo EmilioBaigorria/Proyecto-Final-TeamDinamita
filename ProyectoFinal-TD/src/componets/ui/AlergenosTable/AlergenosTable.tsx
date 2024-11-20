@@ -2,6 +2,8 @@ import { FC } from "react"
 import { IAlergenos } from "../../../types/dtos/alergenos/IAlergenos"
 import { Button } from "react-bootstrap"
 import styles from "./AlergenosTable.module.css"
+import { useAppDispatch } from "../../../hooks/redux"
+import { setActiveAlergeno } from "../../../redux/slices/ActiveAlergenoReducer"
 
 interface IAlergenosTable{
     alergeno:IAlergenos
@@ -10,7 +12,9 @@ interface IAlergenosTable{
 }
 
 export const AlergenosTable: FC<IAlergenosTable> = ({alergeno,setIsCreate,setDisplayCreateUpdateAlergeno}) => {
+    const dispach=useAppDispatch()
     const handleOpenUpdateModal=()=>{
+        dispach(setActiveAlergeno({element:alergeno}))
         setIsCreate(false)
         setDisplayCreateUpdateAlergeno(true)
     }
