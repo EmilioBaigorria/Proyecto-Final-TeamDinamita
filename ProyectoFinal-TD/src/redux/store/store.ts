@@ -4,6 +4,7 @@ import ActiveOfficeReducer from "../slices/ActiveOfficeReducer"
 import enterprisesReducer from "../slices/empresasSlice"
 import sucursalesReducer from "../slices/sucursalSlice"
 import ActiveAlergenoReducer from "../slices/ActiveAlergenoReducer"
+import ActiveProductoReducer from '../slices/ActiveProductoReducer'
 
 
 export const store = configureStore({
@@ -11,6 +12,7 @@ export const store = configureStore({
     ActiveEntrepriseReducer:ActiveEntrepriseReducer,
     ActiveOfficeReducer:ActiveOfficeReducer,
     ActiveAlergenoReducer:ActiveAlergenoReducer,
+    ActiveProductoReducer: ActiveProductoReducer,
     enterprises: enterprisesReducer,
     sucursales: sucursalesReducer,
   },

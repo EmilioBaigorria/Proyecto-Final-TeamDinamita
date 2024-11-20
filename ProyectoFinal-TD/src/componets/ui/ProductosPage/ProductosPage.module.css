@@ -1,11 +1,17 @@
-.main_products_container{
+.main_products_container {
     display: flex;
+    justify-content: center;
+    padding: 20px;
 }
-.products_container{
+
+.products_container {
     display: grid;
-    grid-template-columns: repeat(4,1fr);
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
     width: 100%;
-    height: 100vh;
-    
+    max-width: 1200px;
+    height: auto;
     overflow: auto;
-}   
+    padding: 20px; 
+    box-sizing: border-box;
+}
