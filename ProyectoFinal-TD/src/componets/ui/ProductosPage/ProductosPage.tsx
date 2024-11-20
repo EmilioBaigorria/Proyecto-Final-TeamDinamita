@@ -5,6 +5,8 @@ import { ISucursal } from "../../../types/dtos/sucursal/ISucursal";
 import { ProductoCard } from "../ProductoCard/ProductoCard";
 import { PopUpCreateUpdateProducto } from "../../pages/PopUpCreateEditProducto/CreateEditProductModal"; 
 import styles from "./ProductosPage.module.css";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/store/store";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -13,6 +15,7 @@ interface IProductosPage {
 }
 
 export const ProductosPage: FC<IProductosPage> = ({ office }) => {
+  const activeOffice = useSelector((state :RootState)=> state.ActiveOfficeReducer.activeOffice)
   const productoService = new ProductoService(API_URL);
   const [products, setProducts] = useState<IProductos[] | null>(null);
   const [displayCreateUpdateProducto, setDisplayCreateUpdateProducto] = useState<boolean>(false); 
@@ -21,17 +24,17 @@ export const ProductosPage: FC<IProductosPage> = ({ office }) => {
   useEffect(() => {
     const produGet = async () => {
       try {
-        if (office) {
-          const productData = await productoService.articulosPorSucursalId(office?.id);
+        if (activeOffice) {
+          const productData = await productoService.articulosPorSucursalId(activeOffice?.id);
           setProducts(productData);
-          await console.log(products);
+          console.log("LOGDAVID", productData);
         }
       } catch (error) {
         console.log("Hubo un error buscando los productos", error);
       }
     };
     produGet();
-  }, [office]);
+  }, [activeOffice]);
 
   const handleOpenModal = () => {
     setIsCreate(true); 
