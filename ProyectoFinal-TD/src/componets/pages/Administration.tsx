@@ -7,8 +7,9 @@ import { useAppSelector } from "../../hooks/redux"
 interface IAdministracion{
   activeSubPage:string
   setDisplayCreateUpdateAlergeno:Function
+  setIsCreate:Function
 }
-const Administration: FC<IAdministracion> = ({activeSubPage,setDisplayCreateUpdateAlergeno}) => {
+const Administration: FC<IAdministracion> = ({activeSubPage,setDisplayCreateUpdateAlergeno,setIsCreate}) => {
   const activeOffice=useAppSelector(
     (state)=>state.ActiveOfficeReducer.activeOffice
   )
@@ -16,7 +17,10 @@ const Administration: FC<IAdministracion> = ({activeSubPage,setDisplayCreateUpda
     <main>
       {activeSubPage=="categorias"?<CategoriasPage office={activeOffice}/>:
       activeSubPage=="productos"? <ProductosPage office={activeOffice}/>:
-      activeSubPage=="alergenos"?<AlergenosPage setDisplayCreateUpdateAlergeno={setDisplayCreateUpdateAlergeno}/>:
+      activeSubPage=="alergenos"?<AlergenosPage 
+      setDisplayCreateUpdateAlergeno={setDisplayCreateUpdateAlergeno}
+      setIsCreate={setIsCreate}
+      />:
       <div><h1>Administracion</h1></div>}
     </main> 
   )

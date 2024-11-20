@@ -8,8 +8,9 @@ import style from "./AlergenosPage.module.css"
 const API_URL = import.meta.env.VITE_API_URL;
 interface IAlergenosPage{
     setDisplayCreateUpdateAlergeno:Function
+    setIsCreate:Function
 }
-export const AlergenosPage:FC<IAlergenosPage> = ({setDisplayCreateUpdateAlergeno}) => {
+export const AlergenosPage:FC<IAlergenosPage> = ({setDisplayCreateUpdateAlergeno,setIsCreate}) => {
     const alerService=new AlergenoService(API_URL)
     const [alergenos,setAlergenos]=useState<IAlergenos[]|null>([])
     const getAlergenos=useEffect(()=>{
@@ -26,6 +27,7 @@ export const AlergenosPage:FC<IAlergenosPage> = ({setDisplayCreateUpdateAlergeno
         getaler()
     },[])
     const handleOpenCreateModal=()=>{
+        setIsCreate(true)
         setDisplayCreateUpdateAlergeno(true)
     }
 return (
@@ -41,7 +43,11 @@ return (
         <div className={style.alergenos_container}>
             {alergenos?.map((alg)=>(
             
-                <AlergenosTable alergeno={alg} key={alg.id}/>
+                <AlergenosTable 
+                alergeno={alg} 
+                key={alg.id} 
+                setIsCreate={setIsCreate} 
+                setDisplayCreateUpdateAlergeno={setDisplayCreateUpdateAlergeno}/>
             
             ))}
         </div>

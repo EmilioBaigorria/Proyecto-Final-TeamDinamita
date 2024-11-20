@@ -26,6 +26,7 @@ export const AppRouter = () => {
     const [activeSubPage,setActiveSubPage]=useState("none")
 
     const [displayCreateUpdateAlergeno,setDisplayCreateUpdateAlergeno]=useState(false)
+    const [isCreate,setIsCreate]=useState(true)
 
 
 
@@ -46,7 +47,7 @@ export const AppRouter = () => {
                 <PopUpSeeOffice displayPopUpOffice={displayPopUpOffice} setDisplayPopUpOffice={setDisplayPopUpOffice} />
 
                 <PopUpCreateUpdateAlergeno
-                isCreate={true}
+                isCreate={isCreate}
                 displayCreateUpdateAlergeno={displayCreateUpdateAlergeno} 
                 setDisplayCreateUpdateAlergeno={setDisplayCreateUpdateAlergeno}/>
 
@@ -67,7 +68,8 @@ export const AppRouter = () => {
                         displayPopUpCreateOffice={displayPopUpCreateOffice} />} />
                     <Route path="/admin" element={<Administration 
                         activeSubPage={activeSubPage}
-                        setDisplayCreateUpdateAlergeno={setDisplayCreateUpdateAlergeno} />} />
+                        setDisplayCreateUpdateAlergeno={setDisplayCreateUpdateAlergeno}
+                        setIsCreate={setIsCreate} />} />
                 </Routes>
 
             </BrowserRouter>

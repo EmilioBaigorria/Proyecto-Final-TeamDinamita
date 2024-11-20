@@ -5,12 +5,18 @@ import styles from "./AlergenosTable.module.css"
 
 interface IAlergenosTable{
     alergeno:IAlergenos
+    setIsCreate:Function
+    setDisplayCreateUpdateAlergeno:Function
 }
 
-export const AlergenosTable: FC<IAlergenosTable> = ({alergeno}) => {
+export const AlergenosTable: FC<IAlergenosTable> = ({alergeno,setIsCreate,setDisplayCreateUpdateAlergeno}) => {
+    const handleOpenUpdateModal=()=>{
+        setIsCreate(false)
+        setDisplayCreateUpdateAlergeno(true)
+    }
 return (
     <>
-    
+        
         <div className={styles.main_container}>
             <div className={styles.main_upper_container}>
                 <h3 style={{fontSize:"1.6rem"}}>{alergeno.denominacion}</h3>
@@ -20,7 +26,7 @@ return (
                             visibility
                         </span>
                     </Button>
-                    <Button variant="light">
+                    <Button variant="light" onClick={handleOpenUpdateModal}>
                     <span className="material-symbols-outlined">
                         edit
                     </span>

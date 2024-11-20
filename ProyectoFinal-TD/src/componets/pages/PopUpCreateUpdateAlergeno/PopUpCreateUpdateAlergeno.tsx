@@ -1,4 +1,4 @@
-import  { ChangeEvent, FC, useState } from 'react'
+import  { ChangeEvent, FC, useEffect, useState } from 'react'
 import { Button, FloatingLabel, Form, Modal } from 'react-bootstrap'
 import { ICreateAlergeno } from '../../../types/dtos/alergenos/ICreateAlergeno'
 import { IUpdateAlergeno } from '../../../types/dtos/alergenos/IUpdateAlergeno'
@@ -16,10 +16,12 @@ export const PopUpCreateUpdateAlergeno:FC<IPopUpCreateUpdateAlergeno> = ({displa
     let initialValues:ICreateAlergeno|IUpdateAlergeno
     if(isCreate){
         initialValues={denominacion:"",imagen:null} as ICreateAlergeno
+        console.log("Iniciado como crear",initialValues)
     }else{
         initialValues={id:alergeno?.id,denominacion:alergeno?.denominacion,imagen:alergeno?.imagen} as IUpdateAlergeno
-        
+        console.log("Iniciado como update",initialValues)
     }
+    
     const [newAlergenosData,setNewAlergenosData]=useState(initialValues)
     const [logo,setLogo]=useState<string | null>(null)
     const handleClose = () => setDisplayCreateUpdateAlergeno(false);
@@ -35,9 +37,9 @@ return (
     <>
     <Modal show={displayCreateUpdateAlergeno} onHide={handleClose}>
         <Modal.Header closeButton>
-        <Modal.Title>Crear Alergeno</Modal.Title>
+        <Modal.Title>{isCreate?"Crear Alergeno":"Editar Alergenos"}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body style={{display:"flex", flexDirection:"column",alignItems:"center",gap:"1rem"}}>
             <FloatingLabel
                 label="Denominacion">
                 <Form.Control style={{
