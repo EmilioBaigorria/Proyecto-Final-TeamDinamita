@@ -42,12 +42,15 @@ export const ProductosPage: FC<IProductosPage> = ({ office }) => {
     <>
       {!office && <h2>Seleccione sucursal.</h2>}
 
+      { office && 
       <div className={styles.button_container}>
         <button className="btnAdd" onClick={handleOpenModal}>
           AGREGAR PRODUCTO
         </button>
-      </div>
+      </div>      
+      }
 
+      { products && 
       <div className={styles.main_products_container}>
         <div className={styles.products_container}>
           {products ? (
@@ -58,7 +61,8 @@ export const ProductosPage: FC<IProductosPage> = ({ office }) => {
             <h2>Hubo un error con los productos</h2>
           )}
         </div>
-      </div>
+      </div>      
+      }
 
       {/* Modal de Crear/Actualizar Producto */}
       <PopUpCreateUpdateProducto
