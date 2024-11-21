@@ -12,18 +12,22 @@ interface ICategoryDropdown {
 
 export const CategoryDropdown: FC<ICategoryDropdown> = ({ category, idSucursal }) => {
 
+    // UseState para guardar subcategorias y estado del dropdown
     const [subcategories, setSubcategories] = useState<ICategorias[] | null>(null);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
+    // guardado de estados del display y de la categoria activa para mostrar los datos mientras se edita
     const [displayModal, setDisplayModal] = useState(false)
     const [activeCategory, setActiveCategory] = useState<ICategorias | null>(null)
 
+    // Abridor del popup para categ
     const handleOpenModalCat = () => {
         setActiveCategory(category)
         setDisplayModal(true)
-
     }
 
+
+    // Dummie obj para pruebas y evitar problemas
     const defaultValues: ICategorias = {
         id: 15,
         denominacion: "string",
@@ -79,16 +83,18 @@ export const CategoryDropdown: FC<ICategoryDropdown> = ({ category, idSucursal }
                     </div>
 
                 </div>
+
                 {isDropdownOpen && subcategories && (
                     <div className={styles.main_dropdown_container}>
+                        {/* forEach para mapear y renderizar */}
                         {subcategories.map((sub) => (
                             <div key={sub.id} className={styles.subcategory_item}>
                                 <p>{sub.denominacion}</p>
+                                {/* funcion para manejar el onclick y que solo traiga una de las subcat renderizadas */}
                                 <Button variant="light" onClick={() => {
                                     setActiveCategory(sub)
                                     setDisplayModal(true)
-                                }
-                                }>
+                                }}>
                                     <span className="material-symbols-outlined">edit</span>
                                 </Button>
                             </div>

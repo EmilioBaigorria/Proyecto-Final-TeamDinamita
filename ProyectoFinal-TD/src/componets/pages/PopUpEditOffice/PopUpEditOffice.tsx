@@ -127,7 +127,7 @@ return (
             {/*Segundo set de inputs */}
             <div className={styles.inpunts_style}>
                 <FloatingLabel
-                    label="IdLocalidad">
+                    label="ID Localidad">
                     <Form.Control style={{
                             width:"20rem",  
                     }} value={updatedSucursal.idLocalidad}  type="text" name='idLocalidad' onChange={handleChangeInputs} />
@@ -148,7 +148,7 @@ return (
             {/*Tercer set de inputs */}
             <div className={styles.inpunts_style}>
             <FloatingLabel
-                    label="Nombre Calle">
+                    label="Nombre calle">
                     <Form.Control style={{
                             width:"20rem",  
                     }} value={updatedSucursal.calle}  type="text" name='calle' onChange={handleChangeInputs} />

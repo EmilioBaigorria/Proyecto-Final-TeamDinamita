@@ -1,22 +1,15 @@
-.main_background_container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-  }
+.main_container_inputs{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: auto;
+  gap: 6rem;
   
-  .main_content_container {
-    background-color: white;
-    border-radius: 10px;
-    padding: 20px;
-    min-width: 300px;
-    max-width: 600px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  }
+}
+.inpunts_style{
+  display: flex;
+  flex-direction: column;
+  height: 90%;
+  gap: 1rem; 
+}
   

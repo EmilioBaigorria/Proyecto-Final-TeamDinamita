@@ -2,24 +2,17 @@ import { ChangeEvent, FC, useEffect, useState } from "react";
 import { IUpdateCategoria } from "../../../types/dtos/categorias/IUpdateCategoria";
 import { ICategorias } from "../../../types/dtos/categorias/ICategorias";
 import { useAppSelector } from "../../../hooks/redux";
-import { Button, Modal } from "react-bootstrap";
+import { Button, FloatingLabel, Form, Modal } from "react-bootstrap";
 
 interface IUpdateCategoryModalProps {
-    display: boolean;                                       // Propiedad para manejar la visibilidad del popup
-    setDisplay: Function;                                   // Funcion para cambiar la visibilidad del popup
-    category: ICategorias;                           // Datos de la categoria a editar
+    display: boolean;              // Propiedad para manejar la visibilidad del popup
+    setDisplay: Function;          // Funcion para cambiar la visibilidad del popup
+    category: ICategorias;         // Datos de la categoria a editar
 }
-
-//////////////////////////////////////////////////////////////////////////////////
-//                                                                              //
-//   ELIMINAR EL ARCHIVO DUPLICADO DE MASSSSSS NO SEAS MOGOLICO NO TE OLVIDES   //
-//                                                                              //
-//////////////////////////////////////////////////////////////////////////////////
-
 
 export const PopUpUpdateCategory: FC<IUpdateCategoryModalProps> = ({ display, setDisplay, category }) => {
 
-    
+
     const sucursales: number[] = []
     category.sucursales.map((sucur) => (
         sucursales.push(sucur.id)
@@ -51,30 +44,51 @@ export const PopUpUpdateCategory: FC<IUpdateCategoryModalProps> = ({ display, se
 
     const handleSaveChanges = () => {
 
+        // 1) cuerpo del modal, 2) 
     }
 
-    const handleChangeInputs = (event: ChangeEvent<HTMLInputElement>)=>{
-        // const {value, name} = event.target
-        // setNewAlergenosData((prev)=>({...prev, [`${name}`]: value}))
+    const handleChangeInputs = (event: ChangeEvent<HTMLInputElement>) => {
+        const {value, name} = event.target
+        setUpdateCategory((prev)=>({...prev, [`${name}`]: value}))
     }
 
     return (
         <>
             <Modal show={display} onHide={handleCloseModal}>
-                <Modal.Header closeButton>
+
+                <Modal.Header>
                     <Modal.Title>Modificar Categoria</Modal.Title>
                 </Modal.Header>
+
                 <Modal.Body>
-                    {category.denominacion}
+                
+                    <FloatingLabel label="Denominación">
+                        <Form.Control style={{ width: "20rem", }} value={`${updateCategory.denominacion}`} type="text" name='denominacion' onChange={handleChangeInputs} required/>
+                    </FloatingLabel>
+
+                    <FloatingLabel label="Eliminado">
+                        <Form.Control style={{ width: "20rem", }} value={`${updateCategory.eliminado}`} type="text" name='eliminado' onChange={handleChangeInputs} required/>
+                    </FloatingLabel>
+
+                    <FloatingLabel label="ID Empresa">
+                        <Form.Control style={{ width: "20rem", }} value={`${updateCategory.idEmpresa}`} type="text" name='idEmpresa' onChange={handleChangeInputs} required/>
+                    </FloatingLabel>
+
+                    <FloatingLabel label="ID Categoría Padre (opcional)">
+                        <Form.Control style={{ width: "20rem", }} value={`${updateCategory.idCategoriaPadre}`} type="text" name='idCategoriaPadre' onChange={handleChangeInputs}/>
+                    </FloatingLabel>
+
                 </Modal.Body>
+
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseModal}>
-                        Close
+                        Cancelar
                     </Button>
-                    <Button variant="primary" onClick={handleCloseModal}>
-                        Save Changes
+                    <Button variant="primary" onClick={handleChangeInputs}>
+                        Guardar cambios
                     </Button>
                 </Modal.Footer>
+
             </Modal>
         </>
     )
