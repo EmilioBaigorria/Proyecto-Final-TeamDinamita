@@ -34,7 +34,7 @@ export const ProductoCard: FC<IProductoCard> = ({ product, onEdit, onDelete }) =
                 <h3 className={styles.cardTitle}>{product.denominacion}</h3>
                 <p className={styles.cardText}>{product.descripcion}</p>
                 <p className={`${styles.cardText} ${styles.cardPrice}`}>
-                    {product.precioVenta}$
+                    ${product.precioVenta}
                 </p>
                 <div className={styles.btnsContainer}>
                     <Button variant="outline-primary" onClick={handleEditModal}>
