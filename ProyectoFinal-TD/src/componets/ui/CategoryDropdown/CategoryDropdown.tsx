@@ -67,6 +67,7 @@ export const CategoryDropdown: FC<ICategoryDropdown> = ({ category, idSucursal }
                 console.error("No se encontraron subcategorias");
             }
     };
+
     return (
         <>
             <PopUpUpdateCategory display={displayModal} setDisplay={setDisplayModal} category={activeCategory ? activeCategory : defaultValues} refreshCategory={refreshCategory} />

@@ -48,11 +48,7 @@ export const PopUpUpdateCategory: FC<IUpdateCategoryModalProps> = ({ display, se
     }
 
     const handleSaveChanges = async () => {
-        console.log(updateCategory.idEmpresa);
-        console.log(initialValues.idCategoriaPadre);
-        console.log(category.id);
         const response = await categoriaService.updateCategoria(initialValues.id, updateCategory)
-        console.log(response);
         refreshCategory();
         handleCloseModal()
     }
