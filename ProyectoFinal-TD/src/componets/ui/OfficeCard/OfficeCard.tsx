@@ -27,8 +27,9 @@ export const OfficeCard: FC<IOfficeCardCard> = ({ office, setDisplayOffice, setD
     }
 
     const handleNavigate = () => {
-        navigate(`/admin`)
         dispatch(setActiveOfficeReducer({ element: office }))
+       // console.log("LOGDAVID | ActiveOffice: ", office.nombre, " ID", office.id)
+        navigate(`/admin`)
     }
 
     return (
