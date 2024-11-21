@@ -12,9 +12,11 @@ interface IAlergenosTable{
     alergeno:IAlergenos
     setIsCreate:Function
     setDisplayCreateUpdateAlergeno:Function
+    refreshAlergeno: Function
 }
 
-export const AlergenosTable: FC<IAlergenosTable> = ({alergeno,setIsCreate,setDisplayCreateUpdateAlergeno}) => {
+
+export const AlergenosTable: FC<IAlergenosTable> = ({alergeno,setIsCreate,setDisplayCreateUpdateAlergeno,refreshAlergeno}) => {
     const dispach=useAppDispatch()
     const alerService=new AlergenoService(API_URL)
     const handleOpenUpdateModal=()=>{
@@ -22,6 +24,7 @@ export const AlergenosTable: FC<IAlergenosTable> = ({alergeno,setIsCreate,setDis
         setIsCreate(false)
         setDisplayCreateUpdateAlergeno(true)
     }
+    refreshAlergeno(false)
     
     const handleDelete=()=>{
         Swal.fire({
@@ -38,9 +41,13 @@ export const AlergenosTable: FC<IAlergenosTable> = ({alergeno,setIsCreate,setDis
                     text: "Your file has been deleted.",
                     icon: "success"
                 })
+                const deleteAlergeno=async()=>{
+                    await alerService.deleteAlergeno(alergeno.id)
+                    refreshAlergeno(true)
+                }
+                deleteAlergeno()
                 
-                alerService.deleteAlergeno(alergeno.id)
-
+                
             }
         })
     }

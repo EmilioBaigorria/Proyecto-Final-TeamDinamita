@@ -22,11 +22,7 @@ export const HomeHeader: FC<IHomeHeader> = ({ setDisplayPopUpCreateOffice, setDi
         <>
             {activeEnterprise ? (
                 <div className={styles.main_header_container}>
-                    <div>
-                        <Button variant="link" onClick={handleReload}><span className="material-symbols-outlined">
-                            frame_reload
-                        </span></Button>
-                    </div>
+                    
                     <div className={styles.text_container}>
                         <h1 className={styles.text}>Sucursales de: {activeEnterprise?.nombre}</h1>
                     </div>
