@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { IProductos } from '../../../types/dtos/productos/IProductos';
 import styles from './ProductoCard.module.css';
+import { Button } from 'react-bootstrap';
 
 interface IProductoCard {
     product: IProductos;
@@ -8,7 +9,13 @@ interface IProductoCard {
 
 export const ProductoCard: FC<IProductoCard> = ({ product }) => {
 
+    const handleEditModal = () =>{
 
+    }
+    const handleDeleteProducto = () =>{
+
+    }
+    
     return (
         <div className={styles.card}>
             <img
@@ -26,6 +33,14 @@ export const ProductoCard: FC<IProductoCard> = ({ product }) => {
                 <p className={`${styles.cardText} ${styles.cardPrice}`}>
                     {product.precioVenta}$
                 </p>
+                <div className={styles.btnsContainer}>
+                    <Button variant="outline-primary" onClick={handleEditModal}>
+                        <span className="material-symbols-outlined">edit</span>
+                    </Button>
+                    <Button variant="outline-danger" onClick={handleDeleteProducto}>
+                        <span className="material-symbols-outlined">delete</span>
+                    </Button>
+                </div>
             </div>
         </div>
     );
