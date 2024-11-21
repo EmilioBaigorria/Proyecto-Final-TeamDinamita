@@ -20,10 +20,11 @@ interface IPopUpCreateUpdateProducto {
     displayCreateUpdateProducto: boolean;
     setDisplayCreateUpdateProducto: Function;
     isCreate: boolean;
+    selectedProduct: IProductos | null;
 }
 
-export const PopUpCreateUpdateProducto: FC<IPopUpCreateUpdateProducto> = ({ displayCreateUpdateProducto, setDisplayCreateUpdateProducto, isCreate }) => {
-    const producto = useSelector((state: RootState) => state.ActiveProductoReducer.activeProducto);
+export const PopUpCreateUpdateProducto: FC<IPopUpCreateUpdateProducto> = ({ displayCreateUpdateProducto, setDisplayCreateUpdateProducto, isCreate, selectedProduct }) => {
+    const producto = selectedProduct
     // @ts-ignore
     const sucursal = useSelector((state: RootState) => state.ActiveOfficeReducer.activeOffice?.id);
 
@@ -84,10 +85,11 @@ export const PopUpCreateUpdateProducto: FC<IPopUpCreateUpdateProducto> = ({ disp
                 precioVenta: newProductoData.precioVenta,
                 descripcion: newProductoData.descripcion,
                 habilitado: newProductoData.habilitado,
-                codigo: newProductoData.codigo,
+                codigo: Date.now().toString(), // Solo acepta codigos unicos el endpoint... si bien es solo update.. raroo
+                // codigo: newProductoData.codigo,
                 idCategoria: newProductoData.idCategoria,
                 idAlergenos: newProductoData.idAlergenos,
-                imagenes: newProductoData.imagenes,
+                imagenes: [{ name: 'newImage', url: String(logo) }],
             };
 
             try {
@@ -119,6 +121,7 @@ export const PopUpCreateUpdateProducto: FC<IPopUpCreateUpdateProducto> = ({ disp
         };
 
         try {
+            // @ts-ignore
             const newProd :IProductos = await productoService.createProducto(newProducto);
             if(newProd) dispatch(addProducto(newProd)) 
         } catch (error) {

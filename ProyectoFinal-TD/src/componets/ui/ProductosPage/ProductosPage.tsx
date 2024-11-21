@@ -5,11 +5,9 @@ import { ISucursal } from "../../../types/dtos/sucursal/ISucursal";
 import { ProductoCard } from "../ProductoCard/ProductoCard";
 import { PopUpCreateUpdateProducto } from "../../pages/PopUpCreateEditProducto/CreateEditProductModal"; 
 import styles from "./ProductosPage.module.css";
-
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
 import { setProductos } from "../../../redux/slices/productosSlice";
-
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -18,14 +16,13 @@ interface IProductosPage {
 }
 
 export const ProductosPage: FC<IProductosPage> = ({ office }) => {
-  //if(office) console.log("LOGDAVID | Office: ", office.nombre, " ID", office.id)
   const productos = useSelector((state :RootState) => state.productos.productos)
   const dispatch = useDispatch()
-
   const productoService = new ProductoService(API_URL);
 
   const [displayCreateUpdateProducto, setDisplayCreateUpdateProducto] = useState<boolean>(false); 
   const [isCreate, setIsCreate] = useState<boolean>(true);
+  const [selectedProduct, setSelectedProduct] = useState<IProductos | null>(null); // Para almacenar el producto seleccionado
 
   const [currentPage, setCurrentPage] = useState<number>(1);
 
@@ -35,74 +32,44 @@ export const ProductosPage: FC<IProductosPage> = ({ office }) => {
   const currentProducts = productos.slice(indexOfFirstProduct, indexOfLastProduct);
   const totalPages = Math.ceil(productos.length / pageSize);
 
+  const handleEditProduct = (product: IProductos) => {
+    setSelectedProduct(product);
+    setIsCreate(false); 
+    setDisplayCreateUpdateProducto(true); 
+  };
+
+  const handleDeleteProduct = async (product: IProductos) => {
+    const productoService = new ProductoService(API_URL);
+    const response = await productoService.deleteProducto(product.id)
+    console.log("DAVIDLOG onDelete: ", response)
+  }
+
   useEffect(() => {
     const produGet = async () => {
       try {
         if (office) {
           const listProducts = await productoService.articulosPorSucursalId(office.id);
-          if(listProducts) dispatch(setProductos(listProducts))
+          if (listProducts) dispatch(setProductos(listProducts));
         }
       } catch (error) {
-        console.log("Hubo un error buscando los productos", error);
+        console.error("Error al obtener productos:", error);
       }
     };
-
-    if (office) produGet();
-    
-  }, [office]);
-
-  const handleOpenModal = () => {
-    setIsCreate(true); 
-    setDisplayCreateUpdateProducto(true);
-  };
+    produGet();
+  }, [dispatch, office, productoService]);
 
   return (
-    <>
-      {!office && <h2>Seleccione sucursal.</h2>}
-
-      { office && 
-      <div className={styles.button_container}>
-        <button className="btnAdd" onClick={handleOpenModal}>
-          AGREGAR PRODUCTO
-        </button>
-      </div>      
-      }
-
-      { productos && 
-      <div className={styles.main_products_container}>
-        <div className={styles.products_container}>
-          {productos ? (
-            currentProducts.map((product) => (
-              <ProductoCard product={product} key={product.id} />
-            ))
-          ) : (
-            <h2>Hubo un error con los productos</h2>
-          )}
-        </div>
-        <div className={styles.pagination_container}>
-          <button
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-            disabled={currentPage === 1}
-          >
-            Anterior
-          </button>
-          <span>Página {currentPage} de {totalPages}</span>
-          <button
-            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-            disabled={currentPage === totalPages}
-          >
-            Siguiente
-          </button>
-        </div>
-      </div>      
-      }
-
-      {/* Modal de Crear/Actualizar Producto */}
+    <div>
+      {currentProducts.map(product => (
+        <ProductoCard key={product.id} product={product} onEdit={handleEditProduct} onDelete={handleDeleteProduct}/>
+      ))}
+      
       <PopUpCreateUpdateProducto
         displayCreateUpdateProducto={displayCreateUpdateProducto}
         setDisplayCreateUpdateProducto={setDisplayCreateUpdateProducto}
         isCreate={isCreate}
+        selectedProduct={selectedProduct}
       />
-    </>
+    </div>
   );
 };

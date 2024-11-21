@@ -6,15 +6,17 @@ import { Button } from 'react-bootstrap';
 interface IProductoCard {
     product: IProductos;
     onEdit: Function
+    onDelete: Function
 }
 
-export const ProductoCard: FC<IProductoCard> = ({ product, onEdit }) => {
+export const ProductoCard: FC<IProductoCard> = ({ product, onEdit, onDelete }) => {
 
     const handleEditModal = () =>{
+        console.log("DAVIDLOG: producto a editar: ", product.denominacion)
         onEdit(product)
     }
     const handleDeleteProducto = () =>{
-
+        onDelete(product)
     }
     
     return (
