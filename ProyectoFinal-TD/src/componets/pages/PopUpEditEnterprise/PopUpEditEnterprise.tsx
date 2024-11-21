@@ -8,14 +8,16 @@ import { UploadImage } from "../../UploadImage";
 interface IDisplayPopUp{
     display:boolean,
     setDisplay:Function
+    refreshEnterprise: Function
 }
 
-export const EditEnterpriseModal: FC<IDisplayPopUp> = ({ display, setDisplay }) => {
+export const EditEnterpriseModal: FC<IDisplayPopUp> = ({ display, setDisplay, refreshEnterprise}) => {
 
     const elementActive: IEmpresa = useAppSelector(
         (state) => state.ActiveEntrepriseReducer.activeEnterprise
     );
 
+    refreshEnterprise(false);
     // Estado para los campos editables
     const [nombre, setNombre] = useState("");
     const [razonSocial, setRazonSocial] = useState("");
@@ -49,6 +51,7 @@ export const EditEnterpriseModal: FC<IDisplayPopUp> = ({ display, setDisplay }) 
 
         try {
             const update = await new EmpresaService(API_URL + "/empresas").put(Number(id),updatedEnterprise);
+            refreshEnterprise(true);
             handleClose(); // Cierra el modal
         } catch (err) {
             console.error("Error al editar  empresa:", err);
