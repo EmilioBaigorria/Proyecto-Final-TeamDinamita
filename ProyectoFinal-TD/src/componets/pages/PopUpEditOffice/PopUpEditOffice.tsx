@@ -17,6 +17,7 @@ export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,se
     const activeOffice : ISucursal | null = useAppSelector(
         (state)=>state.ActiveOfficeReducer.activeOffice
     )
+
     const initialValues  ={
         idEmpresa: activeOffice?.empresa.id|| 0 ,
         nombre: activeOffice?.nombre || "",
@@ -36,13 +37,16 @@ export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,se
         horarioApertura: activeOffice?.horarioApertura|| "",
         horarioCierre: activeOffice?.horarioCierre|| ""
     }   
+
     const[updatedSucursal,setUpdatedsucursal]=useState(initialValues)
     const[logo,setLogo]=useState<string | null>(null)
     const sucurSevice= new SucursalService(API_URL)
+
     useEffect(()=>{
         setUpdatedsucursal(initialValues)
         setLogo(initialValues.logo)
     },[displayPopUpEditOffice])
+
     const handleClose = () => setDisplayPopUpEditOffice(false);
     const handleSave=async ()=>{
         const upSucur :IUpdateSucursal={
@@ -77,6 +81,7 @@ export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,se
             console.log("Ocurrio un error gurdando la nueva sucursal: ",err)
         }
     }
+
     const handleChangeInputs = (event: ChangeEvent<HTMLInputElement>)=>{
         const {value, name} = event.target
         
@@ -85,7 +90,6 @@ export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,se
         
     }
     
-
 return (
     <>
     

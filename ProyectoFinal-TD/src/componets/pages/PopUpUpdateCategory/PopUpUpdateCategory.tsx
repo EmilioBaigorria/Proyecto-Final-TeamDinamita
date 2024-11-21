@@ -1,94 +1,81 @@
-import { FC, useEffect, useState } from "react";
-import { Button, FloatingLabel, Form } from "react-bootstrap";
-import Styles from "./PopUpUpdateCategory.module.css";
+import { ChangeEvent, FC, useEffect, useState } from "react";
 import { IUpdateCategoria } from "../../../types/dtos/categorias/IUpdateCategoria";
+import { ICategorias } from "../../../types/dtos/categorias/ICategorias";
+import { useAppSelector } from "../../../hooks/redux";
+import { Button, Modal } from "react-bootstrap";
 
-interface IPopUpUpdateCategory {
-    display: boolean;
-    setDisplay: (value: boolean) => void;
-    categoria?: IUpdateCategoria | null;
-    onSave: (updatedCategoria: IUpdateCategoria) => void;
+interface IUpdateCategoryModalProps {
+    display: boolean;                                       // Propiedad para manejar la visibilidad del popup
+    setDisplay: Function;                                   // Funcion para cambiar la visibilidad del popup
+    category: ICategorias;                           // Datos de la categoria a editar
 }
 
-export const PopUpUpdateCategory: FC<IPopUpUpdateCategory> = ({ display, setDisplay, categoria, onSave }) => {
+//////////////////////////////////////////////////////////////////////////////////
+//                                                                              //
+//   ELIMINAR EL ARCHIVO DUPLICADO DE MASSSSSS NO SEAS MOGOLICO NO TE OLVIDES   //
+//                                                                              //
+//////////////////////////////////////////////////////////////////////////////////
 
-    const [name, setName] = useState("");
-    const [eliminado, setEliminado] = useState(false);
-    const [idCategoriaPadre, setIdCategoriaPadre] = useState<number | null>(null);
 
-    // Inicializa los campos con los datos de la cat
+export const PopUpUpdateCategory: FC<IUpdateCategoryModalProps> = ({ display, setDisplay, category }) => {
+
+    
+    const sucursales: number[] = []
+    category.sucursales.map((sucur) => (
+        sucursales.push(sucur.id)
+    ))
+
+    const initialValues: IUpdateCategoria = {
+        id: category.id,
+        denominacion: category.denominacion,
+        eliminado: category.eliminado,
+        idSucursales: sucursales,
+        idEmpresa: Number(useAppSelector((state) => {
+            state.ActiveEntrepriseReducer.activeEnterprise?.id
+        })),
+        idCategoriaPadre: category.categoriaPadre ? category.categoriaPadre?.id : null,
+    }
+
+    const [updateCategory, setUpdateCategory] = useState(initialValues)
+
     useEffect(() => {
-        if (categoria) {
-            setName(categoria.denominacion || "");
-            setEliminado(categoria.eliminado || false);
-            setIdCategoriaPadre(categoria.idCategoriaPadre || null);
+        const setInitialValues = async () => {
+            setUpdateCategory(initialValues)
         }
-    }, [categoria]);
+        setInitialValues()
+    }, [display])
 
-    const handleUpdate = () => {
-        if (categoria) {
-            const updatedCategoria: IUpdateCategoria = {
-                ...categoria,
-                denominacion: name,
-                eliminado,
-                idCategoriaPadre,
-            };
-            onSave(updatedCategoria); // Guarda lo pasado en los campos
-            setDisplay(false); // Cierra el popup
-        }
-    };
+    const handleCloseModal = () => {
+        setDisplay(false)
+    }
+
+    const handleSaveChanges = () => {
+
+    }
+
+    const handleChangeInputs = (event: ChangeEvent<HTMLInputElement>)=>{
+        // const {value, name} = event.target
+        // setNewAlergenosData((prev)=>({...prev, [`${name}`]: value}))
+    }
 
     return (
-        <div
-            className={Styles.main_background_container}
-            style={{
-                display: display ? "flex" : "none",
-            }}
-        >
-            <div className={Styles.main_content_container}>
-                <h2>Editar Categoría</h2>
-
-                <FloatingLabel label="Denominación">
-                    <Form.Control
-                        style={{ width: "20rem" }}
-                        type="text"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                    />
-                </FloatingLabel>
-
-                <Form.Check
-                    type="checkbox"
-                    label="Eliminado"
-                    checked={eliminado}
-                    onChange={(e) => setEliminado(e.target.checked)}
-                />
-
-                <FloatingLabel label="ID Categoría Padre (opcional)">
-                    <Form.Control
-                        style={{ width: "20rem" }}
-                        type="number"
-                        value={idCategoriaPadre || ""}
-                        onChange={(e) => setIdCategoriaPadre(Number(e.target.value) || null)}
-                    />
-                </FloatingLabel>
-
-                <div className={Styles.main_button_container}>
-                    <Button variant="danger" onClick={() => setDisplay(false)}>
-                        Cancelar
+        <>
+            <Modal show={display} onHide={handleCloseModal}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Modificar Categoria</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {category.denominacion}
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseModal}>
+                        Close
                     </Button>
-                    <Button
-                        variant="success"
-                        onClick={() => {
-                            handleUpdate();
-                            setDisplay(false);
-                        }}
-                    >
-                        Aceptar
+                    <Button variant="primary" onClick={handleCloseModal}>
+                        Save Changes
                     </Button>
-
-                </div>
-            </div>
-        </div>
-    );
-};
+                </Modal.Footer>
+            </Modal>
+        </>
+    )
+}
