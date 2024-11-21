@@ -59,7 +59,7 @@ export const ProductosPage: FC<IProductosPage> = ({ office }) => {
   }, [dispatch, office, productoService]);
 
   return (
-    <div>
+    <div className={styles.products_container}>
       {currentProducts.map(product => (
         <ProductoCard key={product.id} product={product} onEdit={handleEditProduct} onDelete={handleDeleteProduct}/>
       ))}
