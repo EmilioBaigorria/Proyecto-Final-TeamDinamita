@@ -66,7 +66,7 @@ export const PopUpUpdateCategory: FC<IUpdateCategoryModalProps> = ({ display, se
             <Modal show={display} onHide={handleCloseModal}>
 
                 <Modal.Header>
-                    <Modal.Title>Modificar categoria</Modal.Title>
+                    <Modal.Title>Crear categoria</Modal.Title>
                 </Modal.Header>
 
                 <Modal.Body>
