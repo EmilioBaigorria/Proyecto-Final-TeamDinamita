@@ -58,9 +58,19 @@ export const CategoryDropdown: FC<ICategoryDropdown> = ({ category, idSucursal }
         }
     };
 
+    const refreshCategory = async () => {
+            const categoriaService = new CategoriaService(import.meta.env.VITE_API_URL);
+            const subcategories = await categoriaService.todasCategoriasHijaPorIdPadre(category.id, idSucursal);
+            if (subcategories !== null) {
+                setSubcategories(subcategories);
+            } else {
+                console.error("No se encontraron subcategorias");
+            }
+    };
+
     return (
         <>
-            <PopUpUpdateCategory display={displayModal} setDisplay={setDisplayModal} category={activeCategory ? activeCategory : defaultValues} />
+            <PopUpUpdateCategory display={displayModal} setDisplay={setDisplayModal} category={activeCategory ? activeCategory : defaultValues} refreshCategory={refreshCategory} />
             <div className={styles.main_container}>
                 <div className={styles.main_upper_container}>
                     <h3 style={{ fontSize: "1.6rem" }}>{category.denominacion}</h3>
