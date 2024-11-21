@@ -40,7 +40,7 @@ nav {
 nav ul {
     display: flex;
     align-items: center;
-    justify-content: end;
+    justify-content: start;
     list-style: none;
     gap: 0.5rem;
     text-transform: uppercase;
@@ -169,3 +169,18 @@ aside:not(.opened) + main {
     transition: grid-column 1s ease, padding 1s ease;
 }
 
+.imgLink {
+    height: 25px;
+    margin: 0 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imgLink > img {
+    width: 30px;
+    height: 30px;
+    margin: auto;
+    margin-right: 0.5rem;
+    border-radius: 0.2rem;
+}
