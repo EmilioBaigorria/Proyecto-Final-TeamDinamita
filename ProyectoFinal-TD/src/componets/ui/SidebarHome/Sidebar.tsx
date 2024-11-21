@@ -16,6 +16,7 @@ interface IDisplayPopUp {
   setdisplayModalCheckEnterprise: Function;
   setDisplayModalEditEnterprise: Function;
   setActiveSubPage: Function;
+  refreshEnterprise: Boolean
 }
 
 const Sidebar: FC<IDisplayPopUp> = ({
@@ -23,6 +24,7 @@ const Sidebar: FC<IDisplayPopUp> = ({
   setdisplayModalCheckEnterprise,
   setDisplayModalEditEnterprise,
   setActiveSubPage,
+  refreshEnterprise
 }) => {
   const enterprises = useSelector((state: RootState) => state.enterprises.enterprises); // Estado global
   const dispatch = useDispatch();
@@ -53,6 +55,20 @@ const Sidebar: FC<IDisplayPopUp> = ({
 
     fetchEmpresas();
   }, []); 
+
+  useEffect(() => {
+    if (!refreshEnterprise) {
+      return;
+    }
+    const fetchEmpresas = async () => {
+      try {
+        const empresas = await new EmpresaService(`${API_URL}/empresas`).getAll();
+        dispatch(setEmpresas(Array.isArray(empresas) ? empresas : [empresas]));
+      } catch (err) {
+      }
+    };
+    fetchEmpresas();
+  }, [refreshEnterprise]);
 
   return (
     <aside className={isAsideOpen ? 'opened' : ''}>

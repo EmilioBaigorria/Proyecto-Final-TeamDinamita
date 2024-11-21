@@ -38,6 +38,7 @@ export class ProductoService extends BackendClient<IProductos|ICreateProducto|IU
             body:JSON.stringify(data)
         })
         const newData=await response.json()
+        console.log("LOGDAVID: RTA - Creacion de articulo", newData)
         return newData as ICreateProducto
     }
     async updateProducto(id:number, data:IUpdateProducto):Promise<IUpdateProducto>{

@@ -11,6 +11,8 @@ import { CategoriaService } from '../../../services/CategoriaService';
 import { ICategorias } from '../../../types/dtos/categorias/ICategorias';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store/store';
+import { IProductos } from '../../../types/dtos/productos/IProductos';
+import { addProducto } from '../../../redux/slices/productosSlice';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -22,12 +24,12 @@ interface IPopUpCreateUpdateProducto {
 
 export const PopUpCreateUpdateProducto: FC<IPopUpCreateUpdateProducto> = ({ displayCreateUpdateProducto, setDisplayCreateUpdateProducto, isCreate }) => {
     const producto = useSelector((state: RootState) => state.ActiveProductoReducer.activeProducto);
-    const sucursal = useSelector((state: RootState) => state.ActiveOfficeReducer.activeOffice?.id | 0);
+    // @ts-ignore
+    const sucursal = useSelector((state: RootState) => state.ActiveOfficeReducer.activeOffice?.id);
 
     const dispatch = useAppDispatch();
     const productoService = new ProductoService(API_URL);
 
-    // Definir valores iniciales
     const initialValues: ICreateProducto | IUpdateProducto = isCreate
         ? {
             denominacion: '',
@@ -117,8 +119,8 @@ export const PopUpCreateUpdateProducto: FC<IPopUpCreateUpdateProducto> = ({ disp
         };
 
         try {
-            const response = await productoService.createProducto(newProducto);
-            console.log(response);
+            const newProd :IProductos = await productoService.createProducto(newProducto);
+            if(newProd) dispatch(addProducto(newProd)) 
         } catch (error) {
             console.error('Error al crear el producto:', error);
         }
