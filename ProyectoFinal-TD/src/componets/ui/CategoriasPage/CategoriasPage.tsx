@@ -13,8 +13,9 @@ interface ICategoriasPage {
 
 export const CategoriasPage: FC<ICategoriasPage> = ({ office }) => {
 
-    const cateService = new CategoriaService(API_URL)
-    const [categories, setCategories] = useState<ICategorias[] | null>([])
+  const cateService = new CategoriaService(API_URL)
+  const [categories, setCategories] = useState<ICategorias[] | null>([])
+  const [refreshCategoryFather, setRefreshCategoryFather] = useState(false)
 
     useEffect(() => {
         const getCate = async () => {
@@ -27,7 +28,11 @@ export const CategoriasPage: FC<ICategoriasPage> = ({ office }) => {
         }
         getCate()
 
-    }, [office?.id])
+    }, [office?.id, refreshCategoryFather ])
+
+  const refreshCategoryFatherTrue = (data:boolean) => {
+    setRefreshCategoryFather(data);
+  }
 
     return (
         <div style={{ overflow: "auto" }}>
@@ -40,12 +45,12 @@ export const CategoriasPage: FC<ICategoriasPage> = ({ office }) => {
                 display: "flex",
                 flexDirection: "column",
 
-            }}>
-                {categories?.map((cate) => (
-                    <CategoryDropdown key={cate.id} category={cate} idSucursal={office!.id} />
-                ))
-                }
-            </div>
-        </div>
-    )
+      }}>
+        {categories?.map((cate) => (
+          <CategoryDropdown key={cate.id} category={cate} idSucursal={office!.id} refreshCategoryFather={refreshCategoryFatherTrue}/>
+        ))
+        }
+      </div>
+    </div>
+  )
 }

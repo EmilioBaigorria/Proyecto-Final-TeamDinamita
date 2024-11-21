@@ -105,32 +105,7 @@ const Sidebar: FC<IDisplayPopUp> = ({
       {location.pathname === '/admin' && (
         <div className={styles.button_container}>
           <h2>Administración</h2>
-          <Button
-            variant="light"
-            className={styles.button_styles}
-            onClick={handleActiveSubPageChange}
-            name="categorias"
-          >
-            Categorías
-          </Button>
-
-
-          <Button
-            variant="light"
-            className={styles.button_styles}
-            onClick={handleActiveSubPageChange}
-            name="productos"
-          >
-            Productos
-          </Button>
-          <Button
-            variant="light"
-            className={styles.button_styles}
-            onClick={handleActiveSubPageChange}
-            name="alergenos"
-          >
-            Alérgenos
-          </Button>
+          
             <button className='btnAdd' name="categorias" onClick={handleActiveSubPageChange}>CATEGORIAS</button>
             <button className='btnAdd' onClick={handleActiveSubPageChange}>PRODUCTOS</button>
             <button className='btnAdd' onClick={handleActiveSubPageChange}>ALERGENOS</button>

@@ -38,8 +38,14 @@ export const AppRouter = () => {
             <BrowserRouter>
                 <nav>
                     <ul>
-                        <li><Link to='/'>Home</Link></li>
-                        <li><Link to='/admin'>Administración</Link></li>
+                        <li>
+                            <Link className="imgLink" to='/'>
+                                <img src="./favicon.jpeg" alt="logo" />
+                                
+                                    DINAMITA
+                                
+                            </Link>
+                        </li>
                     </ul>
                 </nav>
                 <PopUpCreateOffice displayPopUpCreateOffice={displayPopUpCreateOffice} setDisplayPopUpCreateOffice={setDisplayPopUpCreateOffice} />

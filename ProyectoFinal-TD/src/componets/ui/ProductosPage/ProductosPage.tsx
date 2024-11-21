@@ -73,13 +73,13 @@ export const ProductosPage: FC<IProductosPage> = ({ office }) => {
 
       {!office ? (
         <>
-        <h1>Productos</h1>
-        <div className={stylesAdmin.noActiveOfficeContainer}>
-          <div className={stylesAdmin.noActiveOfficeMessage}>
-            <h2>Seleccione una empresa y sucursal para continuar</h2>
-            <p>Seleccione una empresa y luego una sucursal para realizar acciones.</p>
+          <h1>Productos</h1>
+          <div className={stylesAdmin.noActiveOfficeContainer}>
+            <div className={stylesAdmin.noActiveOfficeMessage}>
+              <h2>Seleccione una empresa y sucursal para continuar</h2>
+              <p>Seleccione una empresa y luego una sucursal para realizar acciones.</p>
+            </div>
           </div>
-        </div>
         </>
       ) : (
         <>
@@ -89,14 +89,31 @@ export const ProductosPage: FC<IProductosPage> = ({ office }) => {
           </div>
           <div className={styles.products_container}>
             {currentProducts.map(product => (
-              <ProductoCard 
-                key={product.id} 
-                product={product} 
-                onEdit={handleEditProduct} 
-                onDelete={handleDeleteProduct} 
+              <ProductoCard
+                key={product.id}
+                product={product}
+                onEdit={handleEditProduct}
+                onDelete={handleDeleteProduct}
               />
             ))}
-    
+
+            
+            <div className={styles.pagination_container}>
+              <button
+                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+              >
+                Anterior
+              </button>
+              <span>Página {currentPage} de {totalPages}</span>
+              <button
+                onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                disabled={currentPage === totalPages}
+              >
+                Siguiente
+              </button>
+            </div>
+
             <PopUpCreateUpdateProducto
               displayCreateUpdateProducto={displayCreateUpdateProducto}
               setDisplayCreateUpdateProducto={setDisplayCreateUpdateProducto}
