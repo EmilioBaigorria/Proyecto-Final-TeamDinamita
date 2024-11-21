@@ -10,6 +10,7 @@ import { PopUpSeeOffice } from "../componets/pages/PopUpSeeOffice/PopUpSeeOffice
 import { PopUpEditOffice } from "../componets/pages/PopUpEditOffice/PopUpEditOffice";
 import { PopUpCreateOffice } from "../componets/pages/PopUpCreateOffice/PopUpCreateOffice";
 import { PopUpCreateUpdateAlergeno } from "../componets/pages/PopUpCreateUpdateAlergeno/PopUpCreateUpdateAlergeno";
+import styles from "./AppRouter.module.css"
 
 
 
@@ -34,7 +35,7 @@ export const AppRouter = () => {
 
 
     return (
-        <div className="grid_container">
+        <div className="grid_container" style={{height:"100vh"}}>
             <BrowserRouter>
                 <nav>
                     <ul>

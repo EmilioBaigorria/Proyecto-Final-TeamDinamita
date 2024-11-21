@@ -7,7 +7,7 @@
     text-align: center;
     display: flex;
     flex-direction: column;
-    height: 330px; 
+    height: auto; 
     width: 300px;
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;

@@ -13,9 +13,9 @@ interface IAdministracion {
 const Administration: FC<IAdministracion> = ({ activeSubPage, setDisplayCreateUpdateAlergeno, setIsCreate }) => {
   const activeOffice = useAppSelector(
     (state) => state.ActiveOfficeReducer.activeOffice
-  )
+  ) 
   return (
-    <main style={{height:"100vh"}}>
+    <main >
       {activeSubPage == "categorias" ? <CategoriasPage office={activeOffice} /> :
         activeSubPage == "productos" ? <ProductosPage office={activeOffice} /> :
           activeSubPage == "alergenos" ? <AlergenosPage

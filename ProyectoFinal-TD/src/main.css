@@ -11,6 +11,7 @@ body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+    background-color: var(--background-color);
 }
 
 .grid_container {
@@ -183,4 +184,11 @@ aside:not(.opened) + main {
     margin: auto;
     margin-right: 0.5rem;
     border-radius: 0.2rem;
+}
+
+
+@media (max-height: 100vh) {
+    .grid_container{
+        height: 100%;
+    }
 }
