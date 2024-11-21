@@ -54,8 +54,9 @@ export const PopUpUpdateCategory: FC<IUpdateCategoryModalProps> = ({ display, se
     }
 
     const handleChangeInputs = (event: ChangeEvent<HTMLInputElement>) => {
-        const {value, name} = event.target
-        setUpdateCategory((prev)=>({...prev, [`${name}`]: value}))
+        const { value, name } = event.target
+        console.log(value, name);
+        setUpdateCategory((prev) => ({ ...prev, [`${name}`]: value }))
     }
 
     return (
@@ -67,21 +68,19 @@ export const PopUpUpdateCategory: FC<IUpdateCategoryModalProps> = ({ display, se
                 </Modal.Header>
 
                 <Modal.Body>
-                
+
                     <FloatingLabel label="Denominación">
-                        <Form.Control style={{ width: "20rem", }} value={`${updateCategory.denominacion}`} type="text" name='denominacion' onChange={handleChangeInputs} required/>
+                        <Form.Control style={{ width: "20rem", }} value={`${updateCategory.denominacion}`} type="text" name='denominacion' onChange={handleChangeInputs} required />
                     </FloatingLabel>
 
-                    <FloatingLabel label="Eliminado">
-                        <Form.Control style={{ width: "20rem", }} value={`${updateCategory.eliminado}`} type="check" name='eliminado' onChange={handleChangeInputs} required/>
-                    </FloatingLabel>
+                    <Form.Check style={{ width: "20rem", }} value={`${updateCategory.eliminado}`} label={updateCategory.eliminado ? "Eliminado" : "Sin eliminar"} type="switch" name='eliminado' onCh={handleChangeInputs} required />
 
                     <FloatingLabel label="ID Empresa">
-                        <Form.Control style={{ width: "20rem", }} value={`${updateCategory.idEmpresa}`} type="text" name='idEmpresa' onChange={handleChangeInputs} required/>
+                        <Form.Control style={{ width: "20rem", }} value={`${updateCategory.idEmpresa}`} type="text" name='idEmpresa' onChange={handleChangeInputs} required />
                     </FloatingLabel>
 
                     <FloatingLabel label="ID Categoría Padre (opcional)">
-                        <Form.Control style={{ width: "20rem", }} value={`${updateCategory.idCategoriaPadre}`} type="text" name='idCategoriaPadre' onChange={handleChangeInputs}/>
+                        <Form.Control style={{ width: "20rem", }} value={`${updateCategory.idCategoriaPadre}`} type="text" name='idCategoriaPadre' onChange={handleChangeInputs} />
                     </FloatingLabel>
 
                 </Modal.Body>
