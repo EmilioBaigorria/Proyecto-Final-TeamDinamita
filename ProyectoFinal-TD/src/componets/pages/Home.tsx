@@ -19,10 +19,10 @@ interface IHome {
     displayListOffice: boolean,
     displayPopUpEditOffice: boolean,
     displayPopUpCreateOffice: boolean
-
+    refreshOffice: boolean
 }
 
-export const Home: FC<IHome> = ({ setDisplayOffice, setDisplayPopUpEditOffice, displayListOffice, setDisplayListOffice, displayPopUpEditOffice, setDisplayPopUpCreateOffice, displayPopUpCreateOffice }) => {
+export const Home: FC<IHome> = ({ setDisplayOffice, setDisplayPopUpEditOffice, displayListOffice, setDisplayListOffice, displayPopUpEditOffice, setDisplayPopUpCreateOffice, displayPopUpCreateOffice, refreshOffice }) => {
     //const [sucursales, setSucursales] = useState<ISucursal[]>([])
     const sucuService = new SucursalService(API_URL)
     const activeEnterprise = useAppSelector(
@@ -51,7 +51,7 @@ export const Home: FC<IHome> = ({ setDisplayOffice, setDisplayPopUpEditOffice, d
             setDisplayListOffice(true);
         };
         fetchSucursales();
-    }, [activeEnterprise?.id]);
+    }, [activeEnterprise?.id, refreshOffice]);
 
 
     return (<main style={{
@@ -59,7 +59,7 @@ export const Home: FC<IHome> = ({ setDisplayOffice, setDisplayPopUpEditOffice, d
         flexDirection: "column"
     }}>
         <HomeHeader setDisplayPopUpCreateOffice={setDisplayPopUpCreateOffice} setDisplayListOffice={setDisplayListOffice} />
-        <ListOffice offices={sucursales} setDisplayOffice={setDisplayOffice} setDisplayPopUpEditOffice={setDisplayPopUpEditOffice} />
+        <ListOffice offices={sucursales} setDisplayOffice={setDisplayOffice} setDisplayPopUpEditOffice={setDisplayPopUpEditOffice}  />
     </main>
     )
 }
