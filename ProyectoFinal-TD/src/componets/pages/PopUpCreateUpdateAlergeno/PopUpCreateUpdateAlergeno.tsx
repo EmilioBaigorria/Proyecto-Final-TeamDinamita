@@ -52,7 +52,8 @@ export const PopUpCreateUpdateAlergeno: FC<IPopUpCreateUpdateAlergeno> = ({ disp
         }
         handleClose()
     }
-    const handleCreate = () => {
+    const handleCreate = async() => {
+        refreshAlergeno(false);
         const newAlergeno: ICreateAlergeno = {
             denominacion: newAlergenosData.denominacion,
             imagen: {
@@ -60,7 +61,8 @@ export const PopUpCreateUpdateAlergeno: FC<IPopUpCreateUpdateAlergeno> = ({ disp
                 url: String(logo)
             }
         }
-        const response = alergenoService.createAlergeno(newAlergeno)
+        const response =  await alergenoService.createAlergeno(newAlergeno)
+        refreshAlergeno(true);
         console.log(response)
         handleClose()
     }
