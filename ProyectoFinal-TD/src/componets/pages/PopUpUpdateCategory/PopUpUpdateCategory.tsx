@@ -21,14 +21,16 @@ export const PopUpUpdateCategory: FC<IUpdateCategoryModalProps> = ({ display, se
         sucursales.push(sucur.id)
     ))
 
+    const activeEnterpriseId = useAppSelector(
+        (state) => state.ActiveEntrepriseReducer.activeEnterprise?.id
+    );
+
     const initialValues: IUpdateCategoria = {
         id: category.id,
         denominacion: category.denominacion,
         eliminado: category.eliminado,
         idSucursales: sucursales,
-        idEmpresa: Number(useAppSelector((state) => {
-            state.ActiveEntrepriseReducer.activeEnterprise?.id
-        })),
+        idEmpresa: Number(activeEnterpriseId),
         idCategoriaPadre: category.categoriaPadre ? category.categoriaPadre?.id : null,
     }
 
@@ -45,10 +47,11 @@ export const PopUpUpdateCategory: FC<IUpdateCategoryModalProps> = ({ display, se
         setDisplay(false)
     }
 
-    const handleSaveChanges = () => {
+    const handleSaveChanges = async () => {
+        console.log(updateCategory.idEmpresa);
         console.log(initialValues.idCategoriaPadre);
         console.log(category.id);
-        const response = categoriaService.updateCategoria(initialValues.id, updateCategory)
+        const response = await categoriaService.updateCategoria(initialValues.id, updateCategory)
         console.log(response);
         handleCloseModal()
     }

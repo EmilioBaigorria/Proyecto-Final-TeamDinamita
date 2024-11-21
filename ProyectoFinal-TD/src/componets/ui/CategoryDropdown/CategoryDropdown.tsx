@@ -1,9 +1,12 @@
-import { FC, useState } from "react"
+import { FC, useEffect, useState } from "react"
 import { ICategorias } from "../../../types/dtos/categorias/ICategorias"
 import styles from "./CategoryDropdown.module.css"
 import { Button } from "react-bootstrap"
 import { CategoriaService } from "../../../services/CategoriaService"
 import { PopUpUpdateCategory } from "../../pages/PopUpUpdateCategory/PopUpUpdateCategory"
+import { useDispatch, useSelector } from "react-redux"
+import { RootState } from "../../../redux/store/store"
+import { addCategoria } from "../../../redux/slices/categoriaSlice"
 
 interface ICategoryDropdown {
     category: ICategorias
@@ -38,6 +41,42 @@ export const CategoryDropdown: FC<ICategoryDropdown> = ({ category, idSucursal }
         articulos: category.articulos,
     }
 
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        console.log("jajas");
+        const setSubcategoria = async () => {
+            const categoriaService = new CategoriaService(import.meta.env.VITE_API_URL);
+            const subcategoriass = await categoriaService.todasCategoriasHijaPorIdPadre(category.id, idSucursal);
+
+
+            if (subcategories !== null) {
+                dispatch(addCategoria(subcategoriass))
+                const subcategorias = useSelector((state: RootState) => state.categorias.categorias)
+                console.log(subcategorias);
+            }
+        }
+        setSubcategoria()
+    }, [])
+
+    /*
+    useEffect(() => {
+    const produGet = async () => {
+      try {
+        if (office) {
+          const listProducts = await productoService.articulosPorSucursalId(office.id);
+          if(listProducts) dispatch(setProductos(listProducts))
+        }
+      } catch (error) {
+        console.log("Hubo un error buscando los productos", error);
+      }
+    };
+
+    if (office) produGet();
+    
+  }, [office]);
+    */
+
     // Esto abre y cierra y maneja el dropdown
     const handleShowSubcategories = async () => {
 
@@ -47,8 +86,7 @@ export const CategoryDropdown: FC<ICategoryDropdown> = ({ category, idSucursal }
         // Chequea que sea falso y que este no este cargado ya para no sobrecargar a peticiones
         if (!isDropdownOpen && subcategories === null) {
 
-            const categoriaService = new CategoriaService(import.meta.env.VITE_API_URL);
-            const subcategories = await categoriaService.todasCategoriasHijaPorIdPadre(category.id, idSucursal);
+
 
             if (subcategories !== null) {
                 setSubcategories(subcategories);
