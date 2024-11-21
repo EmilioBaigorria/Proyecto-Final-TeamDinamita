@@ -2,8 +2,8 @@ import { useLocation } from 'react-router-dom';
 import Card from '../CompanyCard/Card';
 import { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../redux/store/store'; 
-import { setEmpresas } from '../../../redux/slices/EmpresasSlice';
+import { RootState } from '../../../redux/store/store';
+import { setEmpresas } from '../../../redux/slices/empresasSlice';
 import { EmpresaService } from '../../../services/EmpresaService';
 import { Button } from 'react-bootstrap';
 import styles from './SidebarHome.module.css';
@@ -31,8 +31,9 @@ const Sidebar: FC<IDisplayPopUp> = ({
   const location = useLocation();
 
   const handleActiveSubPageChange = (event: React.MouseEvent<HTMLButtonElement>) => {
-    const { name } = event.currentTarget;
-    setActiveSubPage(name);
+    const option = event.currentTarget.textContent?.toLowerCase();
+    console.log(option)
+    setActiveSubPage(option);
   };
 
   const [isAsideOpen, setIsAsideOpen] = useState(true);
@@ -54,7 +55,7 @@ const Sidebar: FC<IDisplayPopUp> = ({
     };
 
     fetchEmpresas();
-  }, []); 
+  }, []);
 
   useEffect(() => {
     if (!refreshEnterprise) {
@@ -112,6 +113,8 @@ const Sidebar: FC<IDisplayPopUp> = ({
           >
             Categorías
           </Button>
+
+
           <Button
             variant="light"
             className={styles.button_styles}
@@ -128,6 +131,9 @@ const Sidebar: FC<IDisplayPopUp> = ({
           >
             Alérgenos
           </Button>
+            <button className='btnAdd' name="categorias" onClick={handleActiveSubPageChange}>CATEGORIAS</button>
+            <button className='btnAdd' onClick={handleActiveSubPageChange}>PRODUCTOS</button>
+            <button className='btnAdd' onClick={handleActiveSubPageChange}>ALERGENOS</button>
         </div>
       )}
     </aside>
