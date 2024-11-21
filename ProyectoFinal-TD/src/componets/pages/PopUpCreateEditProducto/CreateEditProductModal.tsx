@@ -20,10 +20,11 @@ interface IPopUpCreateUpdateProducto {
     displayCreateUpdateProducto: boolean;
     setDisplayCreateUpdateProducto: Function;
     isCreate: boolean;
+    onClose: Function
     selectedProduct: IProductos | null;
 }
 
-export const PopUpCreateUpdateProducto: FC<IPopUpCreateUpdateProducto> = ({ displayCreateUpdateProducto, setDisplayCreateUpdateProducto, isCreate, selectedProduct }) => {
+export const PopUpCreateUpdateProducto: FC<IPopUpCreateUpdateProducto> = ({ displayCreateUpdateProducto, setDisplayCreateUpdateProducto, isCreate, selectedProduct, onClose }) => {
     const producto = selectedProduct
     // @ts-ignore
     const sucursal = useSelector((state: RootState) => state.ActiveOfficeReducer.activeOffice?.id);
@@ -72,6 +73,8 @@ export const PopUpCreateUpdateProducto: FC<IPopUpCreateUpdateProducto> = ({ disp
             idAlergenos: [],
             imagenes: [{ name: 'default', url: '' }]
         });
+        onClose(true)
+        setLogo(null);
         dispatch(removeActiveProducto());
         setDisplayCreateUpdateProducto(false);
     };
@@ -163,6 +166,7 @@ export const PopUpCreateUpdateProducto: FC<IPopUpCreateUpdateProducto> = ({ disp
         };
 
         fetchCategories();
+
     }, [displayCreateUpdateProducto, isCreate, producto]);
 
     // Handle category change

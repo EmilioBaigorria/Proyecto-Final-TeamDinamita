@@ -3,7 +3,7 @@ import { ProductoService } from "../../../services/ProductoService";
 import { IProductos } from "../../../types/dtos/productos/IProductos";
 import { ISucursal } from "../../../types/dtos/sucursal/ISucursal";
 import { ProductoCard } from "../ProductoCard/ProductoCard";
-import { PopUpCreateUpdateProducto } from "../../pages/PopUpCreateEditProducto/CreateEditProductModal"; 
+import { PopUpCreateUpdateProducto } from "../../pages/PopUpCreateEditProducto/CreateEditProductModal";
 import styles from "./ProductosPage.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
@@ -16,13 +16,13 @@ interface IProductosPage {
 }
 
 export const ProductosPage: FC<IProductosPage> = ({ office }) => {
-  const productos = useSelector((state :RootState) => state.productos.productos)
+  const productos = useSelector((state: RootState) => state.productos.productos)
   const dispatch = useDispatch()
   const productoService = new ProductoService(API_URL);
 
-  const [displayCreateUpdateProducto, setDisplayCreateUpdateProducto] = useState<boolean>(false); 
+  const [displayCreateUpdateProducto, setDisplayCreateUpdateProducto] = useState<boolean>(false);
   const [isCreate, setIsCreate] = useState<boolean>(true);
-  const [selectedProduct, setSelectedProduct] = useState<IProductos | null>(null); // Para almacenar el producto seleccionado
+  const [selectedProduct, setSelectedProduct] = useState<IProductos | null>(null);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
 
@@ -34,8 +34,8 @@ export const ProductosPage: FC<IProductosPage> = ({ office }) => {
 
   const handleEditProduct = (product: IProductos) => {
     setSelectedProduct(product);
-    setIsCreate(false); 
-    setDisplayCreateUpdateProducto(true); 
+    setIsCreate(false);
+    setDisplayCreateUpdateProducto(true);
   };
 
   const handleDeleteProduct = async (product: IProductos) => {
@@ -43,6 +43,14 @@ export const ProductosPage: FC<IProductosPage> = ({ office }) => {
     const response = await productoService.deleteProducto(product.id)
     console.log("DAVIDLOG onDelete: ", response)
   }
+
+  const handleOpenModal = () => {
+    setIsCreate(true);
+    setSelectedProduct(null);
+    console.log("DAVIDLOG: Crear btn click: ", isCreate)
+    alert(`DAVIDLOG: Crear btn click: ${isCreate}`)
+    setDisplayCreateUpdateProducto(true);
+  };
 
   useEffect(() => {
     const produGet = async () => {
@@ -57,19 +65,25 @@ export const ProductosPage: FC<IProductosPage> = ({ office }) => {
     };
     produGet();
   }, [dispatch, office, productoService]);
-
+  
   return (
-    <div className={styles.products_container}>
-      {currentProducts.map(product => (
-        <ProductoCard key={product.id} product={product} onEdit={handleEditProduct} onDelete={handleDeleteProduct}/>
-      ))}
-      
-      <PopUpCreateUpdateProducto
-        displayCreateUpdateProducto={displayCreateUpdateProducto}
-        setDisplayCreateUpdateProducto={setDisplayCreateUpdateProducto}
-        isCreate={isCreate}
-        selectedProduct={selectedProduct}
-      />
-    </div>
+    <>
+      <div className={styles.button_container}>
+        <button className='btnAdd' onClick={handleOpenModal}>AGREGAR PRODUCTO</button>
+      </div>
+      <div className={styles.products_container}>
+        {currentProducts.map(product => (
+          <ProductoCard key={product.id} product={product} onEdit={handleEditProduct} onDelete={handleDeleteProduct} />
+        ))}
+
+        <PopUpCreateUpdateProducto
+          displayCreateUpdateProducto={displayCreateUpdateProducto}
+          setDisplayCreateUpdateProducto={setDisplayCreateUpdateProducto}
+          isCreate={isCreate}
+          onClose={setIsCreate}  //Tuve que realizar el seteo dentro del componente popup al cierre del mismo [DAVID CAYO] 
+          selectedProduct={selectedProduct}
+        />
+      </div>
+    </>
   );
 };
