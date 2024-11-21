@@ -1,10 +1,11 @@
-import { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { ProductoService } from "../../../services/ProductoService";
 import { IProductos } from "../../../types/dtos/productos/IProductos";
 import { ISucursal } from "../../../types/dtos/sucursal/ISucursal";
 import { ProductoCard } from "../ProductoCard/ProductoCard";
 import { PopUpCreateUpdateProducto } from "../../pages/PopUpCreateEditProducto/CreateEditProductModal";
 import styles from "./ProductosPage.module.css";
+import stylesAdmin from "../../pages/Administration.module.css"
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
 import { setProductos } from "../../../redux/slices/productosSlice";
@@ -16,8 +17,8 @@ interface IProductosPage {
 }
 
 export const ProductosPage: FC<IProductosPage> = ({ office }) => {
-  const productos = useSelector((state: RootState) => state.productos.productos)
-  const dispatch = useDispatch()
+  const productos = useSelector((state: RootState) => state.productos.productos);
+  const dispatch = useDispatch();
   const productoService = new ProductoService(API_URL);
 
   const [displayCreateUpdateProducto, setDisplayCreateUpdateProducto] = useState<boolean>(false);
@@ -32,6 +33,26 @@ export const ProductosPage: FC<IProductosPage> = ({ office }) => {
   const currentProducts = productos.slice(indexOfFirstProduct, indexOfLastProduct);
   const totalPages = Math.ceil(productos.length / pageSize);
 
+  useEffect(() => {
+    if (!office) return; // Evita ejecutar código si `office` es null
+
+    const fetchProducts = async () => {
+      try {
+        const listProducts = await productoService.articulosPorSucursalId(office.id);
+        if (listProducts) dispatch(setProductos(listProducts));
+      } catch (error) {
+        console.error("Error al obtener productos:", error);
+      }
+    };
+    fetchProducts();
+  }, [dispatch, office, productoService]);
+
+  const handleOpenModal = () => {
+    setIsCreate(true);
+    setSelectedProduct(null);
+    setDisplayCreateUpdateProducto(true);
+  };
+
   const handleEditProduct = (product: IProductos) => {
     setSelectedProduct(product);
     setIsCreate(false);
@@ -39,51 +60,50 @@ export const ProductosPage: FC<IProductosPage> = ({ office }) => {
   };
 
   const handleDeleteProduct = async (product: IProductos) => {
-    const productoService = new ProductoService(API_URL);
-    const response = await productoService.deleteProducto(product.id)
-    console.log("DAVIDLOG onDelete: ", response)
-  }
-
-  const handleOpenModal = () => {
-    setIsCreate(true);
-    setSelectedProduct(null);
-    console.log("DAVIDLOG: Crear btn click: ", isCreate)
-    alert(`DAVIDLOG: Crear btn click: ${isCreate}`)
-    setDisplayCreateUpdateProducto(true);
+    try {
+      await productoService.deleteProducto(product.id);
+      console.log("Producto eliminado con éxito");
+    } catch (error) {
+      console.error("Error al eliminar producto:", error);
+    }
   };
 
-  useEffect(() => {
-    const produGet = async () => {
-      try {
-        if (office) {
-          const listProducts = await productoService.articulosPorSucursalId(office.id);
-          if (listProducts) dispatch(setProductos(listProducts));
-        }
-      } catch (error) {
-        console.error("Error al obtener productos:", error);
-      }
-    };
-    produGet();
-  }, [dispatch, office, productoService]);
-  
   return (
     <>
-      <div className={styles.button_container}>
-        <button className='btnAdd' onClick={handleOpenModal}>AGREGAR PRODUCTO</button>
-      </div>
-      <div className={styles.products_container}>
-        {currentProducts.map(product => (
-          <ProductoCard key={product.id} product={product} onEdit={handleEditProduct} onDelete={handleDeleteProduct} />
-        ))}
 
-        <PopUpCreateUpdateProducto
-          displayCreateUpdateProducto={displayCreateUpdateProducto}
-          setDisplayCreateUpdateProducto={setDisplayCreateUpdateProducto}
-          isCreate={isCreate}
-          onClose={setIsCreate}  //Tuve que realizar el seteo dentro del componente popup al cierre del mismo [DAVID CAYO] 
-          selectedProduct={selectedProduct}
-        />
-      </div>
+      {!office ? (
+        <div className={stylesAdmin.noActiveOfficeContainer}>
+          <div className={stylesAdmin.noActiveOfficeMessage}>
+            <h2>Seleccione una empresa y sucursal para continuar</h2>
+            <p>Seleccione una empresa y luego una sucursal para realizar acciones.</p>
+          </div>
+        </div>
+      ) : (
+        <>
+
+          <div className={styles.button_container}>
+            <button className="btnAdd" onClick={handleOpenModal}>AGREGAR PRODUCTO</button>
+          </div>
+          <div className={styles.products_container}>
+            {currentProducts.map(product => (
+              <ProductoCard 
+                key={product.id} 
+                product={product} 
+                onEdit={handleEditProduct} 
+                onDelete={handleDeleteProduct} 
+              />
+            ))}
+    
+            <PopUpCreateUpdateProducto
+              displayCreateUpdateProducto={displayCreateUpdateProducto}
+              setDisplayCreateUpdateProducto={setDisplayCreateUpdateProducto}
+              isCreate={isCreate}
+              onClose={setIsCreate}
+              selectedProduct={selectedProduct}
+            />
+          </div>
+        </>
+      )}
     </>
   );
-};
+}
