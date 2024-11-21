@@ -10,10 +10,10 @@ interface IUpdateCategoryModalProps {
     display: boolean;              // Propiedad para manejar la visibilidad del popup
     setDisplay: Function;          // Funcion para cambiar la visibilidad del popup
     category: ICategorias;         // Datos de la categoria a editar
+    refreshCategory: Function;
 }
 
-export const PopUpUpdateCategory: FC<IUpdateCategoryModalProps> = ({ display, setDisplay, category }) => {
-
+export const PopUpUpdateCategory: FC<IUpdateCategoryModalProps> = ({ display, setDisplay, category, refreshCategory }) => {
     const categoriaService = new CategoriaService(API_URL)
 
     const sucursales: number[] = []
@@ -48,11 +48,8 @@ export const PopUpUpdateCategory: FC<IUpdateCategoryModalProps> = ({ display, se
     }
 
     const handleSaveChanges = async () => {
-        console.log(updateCategory.idEmpresa);
-        console.log(initialValues.idCategoriaPadre);
-        console.log(category.id);
         const response = await categoriaService.updateCategoria(initialValues.id, updateCategory)
-        console.log(response);
+        refreshCategory();
         handleCloseModal()
     }
 
@@ -66,7 +63,7 @@ export const PopUpUpdateCategory: FC<IUpdateCategoryModalProps> = ({ display, se
             <Modal show={display} onHide={handleCloseModal}>
 
                 <Modal.Header>
-                    <Modal.Title>Crear categoria</Modal.Title>
+                    <Modal.Title>Modificar categoria</Modal.Title>
                 </Modal.Header>
 
                 <Modal.Body>
@@ -75,8 +72,8 @@ export const PopUpUpdateCategory: FC<IUpdateCategoryModalProps> = ({ display, se
                         <Form.Control style={{ width: "20rem", }} value={`${updateCategory.denominacion}`} type="text" name='denominacion' onChange={handleChangeInputs} required/>
                     </FloatingLabel>
 
-                    <FloatingLabel label={updateCategory.eliminado ? "Eliminado" : "No eliminado"}>
-                        <Form.Check style={{ width: "20rem", }} value={`${updateCategory.eliminado}`} type="switch" name='eliminado' onChange={handleChangeInputs} required/>
+                    <FloatingLabel label="Eliminado">
+                        <Form.Control style={{ width: "20rem", }} value={`${updateCategory.eliminado}`} type="check" name='eliminado' onChange={handleChangeInputs} required/>
                     </FloatingLabel>
 
                     <FloatingLabel label="ID Empresa">
