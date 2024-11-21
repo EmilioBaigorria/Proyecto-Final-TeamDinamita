@@ -56,7 +56,8 @@ export const Home: FC<IHome> = ({ setDisplayOffice, setDisplayPopUpEditOffice, d
 
     return (<main style={{
         display: displayListOffice ? "flex" : "none",
-        flexDirection: "column"
+        flexDirection: "column",
+        height:"100vh"
     }}>
         <HomeHeader setDisplayPopUpCreateOffice={setDisplayPopUpCreateOffice} setDisplayListOffice={setDisplayListOffice} />
         <ListOffice offices={sucursales} setDisplayOffice={setDisplayOffice} setDisplayPopUpEditOffice={setDisplayPopUpEditOffice}  />
