@@ -5,8 +5,11 @@ import { ISucursal } from "../../../types/dtos/sucursal/ISucursal";
 import { ProductoCard } from "../ProductoCard/ProductoCard";
 import { PopUpCreateUpdateProducto } from "../../pages/PopUpCreateEditProducto/CreateEditProductModal"; 
 import styles from "./ProductosPage.module.css";
-import { useSelector } from "react-redux";
+
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
+import { setProductos } from "../../../redux/slices/productosSlice";
+
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -15,26 +18,30 @@ interface IProductosPage {
 }
 
 export const ProductosPage: FC<IProductosPage> = ({ office }) => {
-  const activeOffice = useSelector((state :RootState)=> state.ActiveOfficeReducer.activeOffice)
+  //if(office) console.log("LOGDAVID | Office: ", office.nombre, " ID", office.id)
+  const productos = useSelector((state :RootState) => state.productos.productos)
+  const dispatch = useDispatch()
+
   const productoService = new ProductoService(API_URL);
-  const [products, setProducts] = useState<IProductos[] | null>(null);
+
   const [displayCreateUpdateProducto, setDisplayCreateUpdateProducto] = useState<boolean>(false); 
   const [isCreate, setIsCreate] = useState<boolean>(true);
 
   useEffect(() => {
     const produGet = async () => {
       try {
-        if (activeOffice) {
-          const productData = await productoService.articulosPorSucursalId(activeOffice?.id);
-          setProducts(productData);
-          console.log("LOGDAVID", productData);
+        if (office) {
+          const listProducts = await productoService.articulosPorSucursalId(office.id);
+          if(listProducts) dispatch(setProductos(listProducts))
         }
       } catch (error) {
         console.log("Hubo un error buscando los productos", error);
       }
     };
-    produGet();
-  }, [activeOffice]);
+
+    if (office) produGet();
+    
+  }, [office]);
 
   const handleOpenModal = () => {
     setIsCreate(true); 
@@ -53,11 +60,11 @@ export const ProductosPage: FC<IProductosPage> = ({ office }) => {
       </div>      
       }
 
-      { products && 
+      { productos && 
       <div className={styles.main_products_container}>
         <div className={styles.products_container}>
-          {products ? (
-            products.map((product) => (
+          {productos ? (
+            productos.map((product) => (
               <ProductoCard product={product} key={product.id} />
             ))
           ) : (
