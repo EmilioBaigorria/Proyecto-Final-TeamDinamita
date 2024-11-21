@@ -28,4 +28,35 @@ export class ProductoService extends BackendClient<IProductos|ICreateProducto|IU
         const data=await response.json()
         return data as IProductos
     }
+
+    async createProducto(data:ICreateProducto):Promise<ICreateProducto>{
+        const response=await fetch(`${this.baseUrl}/articulos/create`,{
+            method:"POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body:JSON.stringify(data)
+        })
+        const newData=await response.json()
+        return newData as ICreateProducto
+    }
+    async updateProducto(id:number, data:IUpdateProducto):Promise<IUpdateProducto>{
+        const response=await fetch(`${this.baseUrl}/articulos/update/${id}`,{
+            method:"PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body:JSON.stringify(data)
+        })
+        const newData=await response.json()
+        return newData as IUpdateProducto
+    }
+    async deleteProducto(id:number):Promise<void>{
+        const response=await fetch(`${this.baseUrl}/articulos/${id}`,{
+            method:"DELETE",
+        })
+        if(!response.ok){
+            throw new Error(`Error al eliminar el producto con ID ${id}`)
+        }
+    }
 }
