@@ -12,8 +12,10 @@ interface IPopUpEditOffice{
     displayPopUpEditOffice :boolean,
     setDisplayPopUpEditOffice: Function,
     setDisplayListOffice:Function
+    refreshOffice:Function
 }
-export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,setDisplayPopUpEditOffice,setDisplayListOffice}) => {
+export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,setDisplayPopUpEditOffice,setDisplayListOffice, refreshOffice}) => {
+    refreshOffice(false);
     const activeOffice : ISucursal | null = useAppSelector(
         (state)=>state.ActiveOfficeReducer.activeOffice
     )
@@ -76,6 +78,7 @@ export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,se
             await sucurSevice.updateSucursal(Number(upSucur.id),upSucur)
             setDisplayListOffice(false)
             setDisplayListOffice(true)  
+            refreshOffice(true);
             setDisplayPopUpEditOffice(false)
         }catch(err){
             console.log("Ocurrio un error gurdando la nueva sucursal: ",err)
