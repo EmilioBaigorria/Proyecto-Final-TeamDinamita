@@ -15,7 +15,7 @@ const Administration: FC<IAdministracion> = ({ activeSubPage, setDisplayCreateUp
     (state) => state.ActiveOfficeReducer.activeOffice
   )
   return (
-    <main>
+    <main style={{height:"100vh"}}>
       {activeSubPage == "categorias" ? <CategoriasPage office={activeOffice} /> :
         activeSubPage == "productos" ? <ProductosPage office={activeOffice} /> :
           activeSubPage == "alergenos" ? <AlergenosPage
