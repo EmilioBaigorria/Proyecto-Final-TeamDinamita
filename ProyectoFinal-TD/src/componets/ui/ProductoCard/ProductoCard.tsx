@@ -5,12 +5,13 @@ import { Button } from 'react-bootstrap';
 
 interface IProductoCard {
     product: IProductos;
+    onEdit: Function
 }
 
-export const ProductoCard: FC<IProductoCard> = ({ product }) => {
+export const ProductoCard: FC<IProductoCard> = ({ product, onEdit }) => {
 
     const handleEditModal = () =>{
-
+        onEdit(product)
     }
     const handleDeleteProducto = () =>{
 
