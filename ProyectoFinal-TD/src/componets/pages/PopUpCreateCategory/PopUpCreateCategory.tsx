@@ -16,7 +16,6 @@ export const PopUpCreateCategory: FC<ICreateCategoryModalProps> = ({ display, se
     const initialValues: ICreateCategoria = {
         denominacion: "",
         idEmpresa: 0,
-        idSucursal: 0,
         idCategoriaPadre: 0 || null,
     }
 
@@ -55,10 +54,6 @@ export const PopUpCreateCategory: FC<ICreateCategoryModalProps> = ({ display, se
 
                     <FloatingLabel label="ID Empresa">
                         <Form.Control style={{ width: "20rem", }} value={createCategory.idEmpresa} type="text" name='idEmpresa' onChange={handleChangeInputs} required />
-                    </FloatingLabel>
-
-                    <FloatingLabel label="ID Sucursal">
-                        <Form.Control style={{ width: "20rem", }} value={createCategory.idSucursal} type="text" name='idSucursal' onChange={handleChangeInputs} required />
                     </FloatingLabel>
 
                     <FloatingLabel label="ID Categoría Padre (opcional)">

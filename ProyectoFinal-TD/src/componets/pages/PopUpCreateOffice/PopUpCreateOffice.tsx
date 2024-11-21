@@ -78,6 +78,7 @@ export const PopUpCreateOffice:FC<IPopUpCreateOffice> = ({displayPopUpCreateOffi
             const createdSucursal:ISucursal= await sucuService.createSucursal(newSucu) as ISucursal 
             dispatch(addSucursal(createdSucursal))
             setDisplayPopUpCreateOffice(false)
+            console.log(createdSucursal);
         } catch (error) {
             console.log("Hubor un error creando la nueva sucursal: ",error)
         }
