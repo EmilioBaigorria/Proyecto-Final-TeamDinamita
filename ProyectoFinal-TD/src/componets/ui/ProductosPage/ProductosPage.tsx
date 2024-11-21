@@ -72,12 +72,15 @@ export const ProductosPage: FC<IProductosPage> = ({ office }) => {
     <>
 
       {!office ? (
+        <>
+        <h1>Productos</h1>
         <div className={stylesAdmin.noActiveOfficeContainer}>
           <div className={stylesAdmin.noActiveOfficeMessage}>
             <h2>Seleccione una empresa y sucursal para continuar</h2>
             <p>Seleccione una empresa y luego una sucursal para realizar acciones.</p>
           </div>
         </div>
+        </>
       ) : (
         <>
 
