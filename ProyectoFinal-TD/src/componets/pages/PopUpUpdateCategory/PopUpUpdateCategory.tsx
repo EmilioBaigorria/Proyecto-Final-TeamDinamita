@@ -3,6 +3,8 @@ import { IUpdateCategoria } from "../../../types/dtos/categorias/IUpdateCategori
 import { ICategorias } from "../../../types/dtos/categorias/ICategorias";
 import { useAppSelector } from "../../../hooks/redux";
 import { Button, FloatingLabel, Form, Modal } from "react-bootstrap";
+import { CategoriaService } from "../../../services/CategoriaService";
+const API_URL = import.meta.env.VITE_API_URL;
 
 interface IUpdateCategoryModalProps {
     display: boolean;              // Propiedad para manejar la visibilidad del popup
@@ -12,6 +14,7 @@ interface IUpdateCategoryModalProps {
 
 export const PopUpUpdateCategory: FC<IUpdateCategoryModalProps> = ({ display, setDisplay, category }) => {
 
+    const categoriaService = new CategoriaService(API_URL)
 
     const sucursales: number[] = []
     category.sucursales.map((sucur) => (
@@ -43,8 +46,11 @@ export const PopUpUpdateCategory: FC<IUpdateCategoryModalProps> = ({ display, se
     }
 
     const handleSaveChanges = () => {
-
-        // 1) cuerpo del modal, 2) 
+        console.log(initialValues.idCategoriaPadre);
+        console.log(category.id);
+        const response = categoriaService.updateCategoria(initialValues.id, updateCategory)
+        console.log(response);
+        handleCloseModal()
     }
 
     const handleChangeInputs = (event: ChangeEvent<HTMLInputElement>) => {
@@ -67,7 +73,7 @@ export const PopUpUpdateCategory: FC<IUpdateCategoryModalProps> = ({ display, se
                     </FloatingLabel>
 
                     <FloatingLabel label="Eliminado">
-                        <Form.Control style={{ width: "20rem", }} value={`${updateCategory.eliminado}`} type="text" name='eliminado' onChange={handleChangeInputs} required/>
+                        <Form.Control style={{ width: "20rem", }} value={`${updateCategory.eliminado}`} type="check" name='eliminado' onChange={handleChangeInputs} required/>
                     </FloatingLabel>
 
                     <FloatingLabel label="ID Empresa">
@@ -84,7 +90,7 @@ export const PopUpUpdateCategory: FC<IUpdateCategoryModalProps> = ({ display, se
                     <Button variant="secondary" onClick={handleCloseModal}>
                         Cancelar
                     </Button>
-                    <Button variant="primary" onClick={handleChangeInputs}>
+                    <Button variant="primary" onClick={handleSaveChanges}>
                         Guardar cambios
                     </Button>
                 </Modal.Footer>
