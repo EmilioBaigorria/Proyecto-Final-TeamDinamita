@@ -104,7 +104,7 @@ const Sidebar: FC<IDisplayPopUp> = ({
 
       {location.pathname === '/admin' && (
         <div className={styles.button_container}>
-          <h2>Administración</h2>
+          <h2 style={{marginRight: "1rem"}}>Administración</h2>
           
             <button className='btnAdd' name="categorias" onClick={handleActiveSubPageChange}>CATEGORIAS</button>
             <button className='btnAdd' onClick={handleActiveSubPageChange}>PRODUCTOS</button>

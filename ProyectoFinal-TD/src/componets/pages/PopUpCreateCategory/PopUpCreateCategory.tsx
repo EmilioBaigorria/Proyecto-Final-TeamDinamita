@@ -15,7 +15,7 @@ export const PopUpCreateCategory: FC<ICreateCategoryModalProps> = ({ display, se
 
     const initialValues: ICreateCategoria = {
         denominacion: "",
-        idEmpresa: 0,
+        idEmpresa: 1,
         idCategoriaPadre: 0 || null,
     }
 

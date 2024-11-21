@@ -10,7 +10,6 @@ import { PopUpSeeOffice } from "../componets/pages/PopUpSeeOffice/PopUpSeeOffice
 import { PopUpEditOffice } from "../componets/pages/PopUpEditOffice/PopUpEditOffice";
 import { PopUpCreateOffice } from "../componets/pages/PopUpCreateOffice/PopUpCreateOffice";
 import { PopUpCreateUpdateAlergeno } from "../componets/pages/PopUpCreateUpdateAlergeno/PopUpCreateUpdateAlergeno";
-import styles from "./AppRouter.module.css"
 
 
 
@@ -24,48 +23,52 @@ export const AppRouter = () => {
     const [displayPopUpEditOffice, setDisplayPopUpEditOffice] = useState(false)
     const [displayListOffice, setDisplayListOffice] = useState(true)
     const [displayPopUpCreateOffice, setDisplayPopUpCreateOffice] = useState(false)
-    const [activeSubPage,setActiveSubPage]=useState("none")
+    const [activeSubPage, setActiveSubPage] = useState("none")
 
-    const [displayCreateUpdateAlergeno,setDisplayCreateUpdateAlergeno]=useState(false)
-    const [isCreate,setIsCreate]=useState(true)
-    const [refreshOffice, setRefreshOffice]=useState(false)
-    const [refreshEnterprise, setRefreshEnterprise]=useState(false)
-    const setRefreshOfficeTrue=(data: boolean)=>{setRefreshOffice(data)} 
-    const setRefreshEnterpriseTrue=(data: boolean)=>{setRefreshEnterprise(data)} 
+    const [displayCreateUpdateAlergeno, setDisplayCreateUpdateAlergeno] = useState(false)
+    const [isCreate, setIsCreate] = useState(true)
+    const [refreshOffice, setRefreshOffice] = useState(false)
+    const [refreshEnterprise, setRefreshEnterprise] = useState(false)
+    const setRefreshOfficeTrue = (data: boolean) => { setRefreshOffice(data) }
+    const setRefreshEnterpriseTrue = (data: boolean) => { setRefreshEnterprise(data) }
 
 
     return (
-        <div className="grid_container" style={{height:"100vh"}}>
+        <div className="grid_container" style={{ height: "100vh" }}>
             <BrowserRouter>
-                <nav>
+                <nav style={{ display: "flex", flexDirection: "row", alignContent: "center"}}>
                     <ul>
                         <li>
-                            <Link className="imgLink" to='/'>
+                            <Link className="imgLink" to='/' style={{ textDecoration: 'none' }}>
                                 <img src="./favicon.jpeg" alt="logo" />
-                                
+                                <div style={{
+                                    fontSize: "1.5rem",
+                                    textDecoration: "none",
+                                    fontWeight: "bold",
+                                }}>
                                     DINAMITA
-                                
+                                </div>
                             </Link>
                         </li>
                     </ul>
                 </nav>
                 <PopUpCreateOffice displayPopUpCreateOffice={displayPopUpCreateOffice} setDisplayPopUpCreateOffice={setDisplayPopUpCreateOffice} />
-                <PopUpEditOffice displayPopUpEditOffice={displayPopUpEditOffice} setDisplayPopUpEditOffice={setDisplayPopUpEditOffice} setDisplayListOffice={setDisplayListOffice} refreshOffice={setRefreshOfficeTrue}/>
+                <PopUpEditOffice displayPopUpEditOffice={displayPopUpEditOffice} setDisplayPopUpEditOffice={setDisplayPopUpEditOffice} setDisplayListOffice={setDisplayListOffice} refreshOffice={setRefreshOfficeTrue} />
                 <PopUpChekEnterprise displayModalCheckEnterprise={displayModalCheckEnterprise} setdisplayModalCheckEnterprise={setdisplayModalCheckEnterprise} />
                 <PopUpMakeEnterprise display={display} setDisplay={setDisplay} />
                 <EditEnterpriseModal display={displayModalEditEnterprise} setDisplay={setDisplayModalEditEnterprise} refreshEnterprise={setRefreshEnterpriseTrue} />
                 <PopUpSeeOffice displayPopUpOffice={displayPopUpOffice} setDisplayPopUpOffice={setDisplayPopUpOffice} />
 
                 <PopUpCreateUpdateAlergeno
-                isCreate={isCreate}
-                displayCreateUpdateAlergeno={displayCreateUpdateAlergeno} 
-                setDisplayCreateUpdateAlergeno={setDisplayCreateUpdateAlergeno}/>
+                    isCreate={isCreate}
+                    displayCreateUpdateAlergeno={displayCreateUpdateAlergeno}
+                    setDisplayCreateUpdateAlergeno={setDisplayCreateUpdateAlergeno} />
 
-                <Sidebar setDisplay={setDisplay} 
-                setdisplayModalCheckEnterprise={setdisplayModalCheckEnterprise} 
-                setDisplayModalEditEnterprise={setDisplayModalEditEnterprise}
-                setActiveSubPage={setActiveSubPage}
-                refreshEnterprise={refreshEnterprise}
+                <Sidebar setDisplay={setDisplay}
+                    setdisplayModalCheckEnterprise={setdisplayModalCheckEnterprise}
+                    setDisplayModalEditEnterprise={setDisplayModalEditEnterprise}
+                    setActiveSubPage={setActiveSubPage}
+                    refreshEnterprise={refreshEnterprise}
                 />
 
 
@@ -79,7 +82,7 @@ export const AppRouter = () => {
                         setDisplayPopUpCreateOffice={setDisplayPopUpCreateOffice}
                         displayPopUpCreateOffice={displayPopUpCreateOffice}
                         refreshOffice={refreshOffice} />} />
-                    <Route path="/admin" element={<Administration 
+                    <Route path="/admin" element={<Administration
                         activeSubPage={activeSubPage}
                         setDisplayCreateUpdateAlergeno={setDisplayCreateUpdateAlergeno}
                         setIsCreate={setIsCreate} />} />
