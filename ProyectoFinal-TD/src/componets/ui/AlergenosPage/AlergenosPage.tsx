@@ -9,11 +9,14 @@ const API_URL = import.meta.env.VITE_API_URL;
 interface IAlergenosPage{
     setDisplayCreateUpdateAlergeno:Function
     setIsCreate:Function
+    refreshAlergeno: Boolean
 }
-export const AlergenosPage:FC<IAlergenosPage> = ({setDisplayCreateUpdateAlergeno,setIsCreate}) => {
+export const AlergenosPage:FC<IAlergenosPage> = ({setDisplayCreateUpdateAlergeno,setIsCreate, refreshAlergeno}) => {
+
+    
     const alerService=new AlergenoService(API_URL)
     const [alergenos,setAlergenos]=useState<IAlergenos[]|null>([])
-    const getAlergenos=useEffect(()=>{
+    useEffect(()=>{
         const getaler=async ()=>{
             try {
                 const alergenosData=await alerService.getAllAlergenos()
@@ -25,7 +28,7 @@ export const AlergenosPage:FC<IAlergenosPage> = ({setDisplayCreateUpdateAlergeno
             }
         }
         getaler()
-    },[])
+    },[refreshAlergeno])
     const handleOpenCreateModal=()=>{
         setIsCreate(true)
         setDisplayCreateUpdateAlergeno(true)
