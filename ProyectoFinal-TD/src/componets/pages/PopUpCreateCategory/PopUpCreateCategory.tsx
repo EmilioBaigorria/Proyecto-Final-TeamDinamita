@@ -1,28 +1,22 @@
 import { ChangeEvent, FC, useState } from "react";
 import { Button, FloatingLabel, Form, Modal } from "react-bootstrap";
 import { CategoriaService } from "../../../services/CategoriaService";
-import { ICategorias } from "../../../types/dtos/categorias/ICategorias";
 import { ICreateCategoria } from "../../../types/dtos/categorias/ICreateCategoria";
 const API_URL = import.meta.env.VITE_API_URL;
 
-interface IUpdateCategoryModalProps {
+interface ICreateCategoryModalProps {
     display: boolean;              // Propiedad para manejar la visibilidad del popup
     setDisplay: Function;          // Funcion para cambiar la visibilidad del popup
-    category: ICategorias;         // Datos de la categoria a editar
     refreshCategory: Function;     // Nadie vio esto jajaja
 }
 
-export const PopUpUpdateCategory: FC<IUpdateCategoryModalProps> = ({ display, setDisplay, category, refreshCategory }) => {
+export const PopUpCreateCategory: FC<ICreateCategoryModalProps> = ({ display, setDisplay, refreshCategory }) => {
     const categoriaService = new CategoriaService(API_URL)
-
-    const sucursales: number[] = []
-    category.sucursales.map((sucur) => (
-        sucursales.push(sucur.id)
-    ))
 
     const initialValues: ICreateCategoria = {
         denominacion: "",
         idEmpresa: 0,
+        idSucursal: 0,
         idCategoriaPadre: 0 || null,
     }
 
@@ -33,9 +27,11 @@ export const PopUpUpdateCategory: FC<IUpdateCategoryModalProps> = ({ display, se
     }
 
     const handleSaveChanges = async () => {
-        await categoriaService.createCategoria(createCategory)
+        const response = await categoriaService.createCategoria(createCategory)
+        console.log(response);
         refreshCategory();
         handleCloseModal()
+        setCreateCategory(initialValues)
     }
 
     const handleChangeInputs = (event: ChangeEvent<HTMLInputElement>) => {
@@ -48,21 +44,25 @@ export const PopUpUpdateCategory: FC<IUpdateCategoryModalProps> = ({ display, se
             <Modal show={display} onHide={handleCloseModal}>
 
                 <Modal.Header>
-                    <Modal.Title>Modificar categoria</Modal.Title>
+                    <Modal.Title>Crear categoria</Modal.Title>
                 </Modal.Header>
 
                 <Modal.Body>
 
                     <FloatingLabel label="Denominación">
-                        <Form.Control style={{ width: "20rem", }} value={"Denominación"} type="text" name='denominacion' onChange={handleChangeInputs} required />
+                        <Form.Control style={{ width: "20rem", }} value={createCategory.denominacion} type="text" name='denominacion' onChange={handleChangeInputs} required />
                     </FloatingLabel>
 
                     <FloatingLabel label="ID Empresa">
-                        <Form.Control style={{ width: "20rem", }} value={`ID Empresa`} type="text" name='idEmpresa' onChange={handleChangeInputs} required />
+                        <Form.Control style={{ width: "20rem", }} value={createCategory.idEmpresa} type="text" name='idEmpresa' onChange={handleChangeInputs} required />
+                    </FloatingLabel>
+
+                    <FloatingLabel label="ID Sucursal">
+                        <Form.Control style={{ width: "20rem", }} value={createCategory.idSucursal} type="text" name='idSucursal' onChange={handleChangeInputs} required />
                     </FloatingLabel>
 
                     <FloatingLabel label="ID Categoría Padre (opcional)">
-                        <Form.Control style={{ width: "20rem", }} value={`ID Categoría Padre`} type="text" name='idCategoriaPadre' onChange={handleChangeInputs} />
+                        <Form.Control style={{ width: "20rem", }} value={createCategory.idCategoriaPadre ? createCategory.idCategoriaPadre : ""} type="text" name='idCategoriaPadre' onChange={handleChangeInputs} />
                     </FloatingLabel>
 
                 </Modal.Body>

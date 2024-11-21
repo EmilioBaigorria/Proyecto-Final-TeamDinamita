@@ -73,7 +73,7 @@ export const PopUpUpdateCategory: FC<IUpdateCategoryModalProps> = ({ display, se
                         <Form.Control style={{ width: "20rem", }} value={`${updateCategory.denominacion}`} type="text" name='denominacion' onChange={handleChangeInputs} required />
                     </FloatingLabel>
 
-                    <Form.Check style={{ width: "20rem", }} value={`${updateCategory.eliminado}`} label={updateCategory.eliminado ? "Eliminado" : "Sin eliminar"} type="switch" name='eliminado' onCh={handleChangeInputs} required />
+                    <Form.Check style={{ width: "20rem", }} value={`${updateCategory.eliminado}`} label={updateCategory.eliminado ? "Eliminado" : "Sin eliminar"} type="switch" name='eliminado' onChange={handleChangeInputs} required />
 
                     <FloatingLabel label="ID Empresa">
                         <Form.Control style={{ width: "20rem", }} value={`${updateCategory.idEmpresa}`} type="text" name='idEmpresa' onChange={handleChangeInputs} required />
