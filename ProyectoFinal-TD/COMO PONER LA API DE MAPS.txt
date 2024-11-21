@@ -1,1 +1,0 @@
-el archivo es el que tiene la api key es un txt, tiene el formato "tx" sin la T por los bots y las api key
