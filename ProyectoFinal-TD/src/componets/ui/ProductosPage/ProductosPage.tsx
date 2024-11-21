@@ -27,6 +27,14 @@ export const ProductosPage: FC<IProductosPage> = ({ office }) => {
   const [displayCreateUpdateProducto, setDisplayCreateUpdateProducto] = useState<boolean>(false); 
   const [isCreate, setIsCreate] = useState<boolean>(true);
 
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
+  const pageSize = 6;
+  const indexOfLastProduct = currentPage * pageSize;
+  const indexOfFirstProduct = indexOfLastProduct - pageSize;
+  const currentProducts = productos.slice(indexOfFirstProduct, indexOfLastProduct);
+  const totalPages = Math.ceil(productos.length / pageSize);
+
   useEffect(() => {
     const produGet = async () => {
       try {
@@ -64,12 +72,27 @@ export const ProductosPage: FC<IProductosPage> = ({ office }) => {
       <div className={styles.main_products_container}>
         <div className={styles.products_container}>
           {productos ? (
-            productos.map((product) => (
+            currentProducts.map((product) => (
               <ProductoCard product={product} key={product.id} />
             ))
           ) : (
             <h2>Hubo un error con los productos</h2>
           )}
+        </div>
+        <div className={styles.pagination_container}>
+          <button
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+          >
+            Anterior
+          </button>
+          <span>Página {currentPage} de {totalPages}</span>
+          <button
+            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+            disabled={currentPage === totalPages}
+          >
+            Siguiente
+          </button>
         </div>
       </div>      
       }

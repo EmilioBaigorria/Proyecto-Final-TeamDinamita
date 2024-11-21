@@ -27,7 +27,10 @@ export const AppRouter = () => {
 
     const [displayCreateUpdateAlergeno,setDisplayCreateUpdateAlergeno]=useState(false)
     const [isCreate,setIsCreate]=useState(true)
-
+    const [refreshOffice, setRefreshOffice]=useState(false)
+    const [refreshEnterprise, setRefreshEnterprise]=useState(false)
+    const setRefreshOfficeTrue=(data: boolean)=>{setRefreshOffice(data)} 
+    const setRefreshEnterpriseTrue=(data: boolean)=>{setRefreshEnterprise(data)} 
 
 
     return (
@@ -40,10 +43,10 @@ export const AppRouter = () => {
                     </ul>
                 </nav>
                 <PopUpCreateOffice displayPopUpCreateOffice={displayPopUpCreateOffice} setDisplayPopUpCreateOffice={setDisplayPopUpCreateOffice} />
-                <PopUpEditOffice displayPopUpEditOffice={displayPopUpEditOffice} setDisplayPopUpEditOffice={setDisplayPopUpEditOffice} setDisplayListOffice={setDisplayListOffice} />
+                <PopUpEditOffice displayPopUpEditOffice={displayPopUpEditOffice} setDisplayPopUpEditOffice={setDisplayPopUpEditOffice} setDisplayListOffice={setDisplayListOffice} refreshOffice={setRefreshOfficeTrue}/>
                 <PopUpChekEnterprise displayModalCheckEnterprise={displayModalCheckEnterprise} setdisplayModalCheckEnterprise={setdisplayModalCheckEnterprise} />
                 <PopUpMakeEnterprise display={display} setDisplay={setDisplay} />
-                <EditEnterpriseModal display={displayModalEditEnterprise} setDisplay={setDisplayModalEditEnterprise} />
+                <EditEnterpriseModal display={displayModalEditEnterprise} setDisplay={setDisplayModalEditEnterprise} refreshEnterprise={setRefreshEnterpriseTrue} />
                 <PopUpSeeOffice displayPopUpOffice={displayPopUpOffice} setDisplayPopUpOffice={setDisplayPopUpOffice} />
 
                 <PopUpCreateUpdateAlergeno
@@ -54,7 +57,9 @@ export const AppRouter = () => {
                 <Sidebar setDisplay={setDisplay} 
                 setdisplayModalCheckEnterprise={setdisplayModalCheckEnterprise} 
                 setDisplayModalEditEnterprise={setDisplayModalEditEnterprise}
-                setActiveSubPage={setActiveSubPage} />
+                setActiveSubPage={setActiveSubPage}
+                refreshEnterprise={refreshEnterprise}
+                />
 
 
                 <Routes>
@@ -65,7 +70,8 @@ export const AppRouter = () => {
                         setDisplayListOffice={setDisplayListOffice}
                         displayPopUpEditOffice={displayPopUpEditOffice}
                         setDisplayPopUpCreateOffice={setDisplayPopUpCreateOffice}
-                        displayPopUpCreateOffice={displayPopUpCreateOffice} />} />
+                        displayPopUpCreateOffice={displayPopUpCreateOffice}
+                        refreshOffice={refreshOffice} />} />
                     <Route path="/admin" element={<Administration 
                         activeSubPage={activeSubPage}
                         setDisplayCreateUpdateAlergeno={setDisplayCreateUpdateAlergeno}

@@ -12,11 +12,14 @@ interface IPopUpEditOffice{
     displayPopUpEditOffice :boolean,
     setDisplayPopUpEditOffice: Function,
     setDisplayListOffice:Function
+    refreshOffice:Function
 }
-export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,setDisplayPopUpEditOffice,setDisplayListOffice}) => {
+export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,setDisplayPopUpEditOffice,setDisplayListOffice, refreshOffice}) => {
+    refreshOffice(false);
     const activeOffice : ISucursal | null = useAppSelector(
         (state)=>state.ActiveOfficeReducer.activeOffice
     )
+
     const initialValues  ={
         idEmpresa: activeOffice?.empresa.id|| 0 ,
         nombre: activeOffice?.nombre || "",
@@ -36,13 +39,16 @@ export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,se
         horarioApertura: activeOffice?.horarioApertura|| "",
         horarioCierre: activeOffice?.horarioCierre|| ""
     }   
+
     const[updatedSucursal,setUpdatedsucursal]=useState(initialValues)
     const[logo,setLogo]=useState<string | null>(null)
     const sucurSevice= new SucursalService(API_URL)
+
     useEffect(()=>{
         setUpdatedsucursal(initialValues)
         setLogo(initialValues.logo)
     },[displayPopUpEditOffice])
+
     const handleClose = () => setDisplayPopUpEditOffice(false);
     const handleSave=async ()=>{
         const upSucur :IUpdateSucursal={
@@ -72,11 +78,13 @@ export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,se
             await sucurSevice.updateSucursal(Number(upSucur.id),upSucur)
             setDisplayListOffice(false)
             setDisplayListOffice(true)  
+            refreshOffice(true);
             setDisplayPopUpEditOffice(false)
         }catch(err){
             console.log("Ocurrio un error gurdando la nueva sucursal: ",err)
         }
     }
+
     const handleChangeInputs = (event: ChangeEvent<HTMLInputElement>)=>{
         const {value, name} = event.target
         
@@ -85,7 +93,6 @@ export const PopUpEditOffice: FC<IPopUpEditOffice> = ({displayPopUpEditOffice,se
         
     }
     
-
 return (
     <>
     
@@ -123,7 +130,7 @@ return (
             {/*Segundo set de inputs */}
             <div className={styles.inpunts_style}>
                 <FloatingLabel
-                    label="IdLocalidad">
+                    label="ID Localidad">
                     <Form.Control style={{
                             width:"20rem",  
                     }} value={updatedSucursal.idLocalidad}  type="text" name='idLocalidad' onChange={handleChangeInputs} />
@@ -144,7 +151,7 @@ return (
             {/*Tercer set de inputs */}
             <div className={styles.inpunts_style}>
             <FloatingLabel
-                    label="Nombre Calle">
+                    label="Nombre calle">
                     <Form.Control style={{
                             width:"20rem",  
                     }} value={updatedSucursal.calle}  type="text" name='calle' onChange={handleChangeInputs} />
