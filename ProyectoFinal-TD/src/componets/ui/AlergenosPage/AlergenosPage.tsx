@@ -9,9 +9,10 @@ const API_URL = import.meta.env.VITE_API_URL;
 interface IAlergenosPage{
     setDisplayCreateUpdateAlergeno:Function
     setIsCreate:Function
+    setRefreshAlergenoTrue:Function
     refreshAlergeno: Boolean
 }
-export const AlergenosPage:FC<IAlergenosPage> = ({setDisplayCreateUpdateAlergeno,setIsCreate, refreshAlergeno}) => {
+export const AlergenosPage:FC<IAlergenosPage> = ({setDisplayCreateUpdateAlergeno,setIsCreate, refreshAlergeno,setRefreshAlergenoTrue}) => {
 
     
     const alerService=new AlergenoService(API_URL)
@@ -50,7 +51,8 @@ return (
                 alergeno={alg} 
                 key={alg.id} 
                 setIsCreate={setIsCreate} 
-                setDisplayCreateUpdateAlergeno={setDisplayCreateUpdateAlergeno}/>
+                setDisplayCreateUpdateAlergeno={setDisplayCreateUpdateAlergeno}
+                refreshAlergeno={setRefreshAlergenoTrue}/>
             
             ))}
         </div>

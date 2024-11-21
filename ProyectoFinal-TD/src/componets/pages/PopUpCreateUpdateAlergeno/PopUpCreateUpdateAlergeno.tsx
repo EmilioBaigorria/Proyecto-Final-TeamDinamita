@@ -99,7 +99,7 @@ export const PopUpCreateUpdateAlergeno: FC<IPopUpCreateUpdateAlergeno> = ({ disp
                         Cancelar
                     </Button>
                     <Button variant="success" onClick={isCreate ? handleCreate : handleUpdate}>
-                        {isCreate ? "Crear Sucursal" : "Completar Edicion"}
+                        {isCreate ? "Crear Alergeno" : "Completar Edicion"}
                     </Button>
                 </Modal.Footer>
             </Modal>

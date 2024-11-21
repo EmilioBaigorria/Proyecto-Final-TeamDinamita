@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { IAlergenos } from '../../../types/dtos/alergenos/IAlergenos'
-import { Button, Modal } from 'react-bootstrap'
+import { Button, Image, Modal } from 'react-bootstrap'
 interface IPopUpCheckAlergeno{
     alergeno:IAlergenos
     setDisplayChekAlergeno:Function
@@ -17,16 +17,19 @@ return (
     <>
         <Modal show={displayChekAlergeno} onHide={handleClose}>
             <Modal.Header closeButton>
-                <Modal.Title>Modal heading</Modal.Title>
+                <Modal.Title>Ver Alergeno</Modal.Title>
             </Modal.Header>
-            <Modal.Body>Woohoo, you are reading this text in a modal!</Modal.Body>
+            
+            <Modal.Body style={{display:"flex", flexDirection:"column",alignItems:"center", gap:"3rem"}}>
+                Denominacion: {alergeno.denominacion}
+                <Image style={{width:"60%"}} src={alergeno.imagen ? 
+                alergeno.imagen.url:
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMeVgKGC9MMGYtkEoy3zKDpVHa2BPZYWmOfg&s"}/>
+            </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                    Close
+                <Button variant="success" onClick={handleClose}>
+                    Cerrar
                 </Button>
-            <Button variant="primary" onClick={handleClose}>
-                Save Changes
-            </Button>
             </Modal.Footer>
         </Modal>
     </>

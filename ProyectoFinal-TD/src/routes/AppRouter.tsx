@@ -89,7 +89,8 @@ export const AppRouter = () => {
                         setDisplayCreateUpdateAlergeno={setDisplayCreateUpdateAlergeno}
                         setIsCreate={setIsCreate}
                         refreshAlergeno={refreshAlergeno}
-                         />} />
+                        setRefreshAlergenoTrue={setRefreshAlergenoTrue}
+                        />} />
                 </Routes>
 
             </BrowserRouter>
