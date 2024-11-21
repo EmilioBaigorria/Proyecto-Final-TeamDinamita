@@ -8,9 +8,10 @@ import { PopUpUpdateCategory } from "../../pages/PopUpUpdateCategory/PopUpUpdate
 interface ICategoryDropdown {
     category: ICategorias
     idSucursal: number
+    refreshCategoryFather: Function
 }
 
-export const CategoryDropdown: FC<ICategoryDropdown> = ({ category, idSucursal }) => {
+export const CategoryDropdown: FC<ICategoryDropdown> = ({ category, idSucursal, refreshCategoryFather }) => {
 
     // UseState para guardar subcategorias y estado del dropdown
     const [subcategories, setSubcategories] = useState<ICategorias[] | null>(null);
@@ -19,6 +20,7 @@ export const CategoryDropdown: FC<ICategoryDropdown> = ({ category, idSucursal }
     // guardado de estados del display y de la categoria activa para mostrar los datos mientras se edita
     const [displayModal, setDisplayModal] = useState(false)
     const [activeCategory, setActiveCategory] = useState<ICategorias | null>(null)
+    refreshCategoryFather(false);
 
     // Abridor del popup para categ
     const handleOpenModalCat = () => {
@@ -66,6 +68,7 @@ export const CategoryDropdown: FC<ICategoryDropdown> = ({ category, idSucursal }
             } else {
                 console.error("No se encontraron subcategorias");
             }
+            refreshCategoryFather(true);
     };
 
     return (
@@ -104,6 +107,8 @@ export const CategoryDropdown: FC<ICategoryDropdown> = ({ category, idSucursal }
                                 <Button variant="light" onClick={() => {
                                     setActiveCategory(sub)
                                     setDisplayModal(true)
+                                    console.log("Hola");
+                                    
                                 }}>
                                     <span className="material-symbols-outlined">edit</span>
                                 </Button>
