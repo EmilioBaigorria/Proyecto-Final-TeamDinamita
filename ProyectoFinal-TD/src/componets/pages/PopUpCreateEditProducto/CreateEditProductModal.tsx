@@ -20,10 +20,12 @@ interface IPopUpCreateUpdateProducto {
     displayCreateUpdateProducto: boolean;
     setDisplayCreateUpdateProducto: Function;
     isCreate: boolean;
+    onClose: Function
+    selectedProduct: IProductos | null;
 }
 
-export const PopUpCreateUpdateProducto: FC<IPopUpCreateUpdateProducto> = ({ displayCreateUpdateProducto, setDisplayCreateUpdateProducto, isCreate }) => {
-    const producto = useSelector((state: RootState) => state.ActiveProductoReducer.activeProducto);
+export const PopUpCreateUpdateProducto: FC<IPopUpCreateUpdateProducto> = ({ displayCreateUpdateProducto, setDisplayCreateUpdateProducto, isCreate, selectedProduct, onClose }) => {
+    const producto = selectedProduct
     // @ts-ignore
     const sucursal = useSelector((state: RootState) => state.ActiveOfficeReducer.activeOffice?.id);
 
@@ -71,6 +73,8 @@ export const PopUpCreateUpdateProducto: FC<IPopUpCreateUpdateProducto> = ({ disp
             idAlergenos: [],
             imagenes: [{ name: 'default', url: '' }]
         });
+        onClose(true)
+        setLogo(null);
         dispatch(removeActiveProducto());
         setDisplayCreateUpdateProducto(false);
     };
@@ -84,10 +88,11 @@ export const PopUpCreateUpdateProducto: FC<IPopUpCreateUpdateProducto> = ({ disp
                 precioVenta: newProductoData.precioVenta,
                 descripcion: newProductoData.descripcion,
                 habilitado: newProductoData.habilitado,
-                codigo: newProductoData.codigo,
+                codigo: Date.now().toString(), // Solo acepta codigos unicos el endpoint... si bien es solo update.. raroo
+                // codigo: newProductoData.codigo,
                 idCategoria: newProductoData.idCategoria,
                 idAlergenos: newProductoData.idAlergenos,
-                imagenes: newProductoData.imagenes,
+                imagenes: [{ name: 'newImage', url: String(logo) }],
             };
 
             try {
@@ -119,6 +124,7 @@ export const PopUpCreateUpdateProducto: FC<IPopUpCreateUpdateProducto> = ({ disp
         };
 
         try {
+            // @ts-ignore
             const newProd :IProductos = await productoService.createProducto(newProducto);
             if(newProd) dispatch(addProducto(newProd)) 
         } catch (error) {
@@ -160,6 +166,7 @@ export const PopUpCreateUpdateProducto: FC<IPopUpCreateUpdateProducto> = ({ disp
         };
 
         fetchCategories();
+
     }, [displayCreateUpdateProducto, isCreate, producto]);
 
     // Handle category change

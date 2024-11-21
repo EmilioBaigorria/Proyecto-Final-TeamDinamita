@@ -70,6 +70,7 @@ export const CategoryDropdown: FC<ICategoryDropdown> = ({ category, idSucursal, 
             }
             refreshCategoryFather(true);
     };
+
     return (
         <>
             <PopUpUpdateCategory display={displayModal} setDisplay={setDisplayModal} category={activeCategory ? activeCategory : defaultValues} refreshCategory={refreshCategory} />

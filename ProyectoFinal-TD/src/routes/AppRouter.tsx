@@ -38,8 +38,7 @@ export const AppRouter = () => {
             <BrowserRouter>
                 <nav>
                     <ul>
-                        <li><Link to='/'>Home</Link></li>
-                        <li><Link to='/admin'>Administración</Link></li>
+                        <li><Link style={{margin:"1rem"}} to='/'>Home</Link></li>
                     </ul>
                 </nav>
                 <PopUpCreateOffice displayPopUpCreateOffice={displayPopUpCreateOffice} setDisplayPopUpCreateOffice={setDisplayPopUpCreateOffice} />
