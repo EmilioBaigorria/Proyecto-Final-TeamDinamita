@@ -43,8 +43,8 @@ export const AlergenosTable: FC<IAlergenosTable> = ({alergeno,setIsCreate,setDis
         }).then((result)=>{
             if(result.isConfirmed){
                 Swal.fire({
-                    title: "Deleted!",
-                    text: "Your file has been deleted.",
+                    title: "¡Eliminado!",
+                    text: "El alergeno fue eliminado.",
                     icon: "success"
                 })
                 const deleteAlergeno=async()=>{

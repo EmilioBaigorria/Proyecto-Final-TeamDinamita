@@ -37,12 +37,14 @@ export const AlergenosPage:FC<IAlergenosPage> = ({setDisplayCreateUpdateAlergeno
 return (
     <div className={style.main_container}>
         <div className={style.button_container}>
-            <Button onClick={handleOpenCreateModal} style={{textAlign:"center"}} variant="secondary">
-                AGREGAR ALERGENO
-                <span className="material-symbols-outlined">
+            <button className='btnAdd' name="categorias" onClick={handleOpenCreateModal}>
+                <div style={{display:"flex",flexDirection:"row"}}>
+                    <p>AGREGAR ALERGENO</p>
+                    <p><span className="material-symbols-outlined">
                     add_circle
-                </span>
-            </Button>
+                    </span></p>
+                </div>
+            </button>
         </div>
         <div className={style.alergenos_container}>
             {alergenos?.map((alg)=>(

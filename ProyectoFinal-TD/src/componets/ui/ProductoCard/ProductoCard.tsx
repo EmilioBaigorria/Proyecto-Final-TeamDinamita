@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { IProductos } from '../../../types/dtos/productos/IProductos';
 import styles from './ProductoCard.module.css';
 import { Button } from 'react-bootstrap';
+import Swal from 'sweetalert2';
 
 interface IProductoCard {
     product: IProductos;
@@ -16,7 +17,23 @@ export const ProductoCard: FC<IProductoCard> = ({ product, onEdit, onDelete }) =
         onEdit(product)
     }
     const handleDeleteProducto = () =>{
-        onDelete(product)
+        Swal.fire({
+            title: '¿Eliminar Producto?',
+            text: 'No podras recuperarlo',
+            icon: 'warning',
+            showCancelButton:true,
+            cancelButtonText:"Cancelar",
+            confirmButtonText: 'Eliminar Producto'
+        }).then((result)=>{
+            if(result.isConfirmed){
+                Swal.fire({
+                    title: "¡Eliminado!",
+                    text: "El producto fue eliminado.",
+                    icon: "success"
+                })
+                onDelete(product)
+        }})
+        
     }
     
     return (
