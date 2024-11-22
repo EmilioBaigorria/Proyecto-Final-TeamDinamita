@@ -126,6 +126,14 @@ export const PopUpCreateUpdateProducto: FC<IPopUpCreateUpdateProducto> = ({ disp
         try {
             // @ts-ignore
             const newProd :IProductos = await productoService.createProducto(newProducto);
+            console.log("newProd");
+            console.log(newProd);
+
+            if (newProd?.errorMsg) {
+                alert(newProd?.errorMsg);
+                return;
+            }
+            
             if(newProd) dispatch(addProducto(newProd)) 
         } catch (error) {
             console.error('Error al crear el producto:', error);

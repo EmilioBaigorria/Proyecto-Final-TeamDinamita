@@ -9,8 +9,10 @@ interface IAdministracion {
   activeSubPage: string
   setDisplayCreateUpdateAlergeno: Function
   setIsCreate: Function
+  setRefreshAlergenoTrue:Function
+  refreshAlergeno: Boolean
 }
-const Administration: FC<IAdministracion> = ({ activeSubPage, setDisplayCreateUpdateAlergeno, setIsCreate }) => {
+const Administration: FC<IAdministracion> = ({ activeSubPage, setDisplayCreateUpdateAlergeno, setIsCreate, refreshAlergeno,setRefreshAlergenoTrue}) => {
   const activeOffice = useAppSelector(
     (state) => state.ActiveOfficeReducer.activeOffice
   ) 
@@ -21,6 +23,8 @@ const Administration: FC<IAdministracion> = ({ activeSubPage, setDisplayCreateUp
           activeSubPage == "alergenos" ? <AlergenosPage
             setDisplayCreateUpdateAlergeno={setDisplayCreateUpdateAlergeno}
             setIsCreate={setIsCreate}
+            refreshAlergeno={refreshAlergeno}
+            setRefreshAlergenoTrue={setRefreshAlergenoTrue}
           /> :
             <div>
               <h1>Administracion</h1>

@@ -29,9 +29,10 @@ export const AppRouter = () => {
     const [isCreate, setIsCreate] = useState(true)
     const [refreshOffice, setRefreshOffice] = useState(false)
     const [refreshEnterprise, setRefreshEnterprise] = useState(false)
+    const [refreshAlergeno, setRefreshAlergeno] = useState(false)
     const setRefreshOfficeTrue = (data: boolean) => { setRefreshOffice(data) }
     const setRefreshEnterpriseTrue = (data: boolean) => { setRefreshEnterprise(data) }
-
+    const setRefreshAlergenoTrue = (data: boolean) =>  {setRefreshAlergeno(data) }
 
     return (
         <div className="grid_container" style={{ height: "100vh" }}>
@@ -62,7 +63,8 @@ export const AppRouter = () => {
                 <PopUpCreateUpdateAlergeno
                     isCreate={isCreate}
                     displayCreateUpdateAlergeno={displayCreateUpdateAlergeno}
-                    setDisplayCreateUpdateAlergeno={setDisplayCreateUpdateAlergeno} />
+                    setDisplayCreateUpdateAlergeno={setDisplayCreateUpdateAlergeno}
+                    refreshAlergeno={setRefreshAlergenoTrue} />
 
                 <Sidebar setDisplay={setDisplay}
                     setdisplayModalCheckEnterprise={setdisplayModalCheckEnterprise}
@@ -85,7 +87,10 @@ export const AppRouter = () => {
                     <Route path="/admin" element={<Administration
                         activeSubPage={activeSubPage}
                         setDisplayCreateUpdateAlergeno={setDisplayCreateUpdateAlergeno}
-                        setIsCreate={setIsCreate} />} />
+                        setIsCreate={setIsCreate}
+                        refreshAlergeno={refreshAlergeno}
+                        setRefreshAlergenoTrue={setRefreshAlergenoTrue}
+                        />} />
                 </Routes>
 
             </BrowserRouter>

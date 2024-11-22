@@ -9,11 +9,15 @@ const API_URL = import.meta.env.VITE_API_URL;
 interface IAlergenosPage{
     setDisplayCreateUpdateAlergeno:Function
     setIsCreate:Function
+    setRefreshAlergenoTrue:Function
+    refreshAlergeno: Boolean
 }
-export const AlergenosPage:FC<IAlergenosPage> = ({setDisplayCreateUpdateAlergeno,setIsCreate}) => {
+export const AlergenosPage:FC<IAlergenosPage> = ({setDisplayCreateUpdateAlergeno,setIsCreate, refreshAlergeno,setRefreshAlergenoTrue}) => {
+
+    
     const alerService=new AlergenoService(API_URL)
     const [alergenos,setAlergenos]=useState<IAlergenos[]|null>([])
-    const getAlergenos=useEffect(()=>{
+    useEffect(()=>{
         const getaler=async ()=>{
             try {
                 const alergenosData=await alerService.getAllAlergenos()
@@ -25,7 +29,7 @@ export const AlergenosPage:FC<IAlergenosPage> = ({setDisplayCreateUpdateAlergeno
             }
         }
         getaler()
-    },[])
+    },[refreshAlergeno])
     const handleOpenCreateModal=()=>{
         setIsCreate(true)
         setDisplayCreateUpdateAlergeno(true)
@@ -33,12 +37,14 @@ export const AlergenosPage:FC<IAlergenosPage> = ({setDisplayCreateUpdateAlergeno
 return (
     <div className={style.main_container}>
         <div className={style.button_container}>
-            <Button onClick={handleOpenCreateModal} style={{textAlign:"center"}} variant="secondary">
-                AGREGAR ALERGENO
-                <span className="material-symbols-outlined">
+            <button className='btnAdd' name="categorias" onClick={handleOpenCreateModal}>
+                <div style={{display:"flex",flexDirection:"row"}}>
+                    <p>AGREGAR ALERGENO</p>
+                    <p><span className="material-symbols-outlined">
                     add_circle
-                </span>
-            </Button>
+                    </span></p>
+                </div>
+            </button>
         </div>
         <div className={style.alergenos_container}>
             {alergenos?.map((alg)=>(
@@ -47,7 +53,8 @@ return (
                 alergeno={alg} 
                 key={alg.id} 
                 setIsCreate={setIsCreate} 
-                setDisplayCreateUpdateAlergeno={setDisplayCreateUpdateAlergeno}/>
+                setDisplayCreateUpdateAlergeno={setDisplayCreateUpdateAlergeno}
+                refreshAlergeno={setRefreshAlergenoTrue}/>
             
             ))}
         </div>

@@ -13,8 +13,10 @@ interface IPopUpCreateUpdateAlergeno {
     displayCreateUpdateAlergeno: boolean
     setDisplayCreateUpdateAlergeno: Function
     isCreate: boolean
+    refreshAlergeno: Function
 }
-export const PopUpCreateUpdateAlergeno: FC<IPopUpCreateUpdateAlergeno> = ({ displayCreateUpdateAlergeno, setDisplayCreateUpdateAlergeno, isCreate }) => {
+export const PopUpCreateUpdateAlergeno: FC<IPopUpCreateUpdateAlergeno> = ({ displayCreateUpdateAlergeno, setDisplayCreateUpdateAlergeno, isCreate, refreshAlergeno }) => {
+    
     let initialValues: ICreateAlergeno | IUpdateAlergeno
     const alergeno = useAppSelector(
         (state) => state.ActiveAlergenoReducer.activeAlergeno
@@ -33,7 +35,8 @@ export const PopUpCreateUpdateAlergeno: FC<IPopUpCreateUpdateAlergeno> = ({ disp
         dispach(removeActiveAlergeno())
         setDisplayCreateUpdateAlergeno(false)
     }
-    const handleUpdate = () => {
+    const handleUpdate = async () => {
+        refreshAlergeno(false);
         if (alergeno) {
             const updatedAlergeno: IUpdateAlergeno = {
                 id: alergeno?.id,
@@ -43,12 +46,14 @@ export const PopUpCreateUpdateAlergeno: FC<IPopUpCreateUpdateAlergeno> = ({ disp
                     url: String(logo)
                 }
             }
-            const response = alergenoService.updateAlergeno(alergeno?.id, updatedAlergeno)
+            const response = await alergenoService.updateAlergeno(alergeno?.id, updatedAlergeno)
+            refreshAlergeno(true);
             console.log(response)
         }
         handleClose()
     }
-    const handleCreate = () => {
+    const handleCreate = async() => {
+        refreshAlergeno(false);
         const newAlergeno: ICreateAlergeno = {
             denominacion: newAlergenosData.denominacion,
             imagen: {
@@ -56,7 +61,8 @@ export const PopUpCreateUpdateAlergeno: FC<IPopUpCreateUpdateAlergeno> = ({ disp
                 url: String(logo)
             }
         }
-        const response = alergenoService.createAlergeno(newAlergeno)
+        const response =  await alergenoService.createAlergeno(newAlergeno)
+        refreshAlergeno(true);
         console.log(response)
         handleClose()
     }
@@ -93,7 +99,7 @@ export const PopUpCreateUpdateAlergeno: FC<IPopUpCreateUpdateAlergeno> = ({ disp
                         Cancelar
                     </Button>
                     <Button variant="success" onClick={isCreate ? handleCreate : handleUpdate}>
-                        {isCreate ? "Crear Sucursal" : "Completar Edicion"}
+                        {isCreate ? "Crear Alergeno" : "Completar Edicion"}
                     </Button>
                 </Modal.Footer>
             </Modal>

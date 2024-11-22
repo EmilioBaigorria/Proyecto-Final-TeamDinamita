@@ -63,11 +63,11 @@ export const PopUpCreateCategory: FC<ICreateCategoryModalProps> = ({ display, se
                 </Modal.Body>
 
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseModal}>
+                    <Button variant="danger" onClick={handleCloseModal}>
                         Cancelar
                     </Button>
-                    <Button variant="primary" onClick={handleSaveChanges}>
-                        Guardar cambios
+                    <Button variant="success" onClick={handleSaveChanges}>
+                        Crear Categoria
                     </Button>
                 </Modal.Footer>
 

@@ -86,10 +86,10 @@ export const PopUpUpdateCategory: FC<IUpdateCategoryModalProps> = ({ display, se
                 </Modal.Body>
 
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseModal}>
+                    <Button variant="danger" onClick={handleCloseModal}>
                         Cancelar
                     </Button>
-                    <Button variant="primary" onClick={handleSaveChanges}>
+                    <Button variant="success" onClick={handleSaveChanges}>
                         Guardar cambios
                     </Button>
                 </Modal.Footer>
